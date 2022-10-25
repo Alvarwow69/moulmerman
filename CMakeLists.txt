@@ -24,6 +24,7 @@ set(PREFIX_MESSAGE "[${PROJECT_NAME}] ")
 set( SRC_FOLDERS
         ${CMAKE_SOURCE_DIR}/sources/
         ${CMAKE_SOURCE_DIR}/sources/scenes/
+        ${CMAKE_SOURCE_DIR}/sources/script/
         )
 ## INCLUDE FOLDERS
 set( INC_FOLDERS
@@ -33,6 +34,7 @@ set( INC_FOLDERS
         ${CMAKE_SOURCE_DIR}/libraries/freetype/
         ${CMAKE_SOURCE_DIR}/includes/
         ${CMAKE_SOURCE_DIR}/includes/scenes/
+        ${CMAKE_SOURCE_DIR}/includes/script/
         )
 
 message(${PREFIX_MESSAGE} "Build type set to: " ${CMAKE_BUILD_TYPE})
