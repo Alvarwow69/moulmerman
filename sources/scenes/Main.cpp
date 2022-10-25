@@ -49,7 +49,7 @@ void Main::onLoad(sw::EventInfo& info)
     auto& cpt_credit = credit.createComponent<moul::Button>("ScriptManager");
     cpt_credit.m_textureName = "Button_Credit";
     cpt_credit.m_position = {650, 350, 0};
-    cpt_credit.m_scene = "Credit";
+    cpt_credit.m_scene = "Credits";
     auto& cpt_exit = exit.createComponent<moul::Button>("ScriptManager");
     cpt_exit.m_textureName = "Button_Exit";
     cpt_exit.m_position = {650, 700, 0};

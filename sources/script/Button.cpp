@@ -6,6 +6,7 @@
 #include "script/Button.hpp"
 #include "window/Window.hpp"
 #include "utils/Inputs.hpp"
+#include "OpenGLModule.hpp"
 
 moul::Button::Button(sw::GameObject &gameObject) :
 sw::Component(gameObject)
@@ -33,8 +34,14 @@ void moul::Button::update()
     && mousePos.y >= pos.y && mousePos.y < pos.y + height * m_gameObject.transform().getScale().y) {
         m_sprite.value().setColor(sw::Color{1.0f, 1.0f, 1.0f});
         if (sw::isMouseButtonPressed(sw::MouseBtn::Button_left)) {
-            m_loader.value().m_sceneToLoad = m_scene;
-            m_loader.value().startLoad();
+            if (m_scene == "Selection") {
+                m_loader.value().m_sceneToLoad = m_scene;
+                m_loader.value().startLoad();
+            } else if (m_scene == "Exit") {
+                sw::Window::CloseWindow();
+            } else {
+                sw::OpenGLModule::sceneManager().loadScene(m_scene);
+            }
         }
     }
     else

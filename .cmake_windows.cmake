@@ -1,4 +1,4 @@
-set( EXEC incaribus )
+set( EXEC moulmerman )
 set( EXT cpp )
 
 add_definitions(-DYAML_CPP_STATIC_DEFINE)

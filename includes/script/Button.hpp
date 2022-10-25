@@ -18,7 +18,7 @@ namespace moul
         sw::Vector3f m_position;
         std::string m_scene;
 
-        Button(sw::GameObject& gameObject);
+        explicit Button(sw::GameObject& gameObject);
 
     private:
         sw::Reference<sw::Sprite> m_sprite;
