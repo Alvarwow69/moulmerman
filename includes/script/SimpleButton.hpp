@@ -3,30 +3,32 @@
 ** Button.hpp
 */
 
-#ifndef MOULMERMAN_BUTTON_HPP
-#define MOULMERMAN_BUTTON_HPP
+#ifndef MOULMERMAN_SMPLEBUTTON_HPP
+#define MOULMERMAN_SMPLEBUTTON_HPP
 
 #include "components/Components.hpp"
 #include "script/SceneLoader.hpp"
 
 namespace moul
 {
-    class Button : public sw::Component
+    class SimpleButton : public sw::Component
     {
     public:
         std::string m_textureName;
+        std::string m_buttonTitle;
+        sw::Vector2f m_scale;
         sw::Vector3f m_position;
-        std::string m_scene;
+        sw::Vector3f m_txtPosition;
         void (*m_callback)();
 
-        explicit Button(sw::GameObject& gameObject);
+        explicit SimpleButton(sw::GameObject& gameObject);
 
     private:
         sw::Reference<sw::Sprite> m_sprite;
-        sw::Reference<inc::SceneLoader> m_loader;
+        sw::Reference<sw::Text> m_text;
         void start();
         void update();
     }; // class Button
 } // namespace moul
 
-#endif //MOULMERMAN_BUTTON_HPP
+#endif //MOULMERMAN_SMPLEBUTTON_HPP

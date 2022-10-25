@@ -9,7 +9,8 @@
 #include "OpenGLModule.hpp"
 
 moul::Button::Button(sw::GameObject &gameObject) :
-sw::Component(gameObject)
+sw::Component(gameObject),
+m_callback(nullptr)
 {
     gameObject.scene().eventManager["Start"].subscribe(this, &moul::Button::start);
     gameObject.scene().eventManager["Update"].subscribe(this, &moul::Button::update);
@@ -34,6 +35,10 @@ void moul::Button::update()
     && mousePos.y >= pos.y && mousePos.y < pos.y + height * m_gameObject.transform().getScale().y) {
         m_sprite.value().setColor(sw::Color{1.0f, 1.0f, 1.0f});
         if (sw::isMouseButtonPressed(sw::MouseBtn::Button_left)) {
+            if (m_callback) {
+                m_callback();
+                return;
+            }
             if (m_scene == "Selection") {
                 m_loader.value().m_sceneToLoad = m_scene;
                 m_loader.value().startLoad();
