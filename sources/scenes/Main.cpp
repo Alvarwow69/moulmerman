@@ -41,7 +41,7 @@ void Main::onLoad(sw::EventInfo& info)
     auto& cpt_play = play.createComponent<moul::Button>("ScriptManager");
     cpt_play.m_textureName = "Button_Play";
     cpt_play.m_position = {200, 400, 0};
-    cpt_play.m_scene = "Selection";
+    cpt_play.m_scene = "SelectionScene";
     auto& cpt_settings = setting.createComponent<moul::Button>("ScriptManager");
     cpt_settings.m_textureName = "Button_Setting";
     cpt_settings.m_position = {650, 500, 0};

@@ -39,7 +39,7 @@ void moul::Button::update()
                 m_callback();
                 return;
             }
-            if (m_scene == "Selection") {
+            if (m_scene == "SelectionScene") {
                 m_loader.value().m_sceneToLoad = m_scene;
                 m_loader.value().startLoad();
             } else if (m_scene == "Exit") {

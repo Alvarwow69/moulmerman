@@ -1,0 +1,74 @@
+/*
+** ShipWreck Engine , 2022
+** LoadingScene.cpp
+*/
+
+#include "scenes/SelectionScene.hpp"
+#include "scenes_manager/SceneLoadEvent.hpp"
+#include "components/MeshRenderer.hpp"
+#include "script/CameraFPS.hpp"
+#include "script/SelectionPlayer.hpp"
+#include "script/SimpleButton.hpp"
+#include "OpenGLModule.hpp"
+
+void moul::SelectionScene::onLoad(sw::EventInfo &info)
+{
+    auto& scene = info.getInfo<sw::SceneLoadEvent>().scene;
+
+    if (scene.name != "SelectionScene")
+        return;
+
+    auto& mainCamera = scene.createGameObject("MainCamera");
+    sw::ConcreteComponent auto& camera = mainCamera.createComponent<inc::CameraFPS>("ScriptManager");
+    //sw::ConcreteComponent auto& camera = mainCamera.createComponent<sw::Camera>("CameraManager");
+    //camera.setClippingNear(0.1);
+    //camera.setProjection(sw::Camera::PERSPECTIVE);
+    //camera.setClippingFar(1000);
+    //mainCamera.transform().move(0, 0, 5);
+
+    auto& building = scene.createGameObject("Building");
+    auto& model = building.createComponent<sw::MeshRenderer>("MeshRendererManager", "Selection_scene");
+    building.transform().setPosition(0, -8, 13);
+    building.transform().setRotation(180, 0, 1, 0);
+
+    auto& player1 = scene.createGameObject("Player1");
+    auto& model1 = player1.createComponent<moul::SelectionPlayer>("ScriptManager");
+    model1.m_modelName = "Player";
+    model1.m_textPos = {1400, 340};
+    player1.transform().scale(8, 8, 8);
+    player1.transform().setPosition(3.5, -1.1, 8);
+    player1.transform().rotate(-20);
+
+    auto& player2 = scene.createGameObject("Player2");
+    auto& model2 = player2.createComponent<moul::SelectionPlayer>("ScriptManager");
+    model2.m_modelName = "Player";
+    model2.m_textPos = {1075, 340};
+    player2.transform().scale(8, 8, 8);
+    player2.transform().setPosition(1.3, -1.1, 8);
+    player2.transform().rotate(-10);
+
+    auto& player3 = scene.createGameObject("Player3");
+    auto& model3 = player3.createComponent<moul::SelectionPlayer>("ScriptManager");
+    model3.m_modelName = "Player";
+    model3.m_textPos = {700, 340};
+    player3.transform().scale(8, 8, 8);
+    player3.transform().setPosition(-1.3, -1.1, 8);
+    player3.transform().rotate(10);
+
+    auto& player4 = scene.createGameObject("Player4");
+    auto& model4 = player4.createComponent<moul::SelectionPlayer>("ScriptManager");
+    model4.m_modelName = "Player";
+    model4.m_textPos = {400, 340};
+    player4.transform().scale(8, 8, 8);
+    player4.transform().setPosition(-3.5, -1.1, 8);
+    player4.transform().rotate(20);
+
+    auto& exit = scene.createGameObject("Play_btn");
+    auto& exitbtn = exit.createComponent<moul::SimpleButton>("ScriptManager");
+    exitbtn.m_textureName = "Button_large";
+    exitbtn.m_txtPosition = {40, 20, 0};
+    exitbtn.m_position = {1500, 900, 0};
+    exitbtn.m_buttonTitle = "Play";
+    exitbtn.m_scale = {2, 2};
+    exitbtn.m_callback = []() { sw::OpenGLModule::sceneManager().loadScene("Game"); };
+}

@@ -12,6 +12,7 @@
 #include "LoadingScene.hpp"
 #include "CreditScene.hpp"
 #include "SettingsScene.hpp"
+#include "SelectionScene.hpp"
 
 void sw::CreateScenes()
 {
@@ -19,15 +20,18 @@ void sw::CreateScenes()
     auto loading = new moul::LoadingScene();
     auto credit = new moul::CreditScene();
     auto settings = new moul::SettingsScene();
+    auto selection = new moul::SelectionScene();
     sw::OpenGLModule::eventManager().create("SceneLoad");
     sw::OpenGLModule::sceneManager().createScene("Main");
     sw::OpenGLModule::sceneManager().createScene("LoadingScene");
-    sw::OpenGLModule::sceneManager().createScene("Selection");
+    sw::OpenGLModule::sceneManager().createScene("SelectionScene");
     sw::OpenGLModule::sceneManager().createScene("Credits");
     sw::OpenGLModule::sceneManager().createScene("Settings");
+    sw::OpenGLModule::sceneManager().createScene("Game");
 
     sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(main, &Main::onLoad);
     sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(loading, &moul::LoadingScene::onLoad);
     sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(credit, &moul::CreditScene::onLoad);
     sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(settings, &moul::SettingsScene::onLoad);
+    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(selection, &moul::SelectionScene::onLoad);
 }
