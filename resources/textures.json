@@ -1,0 +1,137 @@
+{
+  "MissingTexture": {
+    "Path": "resources/textures/missing_texture.png",
+    "Scene": [
+      "*"
+    ],
+    "Type": "Texture"
+  },
+  "MainMenuBack": {
+    "Path": "resources/textures/Bomberman_background.png",
+    "Scene": [
+      "Main"
+    ],
+    "Type": "Texture"
+  },
+  "DefaultFont": {
+    "Path": "resources/font/calibri-regular.ttf",
+    "Scene": [
+      "*"
+    ],
+    "Type": "Font"
+  },
+  "default": {
+    "Path": "resources/shaders/default.fs.glsl",
+    "Scene": [
+      "*"
+    ],
+    "Type": "Shader"
+  },
+  "model": {
+    "Path": "resources/shaders/model.fs.glsl",
+    "Scene": [
+      "*"
+    ],
+    "Type": "Shader"
+  },
+  "text": {
+    "Path": "resources/shaders/font.fs.glsl",
+    "Scene": [
+      "*"
+    ],
+    "Type": "Shader"
+  },
+  "Button_Play": {
+    "Path": "resources/textures/Button/Play.png",
+    "Scene": [
+      "Main"
+    ],
+    "Type": "Texture"
+  },
+  "Button_Exit": {
+    "Path": "resources/textures/Button/Exit.png",
+    "Scene": [
+      "Main"
+    ],
+    "Type": "Texture"
+  },
+  "Button_Credit": {
+    "Path": "resources/textures/Button/Credit.png",
+    "Scene": [
+      "Main"
+    ],
+    "Type": "Texture"
+  },
+  "Button_Setting": {
+    "Path": "resources/textures/Button/Setting.png",
+    "Scene": [
+      "Main"
+    ],
+    "Type": "Texture"
+  },
+  "Loading_Screen": {
+    "Path": "resources/textures/LoadingScreen.png",
+    "Scene": [
+      "LoadingScene"
+    ],
+    "Type": "Texture"
+  },
+  "Loading_icon": {
+    "Path": "resources/textures/Bestiole.png",
+    "Scene": [
+      "LoadingScene"
+    ],
+    "Type": "Texture"
+  },
+  "Background_Credit": {
+    "Path": "resources/textures/Credit.png",
+    "Scene": [
+      "Credits"
+    ],
+    "Type": "Texture"
+  },
+  "Background_Selection": {
+    "Path": "resources/textures/PlayerSelectBack.png",
+    "Scene": [
+      "Settings",
+      "SelectionScene"
+    ],
+    "Type": "Texture"
+  },
+  "Button_large": {
+    "Path": "resources/textures/button_l.png",
+    "Scene": [
+      "Settings",
+      "SelectionScene"
+    ],
+    "Type": "Texture"
+  },
+  "Menu_music": {
+    "Path": "resources/audio/bomberman-menu.mp3",
+    "Scene": [
+      "Main"
+    ],
+    "Type": "Audio"
+  },
+  "Player": {
+    "Path": "resources/models/Perso.obj",
+    "Scene": [
+      "SelectionScene"
+    ],
+    "Type": "Model"
+  },
+  "Selection_scene": {
+    "Path": "resources/models/Selection.obj",
+    "Scene": [
+      "SelectionScene"
+    ],
+    "Type": "Model"
+  },
+  "PolygonApocalypse_Texture_01_A.png": {
+    "Path": "resources/textures/PolygonApocalypse_Texture_01_A.png",
+    "Scene": [
+      "SelectionScene"
+    ],
+    "Type": "Texture"
+  }
+}
