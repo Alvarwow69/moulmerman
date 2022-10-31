@@ -64,3 +64,8 @@ moul::SelectionPlayerType::Type moul::SelectionPlayerType::getType()
 {
     return (m_type);
 }
+
+std::string moul::SelectionPlayerType::getTypeName()
+{
+    return (GetStringType(m_type));
+}

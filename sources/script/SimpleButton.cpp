@@ -37,7 +37,7 @@ void moul::SimpleButton::update()
         m_sprite.value().setColor(sw::Color{1.0f, 1.0f, 1.0f});
         if (sw::isMouseButtonPressed(sw::MouseBtn::Button_left))
             if (m_callback)
-                m_callback();
+                m_callback(this);
     }
     else
         m_sprite.value().setColor(sw::Color{100.0f / 255.0f, 100.0f / 255.0f, 100.0f / 255.0f});

@@ -25,6 +25,7 @@ namespace moul
         void start();
         void update();
         moul::SelectionPlayerType::Type getType();
+        std::string getTypeName();
     private:
         Type m_type;
         sw::Reference<sw::Text> m_text;

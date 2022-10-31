@@ -23,6 +23,7 @@ namespace moul
 
         void start();
         void update();
+        void saveConf();
     private:
         sw::Reference<SelectionPlayerType> m_type;
         sw::Reference<sw::MeshRenderer> m_mesh;

@@ -4,6 +4,7 @@
 */
 
 #include "SelectionPlayer.hpp"
+#include "config/Config.hpp"
 
 moul::SelectionPlayer::SelectionPlayer(sw::GameObject &gameobject) :
 sw::Component(gameobject),
@@ -32,4 +33,11 @@ void moul::SelectionPlayer::update()
         m_mesh.value().setActive(false);
     else
         m_mesh.value().setActive(true);
+}
+
+void moul::SelectionPlayer::saveConf()
+{
+    sw::Config::GetConfig()["Setting"][m_gameObject.name()]["Name"] = m_playerName;
+    sw::Config::GetConfig()["Setting"][m_gameObject.name()]["Type"] = m_type.value().getTypeName();
+
 }

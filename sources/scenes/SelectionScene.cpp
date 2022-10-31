@@ -6,7 +6,6 @@
 #include "scenes/SelectionScene.hpp"
 #include "scenes_manager/SceneLoadEvent.hpp"
 #include "components/MeshRenderer.hpp"
-#include "script/CameraFPS.hpp"
 #include "script/SelectionPlayer.hpp"
 #include "script/SimpleButton.hpp"
 #include "OpenGLModule.hpp"
@@ -19,12 +18,11 @@ void moul::SelectionScene::onLoad(sw::EventInfo &info)
         return;
 
     auto& mainCamera = scene.createGameObject("MainCamera");
-    sw::ConcreteComponent auto& camera = mainCamera.createComponent<inc::CameraFPS>("ScriptManager");
-    //sw::ConcreteComponent auto& camera = mainCamera.createComponent<sw::Camera>("CameraManager");
-    //camera.setClippingNear(0.1);
-    //camera.setProjection(sw::Camera::PERSPECTIVE);
-    //camera.setClippingFar(1000);
-    //mainCamera.transform().move(0, 0, 5);
+    sw::ConcreteComponent auto& camera = mainCamera.createComponent<sw::Camera>("CameraManager");
+    camera.setClippingNear(0.1);
+    camera.setProjection(sw::Camera::PERSPECTIVE);
+    camera.setClippingFar(1000);
+    mainCamera.transform().move(0, 0, 15);
 
     auto& building = scene.createGameObject("Building");
     auto& model = building.createComponent<sw::MeshRenderer>("MeshRendererManager", "Selection_scene");
@@ -63,12 +61,29 @@ void moul::SelectionScene::onLoad(sw::EventInfo &info)
     player4.transform().setPosition(-3.5, -1.1, 8);
     player4.transform().rotate(20);
 
-    auto& exit = scene.createGameObject("Play_btn");
+    auto& play = scene.createGameObject("Play_btn");
+    auto& playbtn = play.createComponent<moul::SimpleButton>("ScriptManager");
+    playbtn.m_textureName = "Button_large";
+    playbtn.m_txtPosition = {40, 20, 0};
+    playbtn.m_position = {1500, 900, 0};
+    playbtn.m_buttonTitle = "Play";
+    playbtn.m_scale = {2, 2};
+    playbtn.m_callback = [](SimpleButton *button) {
+        button->gameObject().scene().getGameObject("Player1").getComponent<moul::SelectionPlayer>("ScriptManager").saveConf();
+        button->gameObject().scene().getGameObject("Player2").getComponent<moul::SelectionPlayer>("ScriptManager").saveConf();
+        button->gameObject().scene().getGameObject("Player3").getComponent<moul::SelectionPlayer>("ScriptManager").saveConf();
+        button->gameObject().scene().getGameObject("Player4").getComponent<moul::SelectionPlayer>("ScriptManager").saveConf();
+        sw::OpenGLModule::sceneManager().loadScene("Game");
+    };
+
+    auto& exit = scene.createGameObject("Exit_btn");
     auto& exitbtn = exit.createComponent<moul::SimpleButton>("ScriptManager");
     exitbtn.m_textureName = "Button_large";
     exitbtn.m_txtPosition = {40, 20, 0};
-    exitbtn.m_position = {1500, 900, 0};
-    exitbtn.m_buttonTitle = "Play";
+    exitbtn.m_position = {100, 900, 0};
+    exitbtn.m_buttonTitle = "Main Menu";
     exitbtn.m_scale = {2, 2};
-    exitbtn.m_callback = []() { sw::OpenGLModule::sceneManager().loadScene("Game"); };
+    exitbtn.m_callback = [](SimpleButton *button) {
+        sw::OpenGLModule::sceneManager().loadScene("Main");
+    };
 }

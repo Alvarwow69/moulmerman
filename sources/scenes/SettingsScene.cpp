@@ -36,7 +36,7 @@ void moul::SettingsScene::onLoad(sw::EventInfo &info)
     config.m_position = {200, 400, 0};
     config.m_buttonTitle = "Toggle fullscreen";
     config.m_scale = {3, 3};
-    config.m_callback = []() { sw::Window::ToggleFullScreen(); };
+    config.m_callback = [](SimpleButton *button) { sw::Window::ToggleFullScreen(); };
 
     auto& exit = scene.createGameObject("Exit_btn");
     auto& exitbtn = exit.createComponent<moul::SimpleButton>("ScriptManager");
@@ -45,5 +45,5 @@ void moul::SettingsScene::onLoad(sw::EventInfo &info)
     exitbtn.m_position = {1500, 900, 0};
     exitbtn.m_buttonTitle = "Main menu";
     exitbtn.m_scale = {2, 2};
-    exitbtn.m_callback = []() { sw::OpenGLModule::sceneManager().loadScene("Main"); };
+    exitbtn.m_callback = [](SimpleButton *button) { sw::OpenGLModule::sceneManager().loadScene("Main"); };
 }

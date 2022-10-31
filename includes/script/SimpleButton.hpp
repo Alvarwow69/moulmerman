@@ -19,7 +19,7 @@ namespace moul
         sw::Vector2f m_scale;
         sw::Vector3f m_position;
         sw::Vector3f m_txtPosition;
-        void (*m_callback)();
+        void (*m_callback)(SimpleButton *);
 
         explicit SimpleButton(sw::GameObject& gameObject);
 
