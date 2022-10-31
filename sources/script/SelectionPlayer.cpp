@@ -8,8 +8,7 @@
 
 moul::SelectionPlayer::SelectionPlayer(sw::GameObject &gameobject) :
 sw::Component(gameobject),
-m_modelName("PLACEHOLDER"),
-m_playerName("Player")
+m_modelName("PLACEHOLDER")
 {
     m_gameObject.scene().eventManager["Start"].subscribe(this, &moul::SelectionPlayer::start);
     m_gameObject.scene().eventManager["Update"].subscribe(this, &moul::SelectionPlayer::update);
@@ -18,8 +17,12 @@ m_playerName("Player")
 void moul::SelectionPlayer::start()
 {
     m_mesh.emplace(m_gameObject.createComponent<sw::MeshRenderer>("MeshRendererManager", m_modelName));
-    auto& text = m_gameObject.createComponent<sw::Text>("TextManager");
-    text.setText(m_playerName).setPosition(m_textPos.x, m_textPos.y);
+    auto& text = m_gameObject.scene().createGameObject(m_gameObject.name() + "_Name");
+    m_gameObject.addChild(m_gameObject.name() + "_Name");
+    m_name.emplace(text.createComponent<moul::SelectionPlayerName>("ScriptManager"));
+    m_name.value().m_playerName = m_gameObject.name();
+    m_name.value().m_textPos = {m_textPos.x, m_textPos.y};
+    m_name.value().start();
     auto& child = m_gameObject.scene().createGameObject(m_gameObject.name() + "_Type");
     m_gameObject.addChild(m_gameObject.name() + "_Type");
     m_type.emplace(child.createComponent<moul::SelectionPlayerType>("ScriptManager"));
@@ -37,7 +40,6 @@ void moul::SelectionPlayer::update()
 
 void moul::SelectionPlayer::saveConf()
 {
-    sw::Config::GetConfig()["Setting"][m_gameObject.name()]["Name"] = m_playerName;
+    sw::Config::GetConfig()["Setting"][m_gameObject.name()]["Name"] = m_name.value().m_playerName;
     sw::Config::GetConfig()["Setting"][m_gameObject.name()]["Type"] = m_type.value().getTypeName();
-
 }

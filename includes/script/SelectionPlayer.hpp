@@ -8,6 +8,7 @@
 
 #include "components/Components.hpp"
 #include "SelectionPlayerType.hpp"
+#include "SelectionPlayerName.hpp"
 #include "components/MeshRenderer.hpp"
 
 namespace moul
@@ -16,7 +17,6 @@ namespace moul
     {
     public:
         std::string m_modelName;
-        std::string m_playerName;
         sw::Vector2f m_textPos;
 
         explicit SelectionPlayer(sw::GameObject& gameobject);
@@ -26,6 +26,7 @@ namespace moul
         void saveConf();
     private:
         sw::Reference<SelectionPlayerType> m_type;
+        sw::Reference<SelectionPlayerName> m_name;
         sw::Reference<sw::MeshRenderer> m_mesh;
     };
 }
