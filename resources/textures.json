@@ -133,5 +133,33 @@
       "SelectionScene"
     ],
     "Type": "Texture"
+  },
+  "UI_Switch_1": {
+    "Path": "resources/audio/UI_Switch_1.wav",
+    "Scene": [
+      "*"
+    ],
+    "Type": "Audio"
+  },
+  "UI_Switch_2": {
+    "Path": "resources/audio/UI_Switch_2.wav",
+    "Scene": [
+      "*"
+    ],
+    "Type": "Audio"
+  },
+  "UI_Switch_3": {
+    "Path": "resources/audio/UI_Switch_3.wav",
+    "Scene": [
+      "*"
+    ],
+    "Type": "Audio"
+  },
+  "UI_Select": {
+    "Path": "resources/audio/UI_Select.wav",
+    "Scene": [
+      "*"
+    ],
+    "Type": "Audio"
   }
 }

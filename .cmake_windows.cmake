@@ -91,6 +91,7 @@ foreach(ctr RANGE ${LIST_LEN})
     list(GET SHARED_LIB_NAME ${ctr} lib)
     list(GET SHARED_LIB_LOCATION ${ctr} loc)
     list(GET SHARED_LIB ${ctr} filelib)
+    message(${lib} ${loc} ${filelib})
     add_library(${lib} SHARED IMPORTED)
     file(COPY ${loc} DESTINATION ${CMAKE_SOURCE_DIR}/out/${CMAKE_BUILD_TYPE}/)
     set_target_properties(${lib} PROPERTIES

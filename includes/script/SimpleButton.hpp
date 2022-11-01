@@ -20,12 +20,14 @@ namespace moul
         sw::Vector3f m_position;
         sw::Vector3f m_txtPosition;
         void (*m_callback)(SimpleButton *);
+        bool m_hover;
 
         explicit SimpleButton(sw::GameObject& gameObject);
 
     private:
         sw::Reference<sw::Sprite> m_sprite;
         sw::Reference<sw::Text> m_text;
+        sw::Reference<sw::AudioSource> m_audio;
         void start();
         void update();
     }; // class Button

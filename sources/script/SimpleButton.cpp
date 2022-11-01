@@ -10,7 +10,8 @@
 
 moul::SimpleButton::SimpleButton(sw::GameObject &gameObject) :
 sw::Component(gameObject),
-m_callback(nullptr)
+m_callback(nullptr),
+m_hover(false)
 {
     gameObject.scene().eventManager["Start"].subscribe(this, &moul::SimpleButton::start);
     gameObject.scene().eventManager["Update"].subscribe(this, &moul::SimpleButton::update);
@@ -23,6 +24,8 @@ void moul::SimpleButton::start()
     m_gameObject.transform().setScale(m_scale.x, m_scale.y, 0);
     m_text.emplace(m_gameObject.createComponent<sw::Text>("TextManager"));
     m_text.value().setText(m_buttonTitle).setPosition(m_position.x + m_txtPosition.x, sw::Window::GetSize().y - m_txtPosition.y - 40 - m_position.y);
+    m_audio.emplace(m_gameObject.createComponent<sw::AudioSource>("AudioManager"));
+    m_audio.value().addAudio("UI_Switch_1").addAudio("UI_Switch_2").addAudio("UI_Switch_3").addAudio("UI_Select");
 }
 
 void moul::SimpleButton::update()
@@ -35,10 +38,17 @@ void moul::SimpleButton::update()
     if (mousePos.x >= pos.x && mousePos.x < pos.x + width * m_gameObject.transform().getScale().x
     && mousePos.y >= pos.y && mousePos.y < pos.y + height * m_gameObject.transform().getScale().y) {
         m_sprite.value().setColor(sw::Color{1.0f, 1.0f, 1.0f});
+        if (!m_hover)
+            m_audio.value().play(std::rand() % 3);
+        m_hover = true;
         if (sw::isMouseButtonPressed(sw::MouseBtn::Button_left))
-            if (m_callback)
+            if (m_callback) {
+                m_audio.value().play(3);
                 m_callback(this);
+            }
     }
-    else
+    else {
         m_sprite.value().setColor(sw::Color{100.0f / 255.0f, 100.0f / 255.0f, 100.0f / 255.0f});
+        m_hover = false;
+    }
 }
