@@ -17,6 +17,8 @@ m_modelName("PLACEHOLDER")
 void moul::SelectionPlayer::start()
 {
     m_mesh.emplace(m_gameObject.createComponent<sw::MeshRenderer>("MeshRendererManager", m_modelName));
+    auto& animator = m_gameObject.createComponent<sw::ModelAnimator>("ModelAnimatorManager", "Player_idle");
+    animator.attachModel(m_modelName);
     auto& text = m_gameObject.scene().createGameObject(m_gameObject.name() + "_Name");
     m_gameObject.addChild(m_gameObject.name() + "_Name");
     m_name.emplace(text.createComponent<moul::SelectionPlayerName>("ScriptManager"));
