@@ -114,11 +114,18 @@
     "Type": "Audio"
   },
   "Player": {
-    "Path": "resources/models/Perso.obj",
+    "Path": "resources/models/player/player.dae",
     "Scene": [
       "SelectionScene"
     ],
     "Type": "Model"
+  },
+  "Player_idle": {
+    "Path": "resources/models/player/player_idle_anim.dae",
+    "Scene": [
+      "SelectionScene"
+    ],
+    "Type": "Animation"
   },
   "Selection_scene": {
     "Path": "resources/models/Selection.obj",
