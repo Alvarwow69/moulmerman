@@ -137,7 +137,16 @@
   "PolygonApocalypse_Texture_01_A.png": {
     "Path": "resources/textures/PolygonApocalypse_Texture_01_A.png",
     "Scene": [
-      "SelectionScene"
+      "SelectionScene",
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "PolygonApocalypse_Texture_02_B.png": {
+    "Path": "resources/textures/PolygonApocalypse_Texture_02_B.png",
+    "Scene": [
+      "SelectionScene",
+      "Game"
     ],
     "Type": "Texture"
   },
@@ -168,5 +177,39 @@
       "*"
     ],
     "Type": "Audio"
-  }
-}
+  },
+  "Unbreakable_Block": {
+    "Path": "resources/models/Unbreakable_Block.obj",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Model"
+  },
+  "gray_block.png": {
+    "Path": "resources/textures/gray_block.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "Block": {
+    "Path": "resources/models/Cube.obj",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Model"
+  },
+  "Brick.png": {
+    "Path": "resources/textures/Brick.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "Game_map": {
+    "Path": "resources/models/Game_Map.obj",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Model"
+  }}
