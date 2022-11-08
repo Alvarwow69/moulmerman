@@ -19,7 +19,7 @@ namespace moul
         void start();
         void update();
     private:
-        MapGenerator m_mapGenerator;
+        sw::Reference<MapGenerator> m_mapGenerator;
     };
 }
 

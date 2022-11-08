@@ -21,4 +21,8 @@ void moul::GameScene::onLoad(sw::EventInfo &info)
 
     auto& gameManager = scene.createGameObject("GameManager");
     gameManager.createComponent<moul::GameManager>("ScriptManager");
+
+    auto& map = scene.createGameObject("Map");
+    map.transform().scale(3.5f, 3.5f, 3.5f);
+    map.createComponent<sw::MeshRenderer>("MeshRendererManager", "Game_map");
 }

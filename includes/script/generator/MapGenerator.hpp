@@ -8,12 +8,15 @@
 
 #include <vector>
 #include "utils/Vector2.hpp"
+#include "components/Components.hpp"
 
 namespace moul
 {
-    class MapGenerator
+    class MapGenerator : public sw::Component
     {
     public:
+        explicit MapGenerator(sw::GameObject& gameObject);
+
         void generateMap(int with, int height);
         void generateProcedural();
         void generateBasicMap();
@@ -21,6 +24,8 @@ namespace moul
         void generatePlayers(int playerNbr);
 
         [[nodiscard]] const std::vector<std::string>& getMap() const;
+
+        sw::Vector3f m_origin;
     private:
         sw::Vector2i m_size;
         std::vector<std::string> m_map;

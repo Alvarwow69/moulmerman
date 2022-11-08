@@ -7,6 +7,14 @@
 #include "OpenGLModule.hpp"
 #include "components/Components.hpp"
 
+moul::MapGenerator::MapGenerator(sw::GameObject &gameObject) :
+sw::Component(gameObject),
+m_size(),
+m_map(),
+m_basic(false),
+m_origin{0, 0, 0}
+{}
+
 void moul::MapGenerator::generateMap(int with, int height)
 {
     std::string tmp;
@@ -76,7 +84,7 @@ void moul::MapGenerator::generateVisual()
     for (const auto& line : m_map) {
         for (auto c : line) {
             auto& newBlock = sw::OpenGLModule::sceneManager().getActiveScene()->createGameObject("Cube" + std::to_string(x) + "-" + std::to_string(y));
-            newBlock.transform().setPosition(x, 0, y);
+            newBlock.transform().setPosition(m_origin.x + (float)x, m_origin.y, m_origin.z + (float)y);
             switch (c) {
                 case '*':
                     newBlock.createComponent<sw::MeshRenderer>("MeshRendererManager", "Unbreakable_Block");
