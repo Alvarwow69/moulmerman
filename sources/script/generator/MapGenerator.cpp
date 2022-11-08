@@ -36,13 +36,14 @@ void moul::MapGenerator::generateMap(int with, int height)
 
 void moul::MapGenerator::generateProcedural()
 {
-
+    m_basic = false;
 }
 
 void moul::MapGenerator::generateBasicMap()
 {
     std::string tmp;
 
+    m_basic = true;
     m_map.clear();
     tmp.clear();
     for (int y = 0; y < m_size.x + 2; y++)
@@ -76,7 +77,6 @@ void moul::MapGenerator::generateVisual()
         for (auto c : line) {
             auto& newBlock = sw::OpenGLModule::sceneManager().getActiveScene()->createGameObject("Cube" + std::to_string(x) + "-" + std::to_string(y));
             newBlock.transform().setPosition(x, 0, y);
-            newBlock.transform().setScale(6.3f, 6.3f, 6.3f);
             switch (c) {
                 case '*':
                     newBlock.createComponent<sw::MeshRenderer>("MeshRendererManager", "Unbreakable_Block");
@@ -92,4 +92,43 @@ void moul::MapGenerator::generateVisual()
         y++;
         x = 0;
     }
+}
+
+void moul::MapGenerator::generatePlayers(int playerNbr)
+{
+    if (m_basic) {
+        processBasicPlayers(playerNbr);
+    } else {
+        processNonBasicPlayers(playerNbr);
+    }
+}
+
+const std::vector<std::string>& moul::MapGenerator::getMap() const
+{
+    return (m_map);
+}
+
+void moul::MapGenerator::processBasicPlayers(int playerNbr)
+{
+    m_map[1][1] = 'p';
+    m_map[1][2] = 'e';
+    m_map[2][1] = 'e';
+    m_map[m_size.y][m_size.x] = 'p';
+    m_map[m_size.y][m_size.x - 1] = 'e';
+    m_map[m_size.y - 1][m_size.x] = 'e';
+    if (playerNbr >= 3) {
+        m_map[1][m_size.x] = 'p';
+        m_map[1][m_size.x - 1] = 'e';
+        m_map[2][m_size.x] = 'e';
+    }
+    if (playerNbr >= 4) {
+        m_map[m_size.y][1] = 'p';
+        m_map[m_size.y][2] = 'e';
+        m_map[m_size.y - 1][1] = 'e';
+    }
+}
+
+void moul::MapGenerator::processNonBasicPlayers(int playerNbr)
+{
+
 }

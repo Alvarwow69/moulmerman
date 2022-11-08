@@ -16,6 +16,7 @@ void moul::GameManager::start()
 {
     m_mapGenerator.generateMap(13, 13);
     m_mapGenerator.generateBasicMap();
+    m_mapGenerator.generatePlayers(4);
     m_mapGenerator.generateVisual();
 }
 

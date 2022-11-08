@@ -18,9 +18,16 @@ namespace moul
         void generateProcedural();
         void generateBasicMap();
         void generateVisual();
+        void generatePlayers(int playerNbr);
+
+        [[nodiscard]] const std::vector<std::string>& getMap() const;
     private:
         sw::Vector2i m_size;
         std::vector<std::string> m_map;
+        bool m_basic;
+
+        void processBasicPlayers(int playerNbr);
+        void processNonBasicPlayers(int playerNbr);
     }; //class MapGenerator
 } // namespace moul
 
