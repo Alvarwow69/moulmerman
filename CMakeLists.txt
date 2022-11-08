@@ -25,6 +25,7 @@ set( SRC_FOLDERS
         ${CMAKE_SOURCE_DIR}/sources/
         ${CMAKE_SOURCE_DIR}/sources/scenes/
         ${CMAKE_SOURCE_DIR}/sources/script/
+        ${CMAKE_SOURCE_DIR}/sources/script/generator/
         )
 ## INCLUDE FOLDERS
 set( INC_FOLDERS

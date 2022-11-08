@@ -13,6 +13,7 @@
 #include "CreditScene.hpp"
 #include "SettingsScene.hpp"
 #include "SelectionScene.hpp"
+#include "GameScene.hpp"
 
 void sw::CreateScenes()
 {
@@ -21,6 +22,7 @@ void sw::CreateScenes()
     auto credit = new moul::CreditScene();
     auto settings = new moul::SettingsScene();
     auto selection = new moul::SelectionScene();
+    auto game = new moul::GameScene();
     sw::OpenGLModule::eventManager().create("SceneLoad");
     sw::OpenGLModule::sceneManager().createScene("Main");
     sw::OpenGLModule::sceneManager().createScene("LoadingScene");
@@ -34,4 +36,5 @@ void sw::CreateScenes()
     sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(credit, &moul::CreditScene::onLoad);
     sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(settings, &moul::SettingsScene::onLoad);
     sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(selection, &moul::SelectionScene::onLoad);
+    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(game, &moul::GameScene::onLoad);
 }
