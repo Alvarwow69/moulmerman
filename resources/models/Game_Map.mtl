@@ -1,54 +1,59 @@
-# Blender MTL File: 'Game_Map.blend'
-# Material Count: 7
+# Blender 3.3.1 MTL File: 'Game_Map.blend'
+# www.blender.org
 
 newmtl Base_Maya_Scene:pasted__MiniColour44
-Ns 199.999995
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
-illum 2
+illum 1
 map_Kd PolygonApocalypse_Texture_01_A.png
 
 newmtl Base_Maya_Scene:pasted__MiniColour44.001
-Ns 199.999995
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
-illum 2
+illum 1
 map_Kd PolygonApocalypse_Texture_01_A.png
 
 newmtl lambert1
-Ns 199.999995
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
-illum 2
+illum 1
 map_Kd PolygonApocalypse_Texture_01_A.png
 
 newmtl lambert1.001
-Ns 199.999995
+Ns 200.000381
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
-illum 2
+illum 1
 map_Kd PolygonApocalypse_Texture_01_A.png
 
 newmtl lambert1.002
-Ns 199.999995
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd PolygonApocalypse_Texture_01_A.png
+
+newmtl lambert1.003
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -57,9 +62,28 @@ illum 2
 map_Kd PolygonApocalypse_Texture_01_A.png
 
 newmtl lambert1.004
-Ns 199.999995
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd PolygonApocalypse_Texture_01_A.png
+
+newmtl lambert1.005
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd PolygonApocalypse_Texture_02_B.png
+
+newmtl lambert1.006
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -67,13 +91,72 @@ d 1.000000
 illum 2
 map_Kd PolygonApocalypse_Texture_01_A.png
 
-newmtl lambert1.005
-Ns 199.999995
+newmtl lambert1.007
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd PolygonApocalypse_Texture_02_B.png
+map_Kd PolygonApocalypse_Texture_01_A.png
+
+newmtl lambert1.008
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd PolygonApocalypse_Texture_01_A.png
+
+newmtl lambert1.010
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd PolygonApocalypse_Texture_01_A.png
+
+newmtl lambert2
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd PolygonApocalypse_Texture_01_A.png
+
+newmtl lambert35
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd PolygonApocalypse_Veh_Texture_02_Mud.png
+
+newmtl lambert431
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd PolygonApocalypse_Texture_01_A.png
+
+newmtl lambert921
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd PolygonApocalypse_Texture_01_A.png

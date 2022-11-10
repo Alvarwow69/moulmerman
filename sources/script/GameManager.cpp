@@ -17,7 +17,7 @@ void moul::GameManager::start()
 {
     auto& mapGen = m_gameObject.scene().createGameObject("MapGenerator");
     m_mapGenerator.emplace(mapGen.createComponent<moul::MapGenerator>("ScriptManager"));
-    m_mapGenerator.value().m_origin = {4.5f, 3.6f, -30};
+    m_mapGenerator.value().m_origin = {6.0f, 3.6f, -36};
     m_mapGenerator.value().generateMap(13, 13);
     m_mapGenerator.value().generateBasicMap();
     m_mapGenerator.value().generatePlayers(4);

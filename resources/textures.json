@@ -150,6 +150,13 @@
     ],
     "Type": "Texture"
   },
+  "PolygonApocalypse_Veh_Texture_02_Mud.png": {
+    "Path": "resources/textures/PolygonApocalypse_Veh_Texture_02_Mud.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
   "UI_Switch_1": {
     "Path": "resources/audio/UI_Switch_1.wav",
     "Scene": [

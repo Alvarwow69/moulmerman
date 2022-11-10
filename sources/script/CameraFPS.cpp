@@ -26,7 +26,9 @@ void inc::CameraFPS::start()
     camera.setClippingNear(0.1);
     camera.setProjection(sw::Camera::PERSPECTIVE);
     camera.setClippingFar(1000);
-    m_gameObject.transform().move(0, 0, 15);
+    camera.setPitch(-56);
+    camera.setYaw(90);
+    m_gameObject.transform().move(13.5, 27, -43);
 
 }
 
@@ -78,5 +80,11 @@ void inc::CameraFPS::update()
     } else {
         sw::Window::SetEnableCursor(true);
         m_lastY = -1;
+    }
+
+    if (sw::isKeyPressed(sw::SPACE)) {
+        std::cout << "Position: " << m_gameObject.transform().getGlobalPosition() << std::endl;
+        std::cout << "Pitch: " << cam.getPitch() << std::endl;
+        std::cout << "Yaw: " << cam.getYaw() << std::endl;
     }
 }
