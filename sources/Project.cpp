@@ -14,6 +14,7 @@
 #include "SettingsScene.hpp"
 #include "SelectionScene.hpp"
 #include "GameScene.hpp"
+#include "EndGameScene.hpp"
 
 void sw::CreateScenes()
 {
@@ -23,6 +24,7 @@ void sw::CreateScenes()
     auto settings = new moul::SettingsScene();
     auto selection = new moul::SelectionScene();
     auto game = new moul::GameScene();
+    auto endGame = new moul::EndGameScene();
     sw::OpenGLModule::eventManager().create("SceneLoad");
     sw::OpenGLModule::sceneManager().createScene("Main");
     sw::OpenGLModule::sceneManager().createScene("LoadingScene");
@@ -30,6 +32,7 @@ void sw::CreateScenes()
     sw::OpenGLModule::sceneManager().createScene("Credits");
     sw::OpenGLModule::sceneManager().createScene("Settings");
     sw::OpenGLModule::sceneManager().createScene("Game");
+    sw::OpenGLModule::sceneManager().createScene("EndGame");
 
     sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(main, &Main::onLoad);
     sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(loading, &moul::LoadingScene::onLoad);
@@ -37,4 +40,5 @@ void sw::CreateScenes()
     sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(settings, &moul::SettingsScene::onLoad);
     sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(selection, &moul::SelectionScene::onLoad);
     sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(game, &moul::GameScene::onLoad);
+    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(endGame, &moul::EndGameScene::onLoad);
 }
