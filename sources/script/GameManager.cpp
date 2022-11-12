@@ -4,6 +4,7 @@
 */
 
 #include "OpenGLModule.hpp"
+#include "window/Window.hpp"
 
 #include "script/GameManager.hpp"
 
@@ -16,6 +17,7 @@ m_countdown(0.0)
 {
     gameObject.scene().eventManager["Start"].subscribe(this, &moul::GameManager::start);
     gameObject.scene().eventManager["Update"].subscribe(this, &moul::GameManager::update);
+    gameObject.scene().eventManager["PlayerDie"].subscribe(this, &moul::GameManager::playerDie);
 }
 
 void moul::GameManager::start()
@@ -47,6 +49,8 @@ void moul::GameManager::update()
         sw::OpenGLModule::sceneManager().loadScene("EndGame");
     if (m_gameState == PAUSE)
         displayPauseMenu();
+    if (sw::isKeyPressed(sw::P))
+        m_gameState = (m_gameState == PAUSE ? INGAME : PAUSE);
 }
 
 void moul::GameManager::countdown()
@@ -73,7 +77,6 @@ void moul::GameManager::countdown()
         m_audio.value().play("Start4");
         m_nextStep = 2;
     }
-
 }
 
 void moul::GameManager::displayPauseMenu()
@@ -84,4 +87,11 @@ void moul::GameManager::displayPauseMenu()
 moul::GameManager::GameState moul::GameManager::GetGameState()
 {
     return (m_gameState);
+}
+
+void moul::GameManager::playerDie()
+{
+    m_playerLeft--;
+    if (m_playerLeft == 0)
+        m_gameState = POSTGAME;
 }

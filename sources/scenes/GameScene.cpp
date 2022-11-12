@@ -3,6 +3,7 @@
 ** GameScene.cpp
 */
 
+#include "OpenGLModule.hpp"
 #include "scenes/GameScene.hpp"
 #include "scenes_manager/SceneLoadEvent.hpp"
 #include "components/Components.hpp"
@@ -15,6 +16,8 @@ void moul::GameScene::onLoad(sw::EventInfo &info)
 
     if (scene.name != "Game")
         return;
+
+    sw::OpenGLModule::eventManager().create("PlayerDie");
 
     auto& mainCamera = scene.createGameObject("MainCamera");
     sw::ConcreteComponent auto& camera = mainCamera.createComponent<inc::CameraFPS>("ScriptManager");
