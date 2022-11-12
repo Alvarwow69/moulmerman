@@ -31,6 +31,7 @@ namespace moul
     private:
         void countdown();
         void displayPauseMenu();
+        void playerDie();
 
         sw::Reference<MapGenerator> m_mapGenerator;
         sw::Reference<sw::AudioSource> m_audio;
@@ -38,6 +39,7 @@ namespace moul
         static GameState m_gameState;
         double m_countdown;
         int m_nextStep;
+        int m_playerLeft;
     };
 }
 

@@ -102,7 +102,8 @@
     "Path": "resources/textures/button_l.png",
     "Scene": [
       "Settings",
-      "SelectionScene"
+      "SelectionScene",
+      "EndGame"
     ],
     "Type": "Texture"
   },
@@ -116,14 +117,100 @@
   "Player": {
     "Path": "resources/models/player/player.dae",
     "Scene": [
-      "SelectionScene"
+      "SelectionScene",
+      "EndGame"
     ],
     "Type": "Model"
+  },
+  "Player2": {
+    "Path": "resources/models/player/player2.dae",
+    "Scene": [
+      "SelectionScene",
+      "EndGame"
+    ],
+    "Type": "Model"
+  },
+  "Player3": {
+    "Path": "resources/models/player/player3.dae",
+    "Scene": [
+      "SelectionScene",
+      "EndGame"
+    ],
+    "Type": "Model"
+  },
+  "Player4": {
+    "Path": "resources/models/player/player4.dae",
+    "Scene": [
+      "SelectionScene",
+      "EndGame"
+    ],
+    "Type": "Model"
+  },
+  "player1.png": {
+    "Path": "resources/textures/player1.png",
+    "Scene": [
+      "SelectionScene",
+      "Game",
+      "EndGame"
+    ],
+    "Type": "Texture"
+  },
+  "player2.png": {
+    "Path": "resources/textures/player2.png",
+    "Scene": [
+      "SelectionScene",
+      "Game",
+      "EndGame"
+    ],
+    "Type": "Texture"
+  },
+  "player3.png": {
+    "Path": "resources/textures/player3.png",
+    "Scene": [
+      "SelectionScene",
+      "Game",
+      "EndGame"
+    ],
+    "Type": "Texture"
+  },
+  "player4.png": {
+    "Path": "resources/textures/player4.png",
+    "Scene": [
+      "SelectionScene",
+      "Game",
+      "EndGame"
+    ],
+    "Type": "Texture"
   },
   "Player_idle": {
     "Path": "resources/models/player/player_idle_anim.dae",
     "Scene": [
-      "SelectionScene"
+      "SelectionScene",
+      "EndGame"
+    ],
+    "Type": "Animation"
+  },
+  "Player_dying": {
+    "Path": "resources/models/player/player_dying.dae",
+    "Scene": [
+      "SelectionScene",
+      "EndGame"
+    ],
+    "Type": "Animation"
+  },
+  "Player_dancing": {
+    "Path": "resources/models/player/player_dancing.dae",
+    "Scene": [
+      "SelectionScene",
+      "EndGame"
+    ],
+    "Type": "Animation"
+  },
+  "Player_head": {
+    "Path": "resources/models/player/player_head_shake.dae",
+    "Scene": [
+      "SelectionScene",
+      "EndGame"
     ],
     "Type": "Animation"
   },
@@ -138,7 +225,8 @@
     "Path": "resources/textures/PolygonApocalypse_Texture_01_A.png",
     "Scene": [
       "SelectionScene",
-      "Game"
+      "Game",
+      "EndGame"
     ],
     "Type": "Texture"
   },
@@ -154,6 +242,34 @@
     "Path": "resources/textures/PolygonApocalypse_Veh_Texture_02_Mud.png",
     "Scene": [
       "Game"
+    ],
+    "Type": "Texture"
+  },
+  "PolygonApocalypse_Texture_01_B.png": {
+    "Path": "resources/textures/PolygonApocalypse_Texture_01_B.png",
+    "Scene": [
+      "EndGame"
+    ],
+    "Type": "Texture"
+  },
+  "PolygonApocalypse_Texture_04_A.png": {
+    "Path": "resources/textures/PolygonApocalypse_Texture_04_A.png",
+    "Scene": [
+      "EndGame"
+    ],
+    "Type": "Texture"
+  },
+  "PolygonApocalyse_Road_01.png": {
+    "Path": "resources/textures/PolygonApocalyse_Road_01.png",
+    "Scene": [
+      "EndGame"
+    ],
+    "Type": "Texture"
+  },
+  "Overgrowth.png": {
+    "Path": "resources/textures/Overgrowth.png",
+    "Scene": [
+      "EndGame"
     ],
     "Type": "Texture"
   },
@@ -219,4 +335,47 @@
       "Game"
     ],
     "Type": "Model"
-  }}
+  },
+  "Start4": {
+    "Path": "resources/audio/UI_Start_Game_4.wav",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Audio"
+  },
+  "Start3": {
+    "Path": "resources/audio/UI_Start_Game_3.wav",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Audio"
+  },
+  "Start2": {
+    "Path": "resources/audio/UI_Start_Game_2.wav",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Audio"
+  },
+  "Start1": {
+    "Path": "resources/audio/UI_Start_Game_1.wav",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Audio"
+  },
+  "StartGo": {
+    "Path": "resources/audio/UI_Start_Game.wav",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Audio"
+  },
+  "EngGameMap": {
+    "Path": "resources/models/End_Map.obj",
+    "Scene": [
+      "EndGame"
+    ],
+    "Type": "Model"
+  }
+}

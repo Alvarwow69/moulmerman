@@ -29,6 +29,11 @@ void moul::SelectionScene::onLoad(sw::EventInfo &info)
     building.transform().setPosition(0, -8, 13);
     building.transform().setRotation(180, 0, 1, 0);
 
+    auto& directLight = scene.createGameObject("DirLight");
+    auto& directLightCpt = directLight.createComponent<sw::Light>("LightManager");
+    model.attachLight("DirLight");
+    directLightCpt.m_ambient = {1.0f, 1.0f, 1.0f};
+
     auto& player1 = scene.createGameObject("Player1");
     auto& model1 = player1.createComponent<moul::SelectionPlayer>("ScriptManager");
     model1.m_modelName = "Player";
@@ -39,7 +44,7 @@ void moul::SelectionScene::onLoad(sw::EventInfo &info)
 
     auto& player2 = scene.createGameObject("Player2");
     auto& model2 = player2.createComponent<moul::SelectionPlayer>("ScriptManager");
-    model2.m_modelName = "Player";
+    model2.m_modelName = "Player2";
     model2.m_textPos = {1075, 340};
     player2.transform().scale(8, 8, 8);
     player2.transform().setPosition(1.3, -1.1, 8);
@@ -47,7 +52,7 @@ void moul::SelectionScene::onLoad(sw::EventInfo &info)
 
     auto& player3 = scene.createGameObject("Player3");
     auto& model3 = player3.createComponent<moul::SelectionPlayer>("ScriptManager");
-    model3.m_modelName = "Player";
+    model3.m_modelName = "Player3";
     model3.m_textPos = {700, 340};
     player3.transform().scale(8, 8, 8);
     player3.transform().setPosition(-1.3, -1.1, 8);
@@ -55,7 +60,7 @@ void moul::SelectionScene::onLoad(sw::EventInfo &info)
 
     auto& player4 = scene.createGameObject("Player4");
     auto& model4 = player4.createComponent<moul::SelectionPlayer>("ScriptManager");
-    model4.m_modelName = "Player";
+    model4.m_modelName = "Player4";
     model4.m_textPos = {400, 340};
     player4.transform().scale(8, 8, 8);
     player4.transform().setPosition(-3.5, -1.1, 8);

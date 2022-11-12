@@ -25,7 +25,7 @@ void inc::CameraFPS::start()
 
     camera.setClippingNear(0.1);
     camera.setProjection(sw::Camera::PERSPECTIVE);
-    camera.setClippingFar(1000);
+    camera.setClippingFar(10000);
     camera.setPitch(-56);
     camera.setYaw(90);
     m_gameObject.transform().move(13.5, 27, -43);
@@ -34,7 +34,7 @@ void inc::CameraFPS::start()
 
 void inc::CameraFPS::update()
 {
-    float speed = (sw::isKeyDown(sw::Keyboard::LSHIFT) ? 8.0f : 2.5f);
+    float speed = (sw::isKeyDown(sw::Keyboard::LSHIFT) ? 25.0f : 12.5f);
     float velocity = speed * sw::OpenGLModule::chrono().getElapsedTime();
 
     auto& cam = m_gameObject.getComponent<sw::Camera>("CameraManager");
