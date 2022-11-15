@@ -17,7 +17,7 @@ try
 
     sw::CreateScenes();
     sw::OpenGLModule::load();
-    sw::OpenGLModule::sceneManager().loadScene("Game");
+    sw::OpenGLModule::sceneManager().loadScene("Main");
     sw::Speech::flush();
     while (sw::OpenGLModule::isRunning())
         sw::OpenGLModule::update();

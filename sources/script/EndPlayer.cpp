@@ -20,6 +20,7 @@ void moul::EndPlayer::start()
     auto& animator = m_gameObject.createComponent<sw::ModelAnimator>("ModelAnimatorManager", m_animName);
     animator.attachModel(m_modelName);
     m_mesh.value().attachLight("DirLight");
+    m_mesh.value().m_animator.emplace(animator);
 }
 
 void moul::EndPlayer::update()
