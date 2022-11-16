@@ -37,34 +37,39 @@ void moul::SelectionScene::onLoad(sw::EventInfo &info)
     auto& player1 = scene.createGameObject("Player1");
     auto& model1 = player1.createComponent<moul::SelectionPlayer>("ScriptManager");
     model1.m_modelName = "Player1";
-    model1.m_textPos = {1400, 340};
+    model1.m_textPos = {400, 340};
+    model1.m_must = true;
     player1.transform().scale(8, 8, 8);
-    player1.transform().setPosition(3.5, -1.1, 8);
-    player1.transform().rotate(-20);
+    player1.transform().setPosition(-3.5, -1.1, 8);
+    player1.transform().rotate(20);
 
     auto& player2 = scene.createGameObject("Player2");
     auto& model2 = player2.createComponent<moul::SelectionPlayer>("ScriptManager");
     model2.m_modelName = "Player2";
-    model2.m_textPos = {1075, 340};
+    model2.m_textPos = {700, 340};
+    model2.m_must = true;
     player2.transform().scale(8, 8, 8);
-    player2.transform().setPosition(1.3, -1.1, 8);
-    player2.transform().rotate(-10);
+    player2.transform().setPosition(-1.3, -1.1, 8);
+    player2.transform().rotate(10);
 
     auto& player3 = scene.createGameObject("Player3");
     auto& model3 = player3.createComponent<moul::SelectionPlayer>("ScriptManager");
     model3.m_modelName = "Player3";
-    model3.m_textPos = {700, 340};
+    model3.m_textPos = {1075, 340};
+    model3.m_must = false;
     player3.transform().scale(8, 8, 8);
-    player3.transform().setPosition(-1.3, -1.1, 8);
-    player3.transform().rotate(10);
+    player3.transform().setPosition(1.3, -1.1, 8);
+    player3.transform().rotate(-10);
 
     auto& player4 = scene.createGameObject("Player4");
     auto& model4 = player4.createComponent<moul::SelectionPlayer>("ScriptManager");
     model4.m_modelName = "Player4";
-    model4.m_textPos = {400, 340};
+    model4.m_textPos = {1400, 340};
+    model4.m_must = false;
+    model4.m_prevPlayer.emplace(model3);
     player4.transform().scale(8, 8, 8);
-    player4.transform().setPosition(-3.5, -1.1, 8);
-    player4.transform().rotate(20);
+    player4.transform().setPosition(3.5, -1.1, 8);
+    player4.transform().rotate(-20);
 
     auto& play = scene.createGameObject("Play_btn");
     auto& playbtn = play.createComponent<moul::SimpleButton>("ScriptManager");

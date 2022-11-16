@@ -15,7 +15,7 @@ m_type(type)
     m_gameObject.scene().eventManager["Update"].subscribe(this, &moul::SelectionPlayerType::update);
 }
 
-std::string GetStringType(moul::SelectionPlayerType::Type type)
+std::string moul::SelectionPlayerType::GetStringType(moul::SelectionPlayerType::Type type)
 {
     switch (type) {
         case moul::SelectionPlayerType::Type::PLAYER:
@@ -23,26 +23,31 @@ std::string GetStringType(moul::SelectionPlayerType::Type type)
         case moul::SelectionPlayerType::Type::AI:
             return "AI";
         default:
-            return "none";
+            return "No Player";
     }
 }
 
-moul::SelectionPlayerType::Type NextType(moul::SelectionPlayerType::Type type)
+moul::SelectionPlayerType::Type moul::SelectionPlayerType::NextType(moul::SelectionPlayerType::Type type)
 {
-    switch (type) {
-        case moul::SelectionPlayerType::Type::PLAYER:
-            return moul::SelectionPlayerType::Type::AI;
-        case moul::SelectionPlayerType::Type::AI:
-            return moul::SelectionPlayerType::Type::NONE;
-        default:
-            return moul::SelectionPlayerType::Type::PLAYER;
-    }
+    if (!m_must)
+        switch (type) {
+            case moul::SelectionPlayerType::Type::PLAYER:
+                return moul::SelectionPlayerType::Type::AI;
+            case moul::SelectionPlayerType::Type::AI:
+                return moul::SelectionPlayerType::Type::NONE;
+            default:
+                return moul::SelectionPlayerType::Type::PLAYER;
+        }
+    else
+        return (type == moul::SelectionPlayerType::PLAYER ? moul::SelectionPlayerType::Type::AI : moul::SelectionPlayerType::Type::PLAYER);
 }
 
 void moul::SelectionPlayerType::start()
 {
+    if (m_must)
+        m_type = PLAYER;
     m_text.emplace(m_gameObject.createComponent<sw::Text>("TextManager"));
-    m_text.value().setText(GetStringType(m_type)).setPosition(m_textPos.x, m_textPos.y);
+    m_text.value().setText(GetStringType(m_type)).setPosition(m_textPos.x, m_textPos.y).setFont("PixelFont");
 }
 
 void moul::SelectionPlayerType::update()

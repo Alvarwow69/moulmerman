@@ -23,7 +23,7 @@ void moul::SimpleButton::start()
     m_gameObject.transform().setPosition(m_position);
     m_gameObject.transform().setScale(m_scale.x, m_scale.y, 0);
     m_text.emplace(m_gameObject.createComponent<sw::Text>("TextManager"));
-    m_text.value().setText(m_buttonTitle).setPosition(m_position.x + m_txtPosition.x, sw::Window::GetSize().y - m_txtPosition.y - 40 - m_position.y);
+    m_text.value().setText(m_buttonTitle).setPosition(m_position.x + m_txtPosition.x, sw::Window::GetSize().y - m_txtPosition.y - 40 - m_position.y).setFont("PixelFont");
     m_audio.emplace(m_gameObject.createComponent<sw::AudioSource>("AudioManager"));
     m_audio.value().addAudio("UI_Switch_1").addAudio("UI_Switch_2").addAudio("UI_Switch_3").addAudio("UI_Select");
 }

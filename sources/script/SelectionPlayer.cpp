@@ -8,7 +8,8 @@
 
 moul::SelectionPlayer::SelectionPlayer(sw::GameObject &gameobject) :
 sw::Component(gameobject),
-m_modelName("PLACEHOLDER")
+m_modelName("PLACEHOLDER"),
+m_must(false)
 {
     m_gameObject.scene().eventManager["Start"].subscribe(this, &moul::SelectionPlayer::start);
     m_gameObject.scene().eventManager["Update"].subscribe(this, &moul::SelectionPlayer::update);
@@ -30,11 +31,16 @@ void moul::SelectionPlayer::start()
     m_gameObject.addChild(m_gameObject.name() + "_Type");
     m_type.emplace(child.createComponent<moul::SelectionPlayerType>("ScriptManager"));
     m_type.value().m_textPos = {m_textPos.x, m_textPos.y - 50};
+    m_type.value().m_must = m_must;
     m_type.value().start();
 }
 
 void moul::SelectionPlayer::update()
 {
+    if (m_prevPlayer.hasValue()) {
+        m_type.value().gameObject().setActive(m_prevPlayer.value().m_type.value().getType() != moul::SelectionPlayerType::NONE);
+        m_name.value().gameObject().setActive(m_prevPlayer.value().m_type.value().getType() != moul::SelectionPlayerType::NONE);
+    }
     if (m_type.value().getType() == moul::SelectionPlayerType::Type::NONE)
         m_mesh.value().setActive(false);
     else

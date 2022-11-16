@@ -20,6 +20,13 @@
     ],
     "Type": "Font"
   },
+  "PixelFont": {
+    "Path": "resources/font/PixelFont.ttf",
+    "Scene": [
+      "*"
+    ],
+    "Type": "Font"
+  },
   "default": {
     "Path": "resources/shaders/default.fs.glsl",
     "Scene": [

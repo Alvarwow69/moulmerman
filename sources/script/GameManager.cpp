@@ -111,7 +111,7 @@ void moul::GameManager::spawnPlayers()
 
     for (int i = 0; i < conf.size(); i++) {
         auto player = conf[names[i]];
-        if (player["type"].as<std::string>() == "none")
+        if (player["type"].as<std::string>() == "No Player")
             continue;
         auto& newPlayer = m_gameObject.scene().createGameObject(player["name"].as<std::string>());
         auto& newPlayerCpt = newPlayer.createComponent<moul::Player>("ScriptManager");

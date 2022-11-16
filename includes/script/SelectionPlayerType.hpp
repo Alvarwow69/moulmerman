@@ -19,6 +19,7 @@ namespace moul
             NONE
         };
         sw::Vector2f m_textPos;
+        bool m_must;
 
         explicit SelectionPlayerType(sw::GameObject& gameobject, Type type = Type::NONE);
 
@@ -29,6 +30,9 @@ namespace moul
     private:
         Type m_type;
         sw::Reference<sw::Text> m_text;
+
+        std::string GetStringType(moul::SelectionPlayerType::Type type);
+        SelectionPlayerType::Type NextType(moul::SelectionPlayerType::Type type);
     };
 }
 

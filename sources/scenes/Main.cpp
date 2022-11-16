@@ -28,6 +28,7 @@ void Main::onLoad(sw::EventInfo& info)
     auto& setting = scene.createGameObject("Button_Setting");
     auto& credit = scene.createGameObject("Button_Credit");
     auto& exit = scene.createGameObject("Button_Exit");
+    auto& title = scene.createGameObject("Title");
     auto& sceneLoader = scene.createGameObject("SceneLoader");
 
     auto& loader = sceneLoader.createComponent<inc::SceneLoader>("ScriptManager");
@@ -65,4 +66,11 @@ void Main::onLoad(sw::EventInfo& info)
     cpt_exit.m_callback = [](moul::SimpleButton *button) {
         sw::Window::CloseWindow();
     };
+
+    auto& text = title.createComponent<sw::Text>("TextManager");
+    text.setText("Moulmerman");
+    text.setFont("PixelFont");
+    text.setPosition(475, 900);
+    text.setColor(sw::WhiteColor);
+    text.setSize(2);
 }

@@ -17,7 +17,9 @@ namespace moul
     {
     public:
         std::string m_modelName;
+        sw::Reference<SelectionPlayer> m_prevPlayer;
         sw::Vector2f m_textPos;
+        bool m_must;
 
         explicit SelectionPlayer(sw::GameObject& gameobject);
 

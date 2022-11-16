@@ -18,7 +18,7 @@ m_selected(false)
 void moul::SelectionPlayerName::start()
 {
     m_text.emplace(m_gameObject.createComponent<sw::Text>("TextManager"));
-    m_text.value().setText(m_playerName).setPosition(m_textPos.x, m_textPos.y);
+    m_text.value().setText(m_playerName).setPosition(m_textPos.x, m_textPos.y).setFont("PixelFont");
 }
 
 void moul::SelectionPlayerName::update()
