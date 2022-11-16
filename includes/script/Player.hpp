@@ -40,16 +40,18 @@ namespace moul
             int m_bombNumberTotal = 1;
             int m_bombAvailable = 1;
             float m_speed = 3.f;
-            std::map<int, char> m_keys;
+            std::map<int, int> m_keys;
             bool m_alive = true;
             std::vector<std::shared_ptr<Bomb>> m_bombs;
             sw::Reference<SelectionPlayerType> m_type;
             sw::Reference<sw::MeshRenderer> m_mesh;
+            sw::Reference<sw::ModelAnimator> m_animator;
             void addBombNumber();
             void addBombPower();
             void bomb();
             void setKeys();
             void die();
+            void updateAnimation();
     };
 }
 

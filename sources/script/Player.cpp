@@ -18,44 +18,56 @@ bool moul::Player::isAlive() {
 
 void moul::Player::setKeys()
 {
-    m_keys[m_actions::FORWARD] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["f"].as<char>();
-    m_keys[m_actions::BACKWARD] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["b"].as<char>();
-    m_keys[m_actions::LEFT] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["l"].as<char>();
-    m_keys[m_actions::RIGHT] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["r"].as<char>();
-    m_keys[m_actions::BOMB] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["bomb"].as<char>();
+    m_keys[m_actions::FORWARD] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["f"].as<int>();
+    m_keys[m_actions::BACKWARD] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["b"].as<int>();
+    m_keys[m_actions::LEFT] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["l"].as<int>();
+    m_keys[m_actions::RIGHT] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["r"].as<int>();
+    m_keys[m_actions::BOMB] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["bomb"].as<int>();
 }
 
 void moul::Player::start()
 {
     m_mesh.emplace(m_gameObject.createComponent<sw::MeshRenderer>("MeshRendererManager", m_modelName));
-    auto& animator = m_gameObject.createComponent<sw::ModelAnimator>("ModelAnimatorManager", "Player_idle");
-    animator.attachModel(m_modelName);
-    m_mesh.value().m_animator.emplace(animator);
+    m_animator.emplace(m_gameObject.createComponent<sw::ModelAnimator>("ModelAnimatorManager", "Player_idle"));
+    m_animator.value().attachModel(m_modelName);
+    m_mesh.value().m_animator.emplace(m_animator.value());
     m_alive = true;
     m_speed = 3.f;
     setKeys();
 }
 
+void moul::Player::updateAnimation()
+{
+    if (sw::isKeyPressed(m_keys[m_actions::FORWARD]) || sw::isKeyPressed(m_keys[m_actions::BACKWARD]) ||
+        sw::isKeyPressed(m_keys[m_actions::LEFT]) || sw::isKeyPressed(m_keys[m_actions::RIGHT]))
+        m_animator.value().playAnimation("Player_walk");
+    if (sw::isKeyUp(m_keys[m_actions::FORWARD]) && sw::isKeyUp(m_keys[m_actions::BACKWARD]) &&
+        sw::isKeyUp(m_keys[m_actions::LEFT]) && sw::isKeyUp(m_keys[m_actions::RIGHT]))
+        m_animator.value().playAnimation("Player_idle");
+
+}
+
 void moul::Player::update()
 {
-    return;
     double elapsedTime = sw::OpenGLModule::deltaTime();
 
     if (sw::isKeyDown(m_keys[m_actions::FORWARD])) {
-        m_gameObject.transform().move(0, m_speed * elapsedTime, 0);
-    }
-    if (sw::isKeyDown(m_keys[m_actions::BACKWARD])) {
-        m_gameObject.transform().move(0, -m_speed * elapsedTime, 0);
-    }
-    if (sw::isKeyDown(m_keys[m_actions::LEFT])) {
-        m_gameObject.transform().move(-m_speed * elapsedTime, 0, 0);
-    }
-    if (sw::isKeyDown(m_keys[m_actions::RIGHT])) {
+        m_gameObject.transform().move(0, 0, m_speed * elapsedTime);
+        m_gameObject.transform().setRotation(0);
+    } else if (sw::isKeyDown(m_keys[m_actions::BACKWARD])) {
+        m_gameObject.transform().move(0, 0, -m_speed * elapsedTime);
+        m_gameObject.transform().setRotation(180);
+    } else if (sw::isKeyDown(m_keys[m_actions::LEFT])) {
         m_gameObject.transform().move(m_speed * elapsedTime, 0, 0);
+        m_gameObject.transform().setRotation(90);
+    } else if (sw::isKeyDown(m_keys[m_actions::RIGHT])) {
+        m_gameObject.transform().move(-m_speed * elapsedTime, 0, 0);
+        m_gameObject.transform().setRotation(-90);
     }
     if (sw::isKeyDown(m_keys[m_actions::BOMB])) {
         bomb();
     }
+    updateAnimation();
     /*
     for (auto& it = *m_bombs.begin(); it != *m_bombs.end(); it++) {
     }

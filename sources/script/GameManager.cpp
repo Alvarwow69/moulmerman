@@ -118,7 +118,8 @@ void moul::GameManager::spawnPlayers()
         newPlayerCpt.m_modelName = names[i];
         newPlayerCpt.start();
         newPlayer.transform().setPosition(positions[m_playerLeft]);
-        newPlayer.transform().scale(8, 8, 8);;
+        newPlayer.transform().scale(8, 8, 8);
+        newPlayer.transform().rotate(180);
         m_playerLeft++;
     }
 }

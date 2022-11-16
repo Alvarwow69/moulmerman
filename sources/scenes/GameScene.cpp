@@ -20,7 +20,12 @@ void moul::GameScene::onLoad(sw::EventInfo &info)
     scene.eventManager.create("PlayerDie");
 
     auto& mainCamera = scene.createGameObject("MainCamera");
-    sw::ConcreteComponent auto& camera = mainCamera.createComponent<inc::CameraFPS>("ScriptManager");
+    sw::ConcreteComponent auto& camera = mainCamera.createComponent<sw::Camera>("CameraManager");
+    mainCamera.transform().move(13.5, 27, -43);
+    camera.setClippingNear(0.1);
+    camera.setClippingFar(10000);
+    camera.setPitch(-56);
+    camera.setYaw(90);
 
     auto& gameManager = scene.createGameObject("GameManager");
     gameManager.createComponent<moul::GameManager>("ScriptManager");
@@ -33,6 +38,7 @@ void moul::GameScene::onLoad(sw::EventInfo &info)
     auto& directLightCpt = directLight.createComponent<sw::Light>("LightManager");
     mapMesh.attachLight("DirLight");
     directLightCpt.m_ambient = {0.6f, 0.6f, 0.6f};
+    directLightCpt.m_diffuse = {0.6f, 0.6f, 0.6f};
 
     //auto& pointLight = scene.createGameObject("PointLight");
     //auto& pointLightCpt = pointLight.createComponent<sw::Light>("LightManager");
