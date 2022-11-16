@@ -36,7 +36,7 @@ void moul::SelectionScene::onLoad(sw::EventInfo &info)
 
     auto& player1 = scene.createGameObject("Player1");
     auto& model1 = player1.createComponent<moul::SelectionPlayer>("ScriptManager");
-    model1.m_modelName = "Player";
+    model1.m_modelName = "Player1";
     model1.m_textPos = {1400, 340};
     player1.transform().scale(8, 8, 8);
     player1.transform().setPosition(3.5, -1.1, 8);

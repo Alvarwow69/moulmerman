@@ -20,7 +20,7 @@ namespace moul
         void start();
         void update();
     private:
-        float m_animTime;
+        double m_animTime;
 
     }; // class Player
 } // namespace moul

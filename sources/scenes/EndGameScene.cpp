@@ -32,7 +32,7 @@ void moul::EndGameScene::onLoad(sw::EventInfo &info)
 
     auto& player1 = scene.createGameObject("Player1");
     auto& model1 = player1.createComponent<moul::EndPlayer>("ScriptManager");
-    model1.m_modelName = "Player";
+    model1.m_modelName = "Player1";
     model1.m_animName = "Player_dancing";
     model1.m_textPos = {1400, 340};
     player1.transform().scale(30, 30, 30);

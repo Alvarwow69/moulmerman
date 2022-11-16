@@ -43,6 +43,6 @@ void moul::SelectionPlayer::update()
 
 void moul::SelectionPlayer::saveConf()
 {
-    sw::Config::GetConfig()["Setting"][m_gameObject.name()]["Name"] = m_name.value().m_playerName;
-    sw::Config::GetConfig()["Setting"][m_gameObject.name()]["Type"] = m_type.value().getTypeName();
+    sw::Config::GetConfig()["Setting"][m_gameObject.name()]["name"] = m_name.value().m_playerName;
+    sw::Config::GetConfig()["Setting"][m_gameObject.name()]["type"] = m_type.value().getTypeName();
 }

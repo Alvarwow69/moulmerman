@@ -18,16 +18,19 @@ bool moul::Player::isAlive() {
 
 void moul::Player::setKeys()
 {
-    m_keys[m_actions::FORWARD] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["f"].as<int>();
-    m_keys[m_actions::BACKWARD] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["b"].as<int>();
-    m_keys[m_actions::LEFT] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["l"].as<int>();
-    m_keys[m_actions::RIGHT] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["r"].as<int>();
-    m_keys[m_actions::BOMB] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["bomb"].as<int>();
+    m_keys[m_actions::FORWARD] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["f"].as<char>();
+    m_keys[m_actions::BACKWARD] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["b"].as<char>();
+    m_keys[m_actions::LEFT] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["l"].as<char>();
+    m_keys[m_actions::RIGHT] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["r"].as<char>();
+    m_keys[m_actions::BOMB] = sw::Config::GetConfig()["Setting"][m_gameObject.name()]["keys"]["bomb"].as<char>();
 }
 
 void moul::Player::start()
 {
     m_mesh.emplace(m_gameObject.createComponent<sw::MeshRenderer>("MeshRendererManager", m_modelName));
+    auto& animator = m_gameObject.createComponent<sw::ModelAnimator>("ModelAnimatorManager", "Player_idle");
+    animator.attachModel(m_modelName);
+    m_mesh.value().m_animator.emplace(animator);
     m_alive = true;
     m_speed = 3.f;
     setKeys();
@@ -35,7 +38,8 @@ void moul::Player::start()
 
 void moul::Player::update()
 {
-    float elapsedTime = sw::OpenGLModule::chrono().getElapsedTime();
+    return;
+    double elapsedTime = sw::OpenGLModule::deltaTime();
 
     if (sw::isKeyDown(m_keys[m_actions::FORWARD])) {
         m_gameObject.transform().move(0, m_speed * elapsedTime, 0);
@@ -73,12 +77,10 @@ void moul::Player::bomb()
     if (m_bombAvailable < 1)
         return;
     m_bombAvailable -= 1;
-    m_bombs.push_back(std::make_shared<Bomb>());
-    return;
+    //m_bombs.push_back(std::make_shared<Bomb>());
 }
 
 void moul::Player::die()
 {
     m_gameObject.scene().eventManager.drop("PlayerDie");
-    return;
 }

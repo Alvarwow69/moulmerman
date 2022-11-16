@@ -19,7 +19,7 @@ void moul::Bomb::start()
 
 void moul::Bomb::update()
 {
-    float elapsedTime = sw::OpenGLModule::chrono().getElapsedTime();
+    double elapsedTime = sw::OpenGLModule::deltaTime();
 
     m_spentTime += elapsedTime;
 

@@ -7,13 +7,19 @@
 #include "window/Window.hpp"
 
 #include "script/GameManager.hpp"
+#include "config/Config.hpp"
+#include "Player.hpp"
+
+const sw::Vector3f positions[4] = {{7.5f, 3.6f, -35.5f}, {19.5f, 3.6f, -23.5f}, {7.5f, 3.6f, -23.5f}, {19.5f, 3.6f, -35.5f}};
+const std::string names[4] = {"Player1", "Player2", "Player3", "Player4"};
 
 moul::GameManager::GameState moul::GameManager::m_gameState = NONE;
 
 moul::GameManager::GameManager(sw::GameObject &gameObject) :
 sw::Component(gameObject),
 m_mapGenerator(),
-m_countdown(0.0)
+m_countdown(0.0),
+m_playerLeft(0)
 {
     gameObject.scene().eventManager["Start"].subscribe(this, &moul::GameManager::start);
     gameObject.scene().eventManager["Update"].subscribe(this, &moul::GameManager::update);
@@ -37,6 +43,8 @@ void moul::GameManager::start()
     m_text.emplace(m_gameObject.createComponent<sw::Text>("TextManager"));
     m_text.value().setText("4");
     m_text.value().setPosition(900, 500);
+
+    spawnPlayers();
 }
 
 void moul::GameManager::update()
@@ -55,7 +63,8 @@ void moul::GameManager::update()
 
 void moul::GameManager::countdown()
 {
-    m_countdown += sw::OpenGLModule::chrono().getElapsedTime();
+    auto oui = sw::OpenGLModule::deltaTime();
+    m_countdown += oui;
     if (m_countdown > 4 && m_nextStep == 5) {
         m_audio.value().play("StartGo");
         m_text.value().setActive(false);
@@ -94,4 +103,22 @@ void moul::GameManager::playerDie()
     m_playerLeft--;
     if (m_playerLeft == 0)
         m_gameState = POSTGAME;
+}
+
+void moul::GameManager::spawnPlayers()
+{
+    auto conf = sw::Config::GetConfig()["Setting"];
+
+    for (int i = 0; i < conf.size(); i++) {
+        auto player = conf[names[i]];
+        if (player["type"].as<std::string>() == "none")
+            continue;
+        auto& newPlayer = m_gameObject.scene().createGameObject(player["name"].as<std::string>());
+        auto& newPlayerCpt = newPlayer.createComponent<moul::Player>("ScriptManager");
+        newPlayerCpt.m_modelName = names[i];
+        newPlayerCpt.start();
+        newPlayer.transform().setPosition(positions[m_playerLeft]);
+        newPlayer.transform().scale(8, 8, 8);;
+        m_playerLeft++;
+    }
 }

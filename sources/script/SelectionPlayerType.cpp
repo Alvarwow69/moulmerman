@@ -23,7 +23,7 @@ std::string GetStringType(moul::SelectionPlayerType::Type type)
         case moul::SelectionPlayerType::Type::AI:
             return "AI";
         default:
-            return "No Player";
+            return "none";
     }
 }
 

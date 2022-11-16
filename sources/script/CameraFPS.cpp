@@ -35,7 +35,7 @@ void inc::CameraFPS::start()
 void inc::CameraFPS::update()
 {
     float speed = (sw::isKeyDown(sw::Keyboard::LSHIFT) ? 25.0f : 12.5f);
-    float velocity = speed * sw::OpenGLModule::chrono().getElapsedTime();
+    float velocity = speed * sw::OpenGLModule::deltaTime();
 
     auto& cam = m_gameObject.getComponent<sw::Camera>("CameraManager");
     if (sw::isKeyDown(sw::Keyboard::W))                 //Z

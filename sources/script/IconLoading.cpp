@@ -31,7 +31,7 @@ void moul::IconLoading::start()
 
 void moul::IconLoading::update()
 {
-    auto time = sw::OpenGLModule::chrono().getElapsedTime();
+    auto time = sw::OpenGLModule::deltaTime();
     m_animTime += time;
     while (m_animTime > 2.0f)
         m_animTime -= 2.0f;
