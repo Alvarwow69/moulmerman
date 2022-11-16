@@ -114,10 +114,11 @@
     ],
     "Type": "Audio"
   },
-  "Player": {
+  "Player1": {
     "Path": "resources/models/player/player.dae",
     "Scene": [
       "SelectionScene",
+      "Game",
       "EndGame"
     ],
     "Type": "Model"
@@ -126,6 +127,7 @@
     "Path": "resources/models/player/player2.dae",
     "Scene": [
       "SelectionScene",
+      "Game",
       "EndGame"
     ],
     "Type": "Model"
@@ -134,6 +136,7 @@
     "Path": "resources/models/player/player3.dae",
     "Scene": [
       "SelectionScene",
+      "Game",
       "EndGame"
     ],
     "Type": "Model"
@@ -142,6 +145,7 @@
     "Path": "resources/models/player/player4.dae",
     "Scene": [
       "SelectionScene",
+      "Game",
       "EndGame"
     ],
     "Type": "Model"
@@ -186,6 +190,15 @@
     "Path": "resources/models/player/player_idle_anim.dae",
     "Scene": [
       "SelectionScene",
+      "EndGame"
+    ],
+    "Type": "Animation"
+  },
+  "Player_walk": {
+    "Path": "resources/models/player/player_walk.dae",
+    "Scene": [
+      "SelectionScene",
+      "Game",
       "EndGame"
     ],
     "Type": "Animation"
