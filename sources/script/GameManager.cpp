@@ -14,10 +14,10 @@ const sw::Vector3f positions[4] = {{7.5f, 3.6f, -35.5f}, {19.5f, 3.6f, -23.5f}, 
 const std::string names[4] = {"Player1", "Player2", "Player3", "Player4"};
 
 moul::GameManager::GameState moul::GameManager::m_gameState = NONE;
+sw::Reference<moul::MapGenerator> moul::GameManager::m_mapGenerator;
 
 moul::GameManager::GameManager(sw::GameObject &gameObject) :
 sw::Component(gameObject),
-m_mapGenerator(),
 m_countdown(0.0),
 m_playerLeft(0)
 {
@@ -96,6 +96,11 @@ void moul::GameManager::displayPauseMenu()
 moul::GameManager::GameState moul::GameManager::GetGameState()
 {
     return (m_gameState);
+}
+
+moul::MapGenerator& moul::GameManager::GetMap()
+{
+    return (m_mapGenerator.value());
 }
 
 void moul::GameManager::playerDie()

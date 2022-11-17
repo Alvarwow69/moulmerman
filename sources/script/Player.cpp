@@ -6,13 +6,17 @@
 #include "Player.hpp"
 #include "config/Config.hpp"
 
-moul::Player::Player(sw::GameObject& gameObject) : sw::Component(gameObject), m_modelName("PLACEHOLDER")
+moul::Player::Player(sw::GameObject& gameObject) :
+sw::Component(gameObject),
+m_modelName("PLACEHOLDER"),
+m_bombAvailable(1)
 {
     m_gameObject.scene().eventManager["Start"].subscribe(this, &moul::Player::start);
     m_gameObject.scene().eventManager["Update"].subscribe(this, &moul::Player::update);
 }
 
-bool moul::Player::isAlive() {
+bool moul::Player::isAlive()
+{
     return m_alive;
 }
 
@@ -75,12 +79,14 @@ void moul::Player::update()
 
 }
 
-void moul::Player::addBombNumber() {
+void moul::Player::addBombNumber()
+{
     m_bombNumberTotal += 1;
     m_bombAvailable += 1;
 }
 
-void moul::Player::addBombPower() {
+void moul::Player::addBombPower()
+{
     m_bombPower += 1;
 }
 
@@ -89,7 +95,10 @@ void moul::Player::bomb()
     if (m_bombAvailable < 1)
         return;
     m_bombAvailable -= 1;
-    //m_bombs.push_back(std::make_shared<Bomb>());
+    auto& newBomb = m_gameObject.scene().createGameObject("Bomb_" + m_gameObject.name() + "_" + std::to_string(m_bombAvailable));
+    auto& newBombCpt = newBomb.createComponent<moul::Bomb>("ScriptManager");
+    newBombCpt.start();
+    newBomb.transform().setPosition(((int)m_gameObject.transform().getGlobalPosition().x) + 0.5f, m_gameObject.transform().getGlobalPosition().y, ((int)m_gameObject.transform().getGlobalPosition().z) - 0.5f );
 }
 
 void moul::Player::die()

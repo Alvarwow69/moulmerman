@@ -25,10 +25,13 @@ namespace moul
         explicit Bomb(sw::GameObject& gameObject);
     private:
         bool m_hasExploded = false;
-        float m_spentTime = 0;
-        int m_power = 1;
-        float m_explosionTime = 3;
+        float m_spentTime;
+        int m_power;
+        float m_explosionTime;
+        float m_animTime;
+        float m_lastTime;
         sw::Reference<sw::MeshRenderer> m_mesh;
+        sw::Reference<sw::AudioSource> m_audio;
     };
 }
 

@@ -293,6 +293,41 @@
     ],
     "Type": "Texture"
   },
+  "UI_Bomb_tick": {
+    "Path": "resources/audio/FX_Minuteur_1.wav",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Audio"
+  },
+  "UI_Bomb_tick2": {
+    "Path": "resources/audio/FX_Minuteur_2.wav",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Audio"
+  },
+  "UI_Bomb_tick3": {
+    "Path": "resources/audio/FX_Minuteur_3.wav",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Audio"
+  },
+  "UI_Bomb_tick4": {
+    "Path": "resources/audio/FX_Minuteur_4.wav",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Audio"
+  },
+  "UI_Bomb_explode": {
+    "Path": "resources/audio/FX_Bombe_1.wav",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Audio"
+  },
   "UI_Switch_1": {
     "Path": "resources/audio/UI_Switch_1.wav",
     "Scene": [
@@ -397,5 +432,33 @@
       "EndGame"
     ],
     "Type": "Model"
+  },
+  "Bomb": {
+    "Path": "resources/models/Bomb.obj",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Model"
+  },
+  "Bomb.png": {
+    "Path": "resources/textures/Bomb.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "Fire": {
+    "Path": "resources/models/Fire.obj",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Model"
+  },
+  "fire.png": {
+    "Path": "resources/textures/fire.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
   }
 }

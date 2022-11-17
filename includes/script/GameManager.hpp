@@ -28,13 +28,14 @@ namespace moul
         void update();
 
         [[nodiscard]] static GameState GetGameState();
+        [[nodiscard]] static MapGenerator& GetMap();
     private:
         void countdown();
         void displayPauseMenu();
         void playerDie();
         void spawnPlayers();
 
-        sw::Reference<MapGenerator> m_mapGenerator;
+        static sw::Reference<MapGenerator> m_mapGenerator;
         sw::Reference<sw::AudioSource> m_audio;
         sw::Reference<sw::Text> m_text;
         static GameState m_gameState;

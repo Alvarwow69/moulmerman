@@ -26,8 +26,8 @@ namespace moul
         [[nodiscard]] const std::vector<std::string>& getMap() const;
 
         sw::Vector3f m_origin;
-    private:
         sw::Vector2i m_size;
+    private:
         std::vector<std::string> m_map;
         bool m_basic;
 

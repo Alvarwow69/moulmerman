@@ -20,12 +20,13 @@ void moul::GameScene::onLoad(sw::EventInfo &info)
     scene.eventManager.create("PlayerDie");
 
     auto& mainCamera = scene.createGameObject("MainCamera");
-    sw::ConcreteComponent auto& camera = mainCamera.createComponent<sw::Camera>("CameraManager");
-    mainCamera.transform().move(13.5, 27, -43);
-    camera.setClippingNear(0.1);
-    camera.setClippingFar(10000);
-    camera.setPitch(-56);
-    camera.setYaw(90);
+    //sw::ConcreteComponent auto& camera = mainCamera.createComponent<sw::Camera>("CameraManager");
+    sw::ConcreteComponent auto& camera = mainCamera.createComponent<inc::CameraFPS>("ScriptManager");
+    //mainCamera.transform().move(13.5, 27, -43);
+    //camera.setClippingNear(0.1);
+    //camera.setClippingFar(10000);
+    //camera.setPitch(-56);
+    //camera.setYaw(90);
 
     auto& gameManager = scene.createGameObject("GameManager");
     gameManager.createComponent<moul::GameManager>("ScriptManager");
