@@ -8,13 +8,11 @@
 moul::UIPlayer::UIPlayer(sw::GameObject& gameObject) :
 sw::Component(gameObject)
 {
-    m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::UIPlayer::start);
     m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::UIPlayer::update);
 }
 
 moul::UIPlayer::~UIPlayer() noexcept
 {
-    m_gameObject.scene().eventManager["Start"].unsubscribe(m_gameObject.name());
     m_gameObject.scene().eventManager["Update"].unsubscribe(m_gameObject.name());
 }
 

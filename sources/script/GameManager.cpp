@@ -114,7 +114,6 @@ void moul::GameManager::playerDie()
 void CreateUI(sw::Scene& scene, int i, std::string name)
 {
     auto& UIP1 = scene.getGameObject("UI" + name).createComponent<moul::UIPlayer>("ScriptManager");
-    UIP1.start();
 
     switch (i) {
         case 0:
@@ -138,6 +137,7 @@ void CreateUI(sw::Scene& scene, int i, std::string name)
             UIP1.m_txtPos = {320, 70};
             break;
     }
+    UIP1.start();
 }
 
 void moul::GameManager::spawnPlayers()

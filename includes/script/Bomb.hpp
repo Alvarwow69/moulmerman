@@ -12,6 +12,9 @@
 
 namespace moul
 {
+
+    class Player;
+
     class Bomb : public sw::Component
     {
     public:
@@ -24,6 +27,7 @@ namespace moul
         void destroy();
         explicit Bomb(sw::GameObject& gameObject);
         ~Bomb() override;
+        sw::Reference<moul::Player> m_player;
     private:
         bool m_hasExploded = false;
         float m_spentTime;

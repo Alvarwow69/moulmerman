@@ -13,7 +13,6 @@ sw::Component(gameObject),
 m_modelName("PLACEHOLDER"),
 m_bombAvailable(1)
 {
-    m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::Player::start);
     m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::Player::update);
 }
 
@@ -87,15 +86,25 @@ void moul::Player::update()
     m_rangetxt.value().setText(std::to_string(m_bombPower));
 }
 
-void moul::Player::addBombNumber()
+void moul::Player::increaseMaxBomb()
 {
     m_bombNumberTotal += 1;
     m_bombAvailable += 1;
 }
 
-void moul::Player::addBombPower()
+void moul::Player::increaseBombPower()
 {
     m_bombPower += 1;
+}
+
+void moul::Player::increaseSpeed()
+{
+    m_speed += 1;
+}
+
+void moul::Player::addBomb()
+{
+    m_bombAvailable += 1;
 }
 
 void moul::Player::bomb()
@@ -105,6 +114,7 @@ void moul::Player::bomb()
     m_bombAvailable -= 1;
     auto& newBomb = m_gameObject.scene().createGameObject("Bomb_" + m_gameObject.name() + "_" + std::to_string(m_bombAvailable));
     auto& newBombCpt = newBomb.createComponent<moul::Bomb>("ScriptManager");
+    newBombCpt.m_player.emplace(*this);
     newBombCpt.start();
     newBomb.transform().setPosition(((int)m_gameObject.transform().getGlobalPosition().x) + 0.5f, m_gameObject.transform().getGlobalPosition().y, ((int)m_gameObject.transform().getGlobalPosition().z) - 0.5f );
 }

@@ -23,14 +23,18 @@ namespace moul
         public:
             std::string m_modelName;
             sw::Vector2f m_modelPos;
-            void update();
-            void start();
-            bool isAlive();
-            explicit Player(sw::GameObject& gameObject);
             sw::Reference<sw::Text> m_bombtxt;
             sw::Reference<sw::Text> m_rangetxt;
             sw::Reference<sw::Text> m_speedtxt;
 
+            void update();
+            void start();
+            bool isAlive();
+            explicit Player(sw::GameObject& gameObject);
+            void increaseMaxBomb();
+            void increaseBombPower();
+            void increaseSpeed();
+            void addBomb();
         private:
             enum m_actions {
                 FORWARD,
@@ -49,8 +53,6 @@ namespace moul
             sw::Reference<SelectionPlayerType> m_type;
             sw::Reference<sw::MeshRenderer> m_mesh;
             sw::Reference<sw::ModelAnimator> m_animator;
-            void addBombNumber();
-            void addBombPower();
             void bomb();
             void setKeys();
             void die();

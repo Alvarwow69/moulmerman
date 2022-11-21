@@ -7,6 +7,7 @@
 #include "config/Config.hpp"
 #include "Fire.hpp"
 #include "GameManager.hpp"
+#include "script/Player.hpp"
 
 const int xIndex[4] = {1, 0, -1, 0};
 const int zIndex[4] = {0, 1, 0, -1};
@@ -19,7 +20,8 @@ m_explosionTime(3.0f),
 m_hasExploded(false),
 m_power(4),
 m_spentTime(0.0f),
-m_lastTime(0.0f)
+m_lastTime(0.0f),
+m_player()
 {
     m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::Bomb::start);
     m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::Bomb::update);
@@ -74,6 +76,7 @@ bool moul::Bomb::hasExploded()
 void moul::Bomb::explode()
 {
     bool border[4] = {false, false, false, false};
+    m_player.value().addBomb();
     m_hasExploded = true;
     m_gameObject.scene().deleteGameObject(m_gameObject.name());
     m_audio.value().play("UI_Bomb_explode");

@@ -11,7 +11,6 @@ moul::SelectionPlayerName::SelectionPlayerName(sw::GameObject &gameobject) :
 sw::Component(gameobject),
 m_selected(false)
 {
-    m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::SelectionPlayerName::start);
     m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::SelectionPlayerName::update);
 }
 
