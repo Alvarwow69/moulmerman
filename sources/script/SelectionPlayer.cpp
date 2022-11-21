@@ -11,8 +11,8 @@ sw::Component(gameobject),
 m_modelName("PLACEHOLDER"),
 m_must(false)
 {
-    m_gameObject.scene().eventManager["Start"].subscribe(this, &moul::SelectionPlayer::start);
-    m_gameObject.scene().eventManager["Update"].subscribe(this, &moul::SelectionPlayer::update);
+    m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::SelectionPlayer::start);
+    m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::SelectionPlayer::update);
 }
 
 void moul::SelectionPlayer::start()

@@ -3,6 +3,8 @@
 ** Player.cpp
 */
 
+#include <iostream>
+
 #include "Player.hpp"
 #include "config/Config.hpp"
 
@@ -11,8 +13,8 @@ sw::Component(gameObject),
 m_modelName("PLACEHOLDER"),
 m_bombAvailable(1)
 {
-    m_gameObject.scene().eventManager["Start"].subscribe(this, &moul::Player::start);
-    m_gameObject.scene().eventManager["Update"].subscribe(this, &moul::Player::update);
+    m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::Player::start);
+    m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::Player::update);
 }
 
 bool moul::Player::isAlive()
@@ -77,6 +79,12 @@ void moul::Player::update()
     }
     */
 
+    std::stringstream ss;
+    ss << std::setprecision(2) << m_speed;
+
+    m_bombtxt.value().setText(std::to_string(m_bombAvailable));
+    m_speedtxt.value().setText(ss.str());
+    m_rangetxt.value().setText(std::to_string(m_bombPower));
 }
 
 void moul::Player::addBombNumber()

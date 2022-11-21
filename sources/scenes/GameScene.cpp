@@ -20,13 +20,13 @@ void moul::GameScene::onLoad(sw::EventInfo &info)
     scene.eventManager.create("PlayerDie");
 
     auto& mainCamera = scene.createGameObject("MainCamera");
-    //sw::ConcreteComponent auto& camera = mainCamera.createComponent<sw::Camera>("CameraManager");
-    sw::ConcreteComponent auto& camera = mainCamera.createComponent<inc::CameraFPS>("ScriptManager");
-    //mainCamera.transform().move(13.5, 27, -43);
-    //camera.setClippingNear(0.1);
-    //camera.setClippingFar(10000);
-    //camera.setPitch(-56);
-    //camera.setYaw(90);
+    //sw::ConcreteComponent auto& camera = mainCamera.createComponent<inc::CameraFPS>("ScriptManager");
+    sw::ConcreteComponent auto& camera = mainCamera.createComponent<sw::Camera>("CameraManager");
+    mainCamera.transform().move(13.5, 27, -43);
+    camera.setClippingNear(0.01);
+    camera.setClippingFar(10000);
+    camera.setPitch(-56);
+    camera.setYaw(90);
 
     auto& gameManager = scene.createGameObject("GameManager");
     gameManager.createComponent<moul::GameManager>("ScriptManager");
@@ -46,4 +46,19 @@ void moul::GameScene::onLoad(sw::EventInfo &info)
     //mapMesh.attachLight("PointLight");
     //pointLightCpt.setLightType(sw::Light::POINT);
     //pointLight.transform().setPosition({4.5f, 3.6f, -30});
+
+    auto& UIPlayer1 = scene.createGameObject("UIPlayer1");
+    mainCamera.addChild("UIPlayer1");
+
+    auto& UIPlayer2 = scene.createGameObject("UIPlayer2");
+
+    mainCamera.addChild("UIPlayer2");
+
+    auto& UIPlayer3 = scene.createGameObject("UIPlayer3");
+
+    mainCamera.addChild("UIPlayer3");
+
+    auto& UIPlayer4 = scene.createGameObject("UIPlayer4");
+
+    mainCamera.addChild("UIPlayer4");
 }

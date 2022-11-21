@@ -16,8 +16,8 @@ moul::IconLoading::IconLoading(sw::GameObject &gameObject) :
 sw::Component(gameObject),
 m_animTime(0.0f)
 {
-    m_gameObject.scene().eventManager["Start"].subscribe(this, &moul::IconLoading::start);
-    m_gameObject.scene().eventManager["Update"].subscribe(this, &moul::IconLoading::update);
+    m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::IconLoading::start);
+    m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::IconLoading::update);
 }
 
 void moul::IconLoading::start()

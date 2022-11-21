@@ -15,8 +15,8 @@ m_lastX(-1),
 m_lastY(-1),
 m_mouseSensitivity(0.1f)
 {
-    m_gameObject.scene().eventManager["Start"].subscribe(this, &inc::CameraFPS::start);
-    m_gameObject.scene().eventManager["Update"].subscribe(this, &inc::CameraFPS::update);
+    m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &inc::CameraFPS::start);
+    m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &inc::CameraFPS::update);
 }
 
 void inc::CameraFPS::start()

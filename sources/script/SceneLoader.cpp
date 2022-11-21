@@ -13,8 +13,8 @@ sw::Component(gameObject),
 m_isRunning(false),
 m_switchAuto(false)
 {
-    gameObject.scene().eventManager["Start"].subscribe(this, &inc::SceneLoader::start);
-    gameObject.scene().eventManager["Update"].subscribe(this, &inc::SceneLoader::update);
+    gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &inc::SceneLoader::start);
+    gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &inc::SceneLoader::update);
 }
 
 inc::SceneLoader::~SceneLoader() noexcept

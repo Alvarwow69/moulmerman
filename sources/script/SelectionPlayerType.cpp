@@ -11,8 +11,8 @@ moul::SelectionPlayerType::SelectionPlayerType(sw::GameObject &gameobject, moul:
 sw::Component(gameobject),
 m_type(type)
 {
-    m_gameObject.scene().eventManager["Start"].subscribe(this, &moul::SelectionPlayerType::start);
-    m_gameObject.scene().eventManager["Update"].subscribe(this, &moul::SelectionPlayerType::update);
+    m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::SelectionPlayerType::start);
+    m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::SelectionPlayerType::update);
 }
 
 std::string moul::SelectionPlayerType::GetStringType(moul::SelectionPlayerType::Type type)

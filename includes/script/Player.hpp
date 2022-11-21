@@ -27,6 +27,9 @@ namespace moul
             void start();
             bool isAlive();
             explicit Player(sw::GameObject& gameObject);
+            sw::Reference<sw::Text> m_bombtxt;
+            sw::Reference<sw::Text> m_rangetxt;
+            sw::Reference<sw::Text> m_speedtxt;
 
         private:
             enum m_actions {

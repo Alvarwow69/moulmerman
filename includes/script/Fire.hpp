@@ -18,6 +18,7 @@ namespace moul
         void update();
         void start();
         explicit Fire(sw::GameObject& gameObject);
+        ~Fire() override;
     private:
         float m_spentTime;
         float m_durationTime;

@@ -10,8 +10,14 @@ sw::Component(gameObject),
 m_spentTime(0.0f),
 m_durationTime(3.0f)
 {
-    m_gameObject.scene().eventManager["Start"].subscribe(this, &moul::Fire::start);
-    m_gameObject.scene().eventManager["Update"].subscribe(this, &moul::Fire::update);
+    m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::Fire::start);
+    m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::Fire::update);
+}
+
+moul::Fire::~Fire() noexcept
+{
+    m_gameObject.scene().eventManager["Start"].unsubscribe(m_gameObject.name());
+    m_gameObject.scene().eventManager["Update"].unsubscribe(m_gameObject.name());
 }
 
 void moul::Fire::start()
@@ -25,5 +31,5 @@ void moul::Fire::update()
 
     m_spentTime += elapsedTime;
     if (m_spentTime > m_durationTime)
-        m_gameObject.setActive(false); //tscene().deleteGameObject(m_gameObject.name()); //TODO Remove event subscription
+        m_gameObject.scene().deleteGameObject(m_gameObject.name());
 }

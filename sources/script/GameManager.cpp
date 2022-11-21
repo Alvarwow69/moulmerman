@@ -9,6 +9,7 @@
 #include "script/GameManager.hpp"
 #include "config/Config.hpp"
 #include "Player.hpp"
+#include "script/UIPlayer.hpp"
 
 const sw::Vector3f positions[4] = {{7.5f, 3.6f, -35.5f}, {19.5f, 3.6f, -23.5f}, {7.5f, 3.6f, -23.5f}, {19.5f, 3.6f, -35.5f}};
 const std::string names[4] = {"Player1", "Player2", "Player3", "Player4"};
@@ -21,9 +22,9 @@ sw::Component(gameObject),
 m_countdown(0.0),
 m_playerLeft(0)
 {
-    gameObject.scene().eventManager["Start"].subscribe(this, &moul::GameManager::start);
-    gameObject.scene().eventManager["Update"].subscribe(this, &moul::GameManager::update);
-    gameObject.scene().eventManager["PlayerDie"].subscribe(this, &moul::GameManager::playerDie);
+    gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::GameManager::start);
+    gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::GameManager::update);
+    gameObject.scene().eventManager["PlayerDie"].subscribe(m_gameObject.name(), this, &moul::GameManager::playerDie);
 }
 
 void moul::GameManager::start()
@@ -110,6 +111,35 @@ void moul::GameManager::playerDie()
         m_gameState = POSTGAME;
 }
 
+void CreateUI(sw::Scene& scene, int i, std::string name)
+{
+    auto& UIP1 = scene.getGameObject("UI" + name).createComponent<moul::UIPlayer>("ScriptManager");
+    UIP1.start();
+
+    switch (i) {
+        case 0:
+            UIP1.m_pos = {0, 0};
+            UIP1.m_txtPos = {320, 90};
+            UIP1.m_textureName = "UIPlayer1";
+            break;
+        case 1:
+            UIP1.m_pos = {1480, 845};
+            UIP1.m_textureName = "UIPlayer2";
+            UIP1.m_txtPos = {65, 65};
+            break;
+        case 2:
+            UIP1.m_pos = {1480, 0};
+            UIP1.m_textureName = "UIPlayer3";
+            UIP1.m_txtPos = {65, 80};
+            break;
+        default:
+            UIP1.m_pos = {0, 845};
+            UIP1.m_textureName = "UIPlayer4";
+            UIP1.m_txtPos = {320, 70};
+            break;
+    }
+}
+
 void moul::GameManager::spawnPlayers()
 {
     auto conf = sw::Config::GetConfig()["Setting"];
@@ -120,11 +150,15 @@ void moul::GameManager::spawnPlayers()
             continue;
         auto& newPlayer = m_gameObject.scene().createGameObject(player["name"].as<std::string>());
         auto& newPlayerCpt = newPlayer.createComponent<moul::Player>("ScriptManager");
+        CreateUI(m_gameObject.scene(), i, names[i]);
         newPlayerCpt.m_modelName = names[i];
         newPlayerCpt.start();
         newPlayer.transform().setPosition(positions[m_playerLeft]);
         newPlayer.transform().scale(8, 8, 8);
         newPlayer.transform().rotate(180);
+        newPlayerCpt.m_bombtxt.emplace(m_gameObject.scene().getGameObject("Text_Bomb_UI" + names[i]).getComponent<sw::Text>("TextManager"));
+        newPlayerCpt.m_speedtxt.emplace(m_gameObject.scene().getGameObject("Text_Speed_UI" + names[i]).getComponent<sw::Text>("TextManager"));
+        newPlayerCpt.m_rangetxt.emplace(m_gameObject.scene().getGameObject("Text_Range_UI" + names[i]).getComponent<sw::Text>("TextManager"));
         m_playerLeft++;
     }
 }

@@ -12,7 +12,7 @@ moul::BackToScene::BackToScene(sw::GameObject &gameObject, std::string sceneToBa
 sw::Component(gameObject),
 m_sceneToBack(sceneToBack)
 {
-    gameObject.scene().eventManager["Update"].subscribe(this, &moul::BackToScene::update);
+    gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::BackToScene::update);
 }
 
 void moul::BackToScene::update()

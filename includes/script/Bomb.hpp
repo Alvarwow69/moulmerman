@@ -23,6 +23,7 @@ namespace moul
         bool hasExploded();
         void destroy();
         explicit Bomb(sw::GameObject& gameObject);
+        ~Bomb() override;
     private:
         bool m_hasExploded = false;
         float m_spentTime;

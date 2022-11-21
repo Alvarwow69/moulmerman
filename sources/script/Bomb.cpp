@@ -21,8 +21,14 @@ m_power(4),
 m_spentTime(0.0f),
 m_lastTime(0.0f)
 {
-    m_gameObject.scene().eventManager["Start"].subscribe(this, &moul::Bomb::start);
-    m_gameObject.scene().eventManager["Update"].subscribe(this, &moul::Bomb::update);
+    m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::Bomb::start);
+    m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::Bomb::update);
+}
+
+moul::Bomb::~Bomb() noexcept
+{
+    m_gameObject.scene().eventManager["Start"].unsubscribe(m_gameObject.name());
+    m_gameObject.scene().eventManager["Update"].unsubscribe(m_gameObject.name());
 }
 
 void moul::Bomb::start()
@@ -69,7 +75,7 @@ void moul::Bomb::explode()
 {
     bool border[4] = {false, false, false, false};
     m_hasExploded = true;
-    m_mesh.value().setActive(false);
+    m_gameObject.scene().deleteGameObject(m_gameObject.name());
     m_audio.value().play("UI_Bomb_explode");
     auto currentPos = m_gameObject.transform().getGlobalPosition();
     auto &newFire = m_gameObject.scene().createGameObject("Fire_" + m_gameObject.name() + "_" + std::to_string(currentPos.x) + "_" + std::to_string(currentPos.z));

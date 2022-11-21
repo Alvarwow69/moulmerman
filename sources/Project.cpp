@@ -34,11 +34,11 @@ void sw::CreateScenes()
     sw::OpenGLModule::sceneManager().createScene("Game");
     sw::OpenGLModule::sceneManager().createScene("EndGame");
 
-    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(main, &Main::onLoad);
-    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(loading, &moul::LoadingScene::onLoad);
-    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(credit, &moul::CreditScene::onLoad);
-    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(settings, &moul::SettingsScene::onLoad);
-    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(selection, &moul::SelectionScene::onLoad);
-    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(game, &moul::GameScene::onLoad);
-    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe(endGame, &moul::EndGameScene::onLoad);
+    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe("Main", main, &Main::onLoad);
+    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe("Loading", loading, &moul::LoadingScene::onLoad);
+    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe("Credit", credit, &moul::CreditScene::onLoad);
+    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe("Settings", settings, &moul::SettingsScene::onLoad);
+    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe("Selection", selection, &moul::SelectionScene::onLoad);
+    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe("Game", game, &moul::GameScene::onLoad);
+    sw::OpenGLModule::eventManager()["SceneLoad"].subscribe("EndGame", endGame, &moul::EndGameScene::onLoad);
 }

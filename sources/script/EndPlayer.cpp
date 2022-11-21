@@ -10,8 +10,8 @@ sw::Component(gameObject),
 m_modelName("PLACEHOLDER"),
 m_animName("Player_idle")
 {
-    m_gameObject.scene().eventManager["Start"].subscribe(this, &moul::EndPlayer::start);
-    m_gameObject.scene().eventManager["Update"].subscribe(this, &moul::EndPlayer::update);
+    m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::EndPlayer::start);
+    m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::EndPlayer::update);
 }
 
 void moul::EndPlayer::start()

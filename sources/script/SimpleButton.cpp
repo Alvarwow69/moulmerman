@@ -13,8 +13,8 @@ sw::Component(gameObject),
 m_callback(nullptr),
 m_hover(false)
 {
-    gameObject.scene().eventManager["Start"].subscribe(this, &moul::SimpleButton::start);
-    gameObject.scene().eventManager["Update"].subscribe(this, &moul::SimpleButton::update);
+    gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::SimpleButton::start);
+    gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::SimpleButton::update);
 }
 
 void moul::SimpleButton::start()
