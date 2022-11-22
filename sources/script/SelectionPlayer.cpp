@@ -18,6 +18,7 @@ m_must(false)
 void moul::SelectionPlayer::start()
 {
     m_mesh.emplace(m_gameObject.createComponent<sw::MeshRenderer>("MeshRendererManager", m_modelName));
+    m_mesh.value().attachLight("DirLight");
     auto& animator = m_gameObject.createComponent<sw::ModelAnimator>("ModelAnimatorManager", "Player_idle");
     animator.attachModel(m_modelName);
     m_mesh.value().m_animator.emplace(animator);

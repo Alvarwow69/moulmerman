@@ -51,14 +51,11 @@ void moul::GameScene::onLoad(sw::EventInfo &info)
     mainCamera.addChild("UIPlayer1");
 
     auto& UIPlayer2 = scene.createGameObject("UIPlayer2");
-
     mainCamera.addChild("UIPlayer2");
 
     auto& UIPlayer3 = scene.createGameObject("UIPlayer3");
-
     mainCamera.addChild("UIPlayer3");
 
     auto& UIPlayer4 = scene.createGameObject("UIPlayer4");
-
     mainCamera.addChild("UIPlayer4");
 }

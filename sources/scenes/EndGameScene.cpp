@@ -19,7 +19,13 @@ void moul::EndGameScene::onLoad(sw::EventInfo &info)
         return;
 
     auto& mainCamera = scene.createGameObject("MainCamera");
-    sw::ConcreteComponent auto& camera = mainCamera.createComponent<inc::CameraFPS>("ScriptManager");
+    //sw::ConcreteComponent auto& camera = mainCamera.createComponent<inc::CameraFPS>("ScriptManager");
+    sw::ConcreteComponent auto& camera = mainCamera.createComponent<sw::Camera>("CameraManager");
+    mainCamera.transform().move(45.5, 4, -29);
+    camera.setClippingNear(0.01);
+    camera.setClippingFar(10000);
+    camera.setPitch(0.8);
+    camera.setYaw(180);
 
     auto& map = scene.createGameObject("Map");
     map.transform().scale(3.5f, 3.5f, 3.5f);
@@ -70,10 +76,11 @@ void moul::EndGameScene::onLoad(sw::EventInfo &info)
     auto& exitbtn = exit.createComponent<moul::SimpleButton>("ScriptManager");
     exitbtn.m_textureName = "Button_large";
     exitbtn.m_txtPosition = {40, 20, -1};
-    exitbtn.m_position = {100, 900, 0};
+    exitbtn.m_position = {100, 900, -2};
     exitbtn.m_buttonTitle = "Main Menu";
     exitbtn.m_scale = {2, 2};
     exitbtn.m_callback = [](SimpleButton *button) {
         sw::OpenGLModule::sceneManager().loadScene("Main");
     };
+    mainCamera.addChild("Exit_btn");
 }

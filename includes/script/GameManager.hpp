@@ -34,6 +34,7 @@ namespace moul
         void displayPauseMenu();
         void playerDie();
         void spawnPlayers();
+        void postGame();
 
         static sw::Reference<MapGenerator> m_mapGenerator;
         sw::Reference<sw::AudioSource> m_audio;

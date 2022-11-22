@@ -55,7 +55,7 @@ void moul::GameManager::update()
     if (m_gameState == COUNTDOWN)
         countdown();
     if (m_gameState == POSTGAME)
-        sw::OpenGLModule::sceneManager().loadScene("EndGame");
+        postGame();
     if (m_gameState == PAUSE)
         displayPauseMenu();
     if (sw::isKeyPressed(sw::P))
@@ -72,6 +72,7 @@ void moul::GameManager::countdown()
         m_audio.value().play("StartGo");
         m_text.value().setActive(false);
         m_gameState = INGAME;
+        m_countdown = 0;
     } else if (m_countdown > 3 && m_nextStep == 4) {
         m_audio.value().play("Start1");
         m_text.value().setText("1");
@@ -163,4 +164,12 @@ void moul::GameManager::spawnPlayers()
         newPlayerCpt.start();
         m_playerLeft++;
     }
+}
+
+void moul::GameManager::postGame()
+{
+    m_countdown += sw::OpenGLModule::deltaTime();
+
+    if (m_countdown >= 5)
+        sw::OpenGLModule::sceneManager().loadScene("EndGame");
 }
