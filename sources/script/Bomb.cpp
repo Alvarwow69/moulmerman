@@ -45,6 +45,11 @@ void moul::Bomb::update()
     double elapsedTime = sw::OpenGLModule::deltaTime();
 
     m_animTime += elapsedTime;
+    if (m_hasExploded) {
+        if (m_animTime >= 3)
+            m_gameObject.scene().deleteGameObject(m_gameObject.name());
+        return;
+    }
     while (m_animTime > 2.0f)
         m_animTime -= 2.0f;
     auto t = m_animTime < 1.f ? m_animTime : 2.f - m_animTime;
@@ -78,10 +83,11 @@ void moul::Bomb::explode()
     bool border[4] = {false, false, false, false};
     m_player.value().addBomb();
     m_hasExploded = true;
-    m_gameObject.scene().deleteGameObject(m_gameObject.name());
+    m_animTime = 0;
+    m_mesh.value().setActive(false);
     m_audio.value().play("UI_Bomb_explode");
     auto currentPos = m_gameObject.transform().getGlobalPosition();
-    auto &newFire = m_gameObject.scene().createGameObject("Fire_" + m_gameObject.name() + "_" + std::to_string(currentPos.x) + "_" + std::to_string(currentPos.z));
+    auto &newFire = m_gameObject.scene().createGameObject("Fire_" + m_gameObject.name() + "_" + std::to_string(currentPos.x) + "_" + std::to_string(currentPos.z) + std::to_string(sw::OpenGLModule::chrono().getTotalTime()));
     newFire.createComponent<moul::Fire>("ScriptManager").start();
     newFire.transform().setPosition(currentPos.x, currentPos.y, currentPos.z);
     newFire.transform().setScale(3, 3, 3);

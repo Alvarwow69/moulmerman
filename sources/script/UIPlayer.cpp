@@ -13,7 +13,6 @@ sw::Component(gameObject)
 
 moul::UIPlayer::~UIPlayer() noexcept
 {
-    m_gameObject.scene().eventManager["Update"].unsubscribe(m_gameObject.name());
 }
 
 void moul::UIPlayer::start()

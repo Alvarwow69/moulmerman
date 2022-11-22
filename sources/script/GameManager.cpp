@@ -60,6 +60,8 @@ void moul::GameManager::update()
         displayPauseMenu();
     if (sw::isKeyPressed(sw::P))
         m_gameState = (m_gameState == PAUSE ? INGAME : PAUSE);
+    if (sw::isKeyDown(sw::E) && sw::isKeyDown(sw::R))
+        m_gameState = POSTGAME;
 }
 
 void moul::GameManager::countdown()
@@ -152,13 +154,13 @@ void moul::GameManager::spawnPlayers()
         auto& newPlayerCpt = newPlayer.createComponent<moul::Player>("ScriptManager");
         CreateUI(m_gameObject.scene(), i, names[i]);
         newPlayerCpt.m_modelName = names[i];
-        newPlayerCpt.start();
         newPlayer.transform().setPosition(positions[m_playerLeft]);
         newPlayer.transform().scale(8, 8, 8);
         newPlayer.transform().rotate(180);
         newPlayerCpt.m_bombtxt.emplace(m_gameObject.scene().getGameObject("Text_Bomb_UI" + names[i]).getComponent<sw::Text>("TextManager"));
         newPlayerCpt.m_speedtxt.emplace(m_gameObject.scene().getGameObject("Text_Speed_UI" + names[i]).getComponent<sw::Text>("TextManager"));
         newPlayerCpt.m_rangetxt.emplace(m_gameObject.scene().getGameObject("Text_Range_UI" + names[i]).getComponent<sw::Text>("TextManager"));
+        newPlayerCpt.start();
         m_playerLeft++;
     }
 }

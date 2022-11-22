@@ -9,6 +9,7 @@
 #include "script/SelectionPlayer.hpp"
 #include "script/SimpleButton.hpp"
 #include "OpenGLModule.hpp"
+#include "config/Config.hpp"
 
 void moul::SelectionScene::onLoad(sw::EventInfo &info)
 {
@@ -83,7 +84,8 @@ void moul::SelectionScene::onLoad(sw::EventInfo &info)
         button->gameObject().scene().getGameObject("Player2").getComponent<moul::SelectionPlayer>("ScriptManager").saveConf();
         button->gameObject().scene().getGameObject("Player3").getComponent<moul::SelectionPlayer>("ScriptManager").saveConf();
         button->gameObject().scene().getGameObject("Player4").getComponent<moul::SelectionPlayer>("ScriptManager").saveConf();
-        sw::OpenGLModule::sceneManager().loadScene("Game");
+        sw::Config::GetConfig()["Data"]["NewScene"] = "Game";
+        sw::OpenGLModule::sceneManager().loadScene("LoadingScene");
     };
 
     auto& exit = scene.createGameObject("Exit_btn");

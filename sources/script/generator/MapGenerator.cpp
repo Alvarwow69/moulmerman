@@ -83,7 +83,7 @@ void moul::MapGenerator::generateVisual()
     int y = 0;
     for (const auto& line : m_map) {
         for (auto c : line) {
-            auto& newBlock = sw::OpenGLModule::sceneManager().getActiveScene()->createGameObject("Cube" + std::to_string(x) + "-" + std::to_string(y));
+            auto& newBlock = m_gameObject.scene().createGameObject("Cube" + std::to_string(x) + "-" + std::to_string(y));
             newBlock.transform().setPosition(m_origin.x + (float)x, m_origin.y, m_origin.z + (float)y);
             switch (c) {
                 case '*':

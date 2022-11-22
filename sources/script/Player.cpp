@@ -7,6 +7,7 @@
 
 #include "Player.hpp"
 #include "config/Config.hpp"
+#include "GameManager.hpp"
 
 moul::Player::Player(sw::GameObject& gameObject) :
 sw::Component(gameObject),
@@ -39,6 +40,11 @@ void moul::Player::start()
     m_alive = true;
     m_speed = 3.f;
     setKeys();
+    std::stringstream ss;
+    ss << std::setprecision(2) << m_speed;
+    m_bombtxt.value().setText(std::to_string(m_bombAvailable));
+    m_speedtxt.value().setText(ss.str());
+    m_rangetxt.value().setText(std::to_string(m_bombPower));
 }
 
 void moul::Player::updateAnimation()
@@ -54,6 +60,8 @@ void moul::Player::updateAnimation()
 
 void moul::Player::update()
 {
+    if (moul::GameManager::GetGameState() != moul::GameManager::INGAME)
+        return;
     double elapsedTime = sw::OpenGLModule::deltaTime();
 
     if (sw::isKeyDown(m_keys[m_actions::FORWARD])) {
@@ -112,7 +120,7 @@ void moul::Player::bomb()
     if (m_bombAvailable < 1)
         return;
     m_bombAvailable -= 1;
-    auto& newBomb = m_gameObject.scene().createGameObject("Bomb_" + m_gameObject.name() + "_" + std::to_string(m_bombAvailable));
+    auto& newBomb = m_gameObject.scene().createGameObject("Bomb_" + m_gameObject.name() + "_" + std::to_string(m_bombAvailable) + std::to_string(sw::OpenGLModule::chrono().getTotalTime()));
     auto& newBombCpt = newBomb.createComponent<moul::Bomb>("ScriptManager");
     newBombCpt.m_player.emplace(*this);
     newBombCpt.start();
