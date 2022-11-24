@@ -23,7 +23,7 @@ namespace moul
         void generateVisual();
         void generatePlayers(int playerNbr);
 
-        [[nodiscard]] const std::vector<std::string>& getMap() const;
+        [[nodiscard]] std::vector<std::string>& getMap();
 
         sw::Vector3f m_origin;
         sw::Vector2i m_size;

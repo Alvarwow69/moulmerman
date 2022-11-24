@@ -24,13 +24,13 @@ void moul::UIPlayer::start()
     m_sprite.value().setTexture(m_textureName);
     auto& txtBomb = m_gameObject.scene().createGameObject("Text_Bomb_" + m_gameObject.name());
     m_bomb.emplace(txtBomb.createComponent<sw::Text>("TextManager"));
-    m_bomb.value().setText("PLACEHOLDER").setPosition(txtPos.x, txtPos.y);
+    m_bomb.value().setText("PLACEHOLDER").setPosition(txtPos.x, txtPos.y - 83);
     auto& txtRange = m_gameObject.scene().createGameObject("Text_Range_" + m_gameObject.name());
     m_range.emplace(txtRange.createComponent<sw::Text>("TextManager"));
     m_range.value().setText("PLACEHOLDER").setPosition(txtPos.x, txtPos.y - 40);
     auto& txtSpeed = m_gameObject.scene().createGameObject("Text_Speed_" + m_gameObject.name());
     m_speed.emplace(txtSpeed.createComponent<sw::Text>("TextManager"));
-    m_speed.value().setText("PLACEHOLDER").setPosition(txtPos.x, txtPos.y - 83);
+    m_speed.value().setText("PLACEHOLDER").setPosition(txtPos.x, txtPos.y);
 
 }
 

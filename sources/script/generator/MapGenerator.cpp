@@ -6,6 +6,7 @@
 #include "generator/MapGenerator.hpp"
 #include "OpenGLModule.hpp"
 #include "components/Components.hpp"
+#include "script/Block.hpp"
 
 moul::MapGenerator::MapGenerator(sw::GameObject &gameObject) :
 sw::Component(gameObject),
@@ -83,19 +84,25 @@ void moul::MapGenerator::generateVisual()
     int y = 0;
     for (const auto& line : m_map) {
         for (auto c : line) {
+            if (c != ' ' && c != '*') {
+                x++;
+                continue;
+            }
             auto& newBlock = m_gameObject.scene().createGameObject("Cube" + std::to_string(x) + "-" + std::to_string(y));
             newBlock.transform().setPosition(m_origin.x + (float)x, m_origin.y, m_origin.z + (float)y);
+            auto& newBlockCpt = newBlock.createComponent<moul::Block>("ScriptManager");
             switch (c) {
                 case '*':
-                    newBlock.createComponent<sw::MeshRenderer>("MeshRendererManager", "Unbreakable_Block");
+                    newBlockCpt.m_modelName = "Unbreakable_Block";
                     break;
                 case ' ':
-                    newBlock.createComponent<sw::MeshRenderer>("MeshRendererManager", "Block");
+                    newBlockCpt.m_modelName = "Block";
                     break;
                 default:
                     break;
             }
             x++;
+            newBlockCpt.start();
         }
         y++;
         x = 0;
@@ -111,7 +118,7 @@ void moul::MapGenerator::generatePlayers(int playerNbr)
     }
 }
 
-const std::vector<std::string>& moul::MapGenerator::getMap() const
+std::vector<std::string>& moul::MapGenerator::getMap()
 {
     return (m_map);
 }

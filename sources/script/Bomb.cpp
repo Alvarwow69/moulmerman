@@ -8,6 +8,7 @@
 #include "Fire.hpp"
 #include "GameManager.hpp"
 #include "script/Player.hpp"
+#include "script/Block.hpp"
 
 const int xIndex[4] = {1, 0, -1, 0};
 const int zIndex[4] = {0, 1, 0, -1};
@@ -18,7 +19,7 @@ m_modelName("Bomb"),
 m_animTime(0.0f),
 m_explosionTime(3.0f),
 m_hasExploded(false),
-m_power(4),
+m_power(1),
 m_spentTime(0.0f),
 m_lastTime(0.0f),
 m_player()
@@ -103,6 +104,11 @@ void moul::Bomb::explode()
             newFire.createComponent<moul::Fire>("ScriptManager").start();
             newFire.transform().setPosition(currentPos.x + i * xIndex[p], currentPos.y, currentPos.z + i * zIndex[p]);
             newFire.transform().setScale(3, 3, 3);
+
+            if (map[(currentPos.x - origin.x) + i * xIndex[p]].at((currentPos.z - origin.z) + i * zIndex[p] + 1) != 'e') {
+                m_gameObject.scene().getGameObject("Cube" + std::to_string(int((currentPos.x - origin.x) + i * xIndex[p])) + "-" + std::to_string(int((currentPos.z - origin.z) + i * zIndex[p] + 1))).getComponent<moul::Block>("ScriptManager").explode();
+                map[(currentPos.x - origin.x) + i * xIndex[p]][(currentPos.z - origin.z) + i * zIndex[p] + 1] = 'e';
+            }
         }
     }
 }
