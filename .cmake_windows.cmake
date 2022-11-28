@@ -79,6 +79,9 @@ target_include_directories(${EXEC} PRIVATE ${INC_FOLDERS})
 if (UNIX)
     target_compile_options(${EXEC} PRIVATE -g3)
 endif (UNIX)
+if(MSVC)
+    target_compile_options(${EXEC} PRIVATE "/MP")
+endif()
 ## <=====================================>
 
 

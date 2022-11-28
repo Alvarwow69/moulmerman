@@ -113,12 +113,16 @@ void moul::Player::update()
         auto& ntmp = m_gameObject.transform().getGlobalPosition();
         min = { ntmp.z - 0.25f, ntmp.x - 0.25f };
         max = { min.x + 0.50f, min.y + 0.50f };
+        /*
         std::cout << "Player update ------" << std::endl;
         std::cout << "current position: " << ntmp << std::endl;
         std::cout << "hitbox: min = " << min << " max = " << max;
+        */
         m_gameObject.scene().m_tree.update(m_gameObject.id, min, max, true);
+        /*
         std::cout << "node position: min = " << m_gameObject.scene().m_tree.get_aabb(m_gameObject.id).min() << " max = " << m_gameObject.scene().m_tree.get_aabb(m_gameObject.id).max();
         std::cout << "----------" << std::endl;
+        */
     }
 
     if (sw::isKeyDown(m_keys[m_actions::BOMB])) {
