@@ -81,20 +81,28 @@ void moul::MapGenerator::generateVisual()
 {
     int x = 0;
     int y = 0;
+    int i = 1;
     for (const auto& line : m_map) {
         for (auto c : line) {
-            auto& newBlock = sw::OpenGLModule::sceneManager().getActiveScene()->createGameObject("Cube" + std::to_string(x) + "-" + std::to_string(y));
+            auto scene = sw::OpenGLModule::sceneManager().getActiveScene();
+            auto& newBlock = scene->createGameObject("Cube" + std::to_string(x) + "-" + std::to_string(y));
             newBlock.transform().setPosition(m_origin.x + (float)x, m_origin.y, m_origin.z + (float)y);
+            auto &trans = newBlock.transform().getGlobalPosition();
             switch (c) {
                 case '*':
                     newBlock.createComponent<sw::MeshRenderer>("MeshRendererManager", "Unbreakable_Block");
+                    //scene->m_lut.emplace(i, block comp);
+                    scene->m_tree.insert(i, {trans.z, trans.x}, {trans.z + 0.1f, trans.x + 0.1f});
                     break;
                 case ' ':
                     newBlock.createComponent<sw::MeshRenderer>("MeshRendererManager", "Block");
+                    //scene->m_lut.emplace(i, block comp);
+                    scene->m_tree.insert(i, {trans.z, trans.x}, {trans.z + 0.1f, trans.x + 0.1f});
                     break;
                 default:
                     break;
             }
+            i++;
             x++;
         }
         y++;

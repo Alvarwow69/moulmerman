@@ -8,6 +8,7 @@
 
 #include "components/Components.hpp"
 #include "components/MeshRenderer.hpp"  
+#include "components/BoxCollider.hpp"
 #include "Bomb.hpp"
 #include "SelectionPlayerType.hpp"
 #include "utils/Inputs.hpp"
@@ -53,6 +54,7 @@ namespace moul
             sw::Reference<SelectionPlayerType> m_type;
             sw::Reference<sw::MeshRenderer> m_mesh;
             sw::Reference<sw::ModelAnimator> m_animator;
+            //sw::Reference<sw::BoxCollider> m_collider;
             void bomb();
             void setKeys();
             void die();
