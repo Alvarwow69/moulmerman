@@ -45,6 +45,7 @@ void moul::GameManager::start()
     m_text.value().setText("4");
     m_text.value().setPosition(900, 500);
 
+    m_gameObject.scene().eventManager.create("Collision");
     spawnPlayers();
 }
 
@@ -161,6 +162,19 @@ void moul::GameManager::spawnPlayers()
         newPlayerCpt.m_bombtxt.emplace(m_gameObject.scene().getGameObject("Text_Bomb_UI" + names[i]).getComponent<sw::Text>("TextManager"));
         newPlayerCpt.m_speedtxt.emplace(m_gameObject.scene().getGameObject("Text_Speed_UI" + names[i]).getComponent<sw::Text>("TextManager"));
         newPlayerCpt.m_rangetxt.emplace(m_gameObject.scene().getGameObject("Text_Range_UI" + names[i]).getComponent<sw::Text>("TextManager"));
+
+        /*
+        sw::Vector2f min = ...
+        sw::Vector2f max = ...
+        */
+        auto &trans = newPlayer.transform().getPosition();
+        //auto &size = newPlayer.getComponent<sw::BoxCollider>("BoxColliderManager").getSize();
+
+        sw::Vector2f min{trans.z - 0.25f, trans.x - 0.25f};
+        sw::Vector2f max{min.x + 0.5f, min.y + 0.5f};
+        newPlayer.id = i + 800;
+        m_gameObject.scene().m_tree.insert(newPlayer.id, min, max);
+        m_gameObject.scene().m_lut.emplace(newPlayer.id, newPlayerCpt);
         newPlayerCpt.start();
         m_playerLeft++;
     }

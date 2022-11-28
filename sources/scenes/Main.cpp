@@ -48,6 +48,7 @@ void Main::onLoad(sw::EventInfo& info)
         sw::Config::GetConfig()["Data"]["NewScene"] = "SelectionScene";
         sw::OpenGLModule::sceneManager().loadScene("LoadingScene");
     };
+
     auto& cpt_settings = setting.createComponent<moul::SimpleButton>("ScriptManager");
     cpt_settings.m_textureName = "Button_Setting";
     cpt_settings.m_position = {650, 500, 0};
