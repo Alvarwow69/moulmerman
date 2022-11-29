@@ -2,6 +2,9 @@ set( EXEC moulmerman )
 set( EXT cpp )
 
 add_definitions(-DYAML_CPP_STATIC_DEFINE)
+add_definitions(-D_WIN32_WINDOWS)
+add_definitions(-DBOOST_CONTAINER_NO_LIB)
+add_definitions(-DBOOST_JSON_NO_LIB)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
     set(DEBUG_SUFFIX "d")

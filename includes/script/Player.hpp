@@ -54,6 +54,7 @@ namespace moul
             sw::Reference<SelectionPlayerType> m_type;
             sw::Reference<sw::MeshRenderer> m_mesh;
             sw::Reference<sw::ModelAnimator> m_animator;
+            sw::Reference<sw::Primitive> m_primitive;
             //sw::Reference<sw::BoxCollider> m_collider;
             void bomb();
             void setKeys();

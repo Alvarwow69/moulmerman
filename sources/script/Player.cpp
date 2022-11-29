@@ -39,6 +39,17 @@ void moul::Player::start()
     m_animator.emplace(m_gameObject.createComponent<sw::ModelAnimator>("ModelAnimatorManager", "Player_idle"));
     m_animator.value().attachModel(m_modelName);
     m_mesh.value().m_animator.emplace(m_animator.value());
+
+    m_primitive.emplace(m_gameObject.createComponent<sw::Primitive>("PrimitiveManager"));
+    m_primitive.value().m_array[0].position = {0.00f, 0.2f, 0.0f};
+    m_primitive.value().m_array[1].position = {0.05f, 0.2f, 0.0f};
+    m_primitive.value().m_array[2].position = {0.05f, 0.2f, 0.1f};
+    m_primitive.value().m_array[3].position = {0.00f, 0.2f, 0.1f};
+    m_primitive.value().m_array[0].color = {1, 1, 0};
+    m_primitive.value().m_array[1].color = {1, 1, 0};
+    m_primitive.value().m_array[2].color = {1, 1, 0};
+    m_primitive.value().m_array[3].color = {1, 1, 0};
+
     m_alive = true;
     m_speed = 3.f;
     //m_collider.emplace(m_gameObject.createComponent<sw::BoxCollider>("BoxColliderManager"));
@@ -67,6 +78,7 @@ void moul::Player::update()
     if (moul::GameManager::GetGameState() != moul::GameManager::INGAME)
         return;
     double elapsedTime = sw::OpenGLModule::deltaTime();
+    sw::Vector2f size = {0.05f, 0.15f};
     
     std::array<std::byte, sizeof(size_t) * 256> buffer; // enough to fit in all nodes
     std::pmr::monotonic_buffer_resource mbr{buffer.data(), buffer.size()};
@@ -79,58 +91,50 @@ void moul::Player::update()
     sw::Vector2f max{};
 
     if (sw::isKeyDown(m_keys[m_actions::FORWARD])) {
-        min = {tmp.z - 0.25f, (tmp.x - 0.25f) + static_cast<float>(m_speed * elapsedTime)};
-        max = {min.x + 0.50f, (min.y + 0.50f)};
+        min = {tmp.z - size.x, (tmp.x - size.x) + static_cast<float>(m_speed * elapsedTime)};
+        max = {min.x + size.y, (min.y + size.y)};
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
-        {
             m_gameObject.transform().move(0, 0, m_speed * elapsedTime);
-            m_gameObject.transform().setRotation(0);
-        }
+        m_gameObject.transform().setRotation(0);
     } else if (sw::isKeyDown(m_keys[m_actions::BACKWARD])) {
-        min = {tmp.z - 0.25f, (tmp.x - 0.25f) + static_cast<float>(-m_speed * elapsedTime)};
-        max = {min.x + 0.50f, (min.y + 0.50f)};
+        min = {tmp.z - size.x, (tmp.x - size.x) + static_cast<float>(-m_speed * elapsedTime)};
+        max = {min.x + size.y, (min.y + size.y)};
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
-        {
             m_gameObject.transform().move(0, 0, -m_speed * elapsedTime);
-            m_gameObject.transform().setRotation(180);
-        }
+        m_gameObject.transform().setRotation(180);
     } else if (sw::isKeyDown(m_keys[m_actions::LEFT])) {
-        min = {(tmp.z - 0.25f) + static_cast<float>(m_speed * elapsedTime), (tmp.x - 0.25f)};
-        max = {(min.x + 0.50f), (min.y + .50f)};
+        min = {(tmp.z - size.x) + static_cast<float>(m_speed * elapsedTime), (tmp.x - size.x)};
+        max = {(min.x + size.y), (min.y + size.y)};
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
-        {
             m_gameObject.transform().move(m_speed * elapsedTime, 0, 0);
-            m_gameObject.transform().setRotation(90);
-        }
+        m_gameObject.transform().setRotation(90);
     } else if (sw::isKeyDown(m_keys[m_actions::RIGHT])) {
-        min = {(tmp.z - 0.25f) + static_cast<float>(-m_speed * elapsedTime), (tmp.x - 0.25f)};
-        max = {(min.x + 0.50f), (min.y + 0.50f)};
+        min = {(tmp.z - size.x) + static_cast<float>(-m_speed * elapsedTime), (tmp.x - size.x)};
+        max = {(min.x + size.y), (min.y + size.y)};
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
-        {
             m_gameObject.transform().move(-m_speed * elapsedTime, 0, 0);
-            m_gameObject.transform().setRotation(-90);
-        }
+        m_gameObject.transform().setRotation(-90);
     }
 
     if (m_gameObject.id >= 0)
     {
         auto& ntmp = m_gameObject.transform().getGlobalPosition();
         min = { ntmp.z - 0.25f, ntmp.x - 0.25f };
-        max = { min.x + 0.50f, min.y + 0.50f };
-        /*
-        std::cout << "Player update ------" << std::endl;
-        std::cout << "current position: " << ntmp << std::endl;
-        std::cout << "hitbox: min = " << min << " max = " << max;
-        */
+        max = { min.x + 0.25f, min.y + 0.25f };
+
+        //std::cout << "Player update ------" << std::endl;
+        //std::cout << "current position: " << ntmp << std::endl;
+        //std::cout << "hitbox: min = " << min << " max = " << max;
+
         m_gameObject.scene().m_tree.update(m_gameObject.id, min, max, true);
-        /*
-        std::cout << "node position: min = " << m_gameObject.scene().m_tree.get_aabb(m_gameObject.id).min() << " max = " << m_gameObject.scene().m_tree.get_aabb(m_gameObject.id).max();
-        std::cout << "----------" << std::endl;
-        */
+
+        //  std::cout << "node position: min = " << m_gameObject.scene().m_tree.get_aabb(m_gameObject.id).min() << " max = " << m_gameObject.scene().m_tree.get_aabb(m_gameObject.id).max();
+        //std::cout << "----------" << std::endl;
+
     }
 
     if (sw::isKeyDown(m_keys[m_actions::BOMB])) {

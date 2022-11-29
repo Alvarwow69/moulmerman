@@ -7,7 +7,6 @@
 #define MOULERMAN_BLOCK_HPP
 
 #include "components/Components.hpp"
-#include "components/MeshRenderer.hpp"  
 #include "OpenGLModule.hpp"
 
 namespace moul
@@ -22,6 +21,7 @@ namespace moul
         std::string m_modelName;
     private:
         sw::Reference<sw::MeshRenderer> m_mesh;
+        sw::Reference<sw::Primitive> m_primitive;
     }; // class Block
 } // namespace moul
 
