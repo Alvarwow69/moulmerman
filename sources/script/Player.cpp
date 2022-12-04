@@ -41,10 +41,10 @@ void moul::Player::start()
     m_mesh.value().m_animator.emplace(m_animator.value());
 
     m_primitive.emplace(m_gameObject.createComponent<sw::Primitive>("PrimitiveManager"));
-    m_primitive.value().m_array[0].position = {0.00f, 0.2f, 0.0f};
-    m_primitive.value().m_array[1].position = {0.05f, 0.2f, 0.0f};
-    m_primitive.value().m_array[2].position = {0.05f, 0.2f, 0.1f};
-    m_primitive.value().m_array[3].position = {0.00f, 0.2f, 0.1f};
+    m_primitive.value().m_array[0].position = {-0.025f, 0.2f, -0.025f};
+    m_primitive.value().m_array[1].position = {0.025f, 0.2f, -0.025f};
+    m_primitive.value().m_array[2].position = {0.025f, 0.2f, 0.025f};
+    m_primitive.value().m_array[3].position = {-0.025f, 0.2f, 0.025f};
     m_primitive.value().m_array[0].color = {1, 1, 0};
     m_primitive.value().m_array[1].color = {1, 1, 0};
     m_primitive.value().m_array[2].color = {1, 1, 0};
@@ -78,7 +78,7 @@ void moul::Player::update()
     if (moul::GameManager::GetGameState() != moul::GameManager::INGAME)
         return;
     double elapsedTime = sw::OpenGLModule::deltaTime();
-    sw::Vector2f size = {0.05f, 0.15f};
+    sw::Vector2f size = {0.3f, 0.3f};
     
     std::array<std::byte, sizeof(size_t) * 256> buffer; // enough to fit in all nodes
     std::pmr::monotonic_buffer_resource mbr{buffer.data(), buffer.size()};
@@ -87,33 +87,38 @@ void moul::Player::update()
 
     //std::vector<int> candidates;
     auto &tmp = m_gameObject.transform().getGlobalPosition();
-    sw::Vector2f min{};
-    sw::Vector2f max{};
+    sw::Vector2f min{tmp.x - size.x, tmp.z - size.x};
+    sw::Vector2f max{tmp.x + size.y, tmp.z + size.y};
+
+    m_primitive.value().m_array[0].position = {min.x, tmp.y + 1.1f, min.y};
+    m_primitive.value().m_array[1].position = {max.x, tmp.y + 1.1f, min.y};
+    m_primitive.value().m_array[2].position = {max.x, tmp.y + 1.1f, max.y};
+    m_primitive.value().m_array[3].position = {min.x, tmp.y + 1.1f, max.y};
 
     if (sw::isKeyDown(m_keys[m_actions::FORWARD])) {
-        min = {tmp.z - size.x, (tmp.x - size.x) + static_cast<float>(m_speed * elapsedTime)};
-        max = {min.x + size.y, (min.y + size.y)};
+        min.y += m_speed * elapsedTime;
+        max.y += m_speed * elapsedTime;
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
             m_gameObject.transform().move(0, 0, m_speed * elapsedTime);
         m_gameObject.transform().setRotation(0);
     } else if (sw::isKeyDown(m_keys[m_actions::BACKWARD])) {
-        min = {tmp.z - size.x, (tmp.x - size.x) + static_cast<float>(-m_speed * elapsedTime)};
-        max = {min.x + size.y, (min.y + size.y)};
+        min.y += -m_speed * elapsedTime;
+        max.y += -m_speed * elapsedTime;
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
             m_gameObject.transform().move(0, 0, -m_speed * elapsedTime);
         m_gameObject.transform().setRotation(180);
     } else if (sw::isKeyDown(m_keys[m_actions::LEFT])) {
-        min = {(tmp.z - size.x) + static_cast<float>(m_speed * elapsedTime), (tmp.x - size.x)};
-        max = {(min.x + size.y), (min.y + size.y)};
+        min.x += m_speed * elapsedTime;
+        max.x += m_speed * elapsedTime;
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
             m_gameObject.transform().move(m_speed * elapsedTime, 0, 0);
         m_gameObject.transform().setRotation(90);
     } else if (sw::isKeyDown(m_keys[m_actions::RIGHT])) {
-        min = {(tmp.z - size.x) + static_cast<float>(-m_speed * elapsedTime), (tmp.x - size.x)};
-        max = {(min.x + size.y), (min.y + size.y)};
+        min.x += -m_speed * elapsedTime;
+        max.x += -m_speed * elapsedTime;
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
             m_gameObject.transform().move(-m_speed * elapsedTime, 0, 0);
@@ -141,10 +146,6 @@ void moul::Player::update()
         bomb();
     }
     updateAnimation();
-    /*
-    for (auto& it = *m_bombs.begin(); it != *m_bombs.end(); it++) {
-    }
-    */
 
     std::stringstream ss;
     ss << std::setprecision(2) << m_speed;
@@ -183,8 +184,8 @@ void moul::Player::bomb()
     auto& newBomb = m_gameObject.scene().createGameObject("Bomb_" + m_gameObject.name() + "_" + std::to_string(m_bombAvailable) + std::to_string(sw::OpenGLModule::chrono().getTotalTime()));
     auto& newBombCpt = newBomb.createComponent<moul::Bomb>("ScriptManager");
     newBombCpt.m_player.emplace(*this);
-    newBombCpt.start();
     newBomb.transform().setPosition(((int)m_gameObject.transform().getGlobalPosition().x) + 0.5f, m_gameObject.transform().getGlobalPosition().y, ((int)m_gameObject.transform().getGlobalPosition().z) - 0.5f );
+    newBombCpt.start();
 }
 
 void moul::Player::die()

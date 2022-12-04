@@ -92,18 +92,19 @@ void moul::MapGenerator::generateVisual()
             auto& scene = m_gameObject.scene();
             auto& newBlock = scene.createGameObject("Cube" + std::to_string(x) + "-" + std::to_string(y));
             newBlock.transform().setPosition(m_origin.x + (float)x, m_origin.y, m_origin.z + (float)y);
+            newBlock.id = i;
             auto& newBlockCpt = newBlock.createComponent<moul::Block>("ScriptManager");
             auto &trans = newBlock.transform().getGlobalPosition();
             switch (c) {
                 case '*':
                     newBlockCpt.m_modelName = "Unbreakable_Block";
                     //scene->m_lut.emplace(i, block comp);
-                    scene.m_tree.insert(i, {trans.z - 1.0f, trans.x - 1.0f}, {trans.z, trans.x});
+                    scene.m_tree.insert(i, {trans.x, trans.z - 1.0f}, {trans.x + 1.0f, trans.z});
                     break;
                 case ' ':
                     newBlockCpt.m_modelName = "Block";
                     //scene->m_lut.emplace(i, block comp);
-                    scene.m_tree.insert(i, {trans.z - 1.0f, trans.x - 1.0f}, {trans.z, trans.x});
+                    scene.m_tree.insert(i, {trans.x, trans.z - 1.0f}, {trans.x + 1.0f, trans.z});
                     break;
                 default:
                     break;

@@ -20,24 +20,24 @@ void moul::GameScene::onLoad(sw::EventInfo &info)
     scene.eventManager.create("PlayerDie");
 
     auto& mainCamera = scene.createGameObject("MainCamera");
-    sw::ConcreteComponent auto& camera = mainCamera.createComponent<inc::CameraFPS>("ScriptManager");
-    //sw::ConcreteComponent auto& camera = mainCamera.createComponent<sw::Camera>("CameraManager");
-    //mainCamera.transform().move(13.5, 27, -43);
-    //camera.setClippingNear(0.01);
-    //camera.setClippingFar(10000);
-    //camera.setPitch(-56);
-    //camera.setYaw(90);
+    //sw::ConcreteComponent auto& camera = mainCamera.createComponent<inc::CameraFPS>("ScriptManager");
+    sw::ConcreteComponent auto& camera = mainCamera.createComponent<sw::Camera>("CameraManager");
+    mainCamera.transform().move(13.5, 27, -43);
+    camera.setClippingNear(0.01);
+    camera.setClippingFar(10000);
+    camera.setPitch(-56);
+    camera.setYaw(90);
 
     auto& gameManager = scene.createGameObject("GameManager");
     gameManager.createComponent<moul::GameManager>("ScriptManager");
 
-    //auto& map = scene.createGameObject("Map");
-    //map.transform().scale(3.5f, 3.5f, 3.5f);
-    //auto& mapMesh = map.createComponent<sw::MeshRenderer>("MeshRendererManager", "Game_map");
+    auto& map = scene.createGameObject("Map");
+    map.transform().scale(3.5f, 3.5f, 3.5f);
+    auto& mapMesh = map.createComponent<sw::MeshRenderer>("MeshRendererManager", "Game_map");
 
     auto& directLight = scene.createGameObject("DirLight");
     auto& directLightCpt = directLight.createComponent<sw::Light>("LightManager");
-    //mapMesh.attachLight("DirLight");
+    mapMesh.attachLight("DirLight");
     directLightCpt.m_ambient = {0.6f, 0.6f, 0.6f};
     directLightCpt.m_diffuse = {0.6f, 0.6f, 0.6f};
 
