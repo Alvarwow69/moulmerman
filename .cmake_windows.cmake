@@ -21,6 +21,8 @@ set( SHARED_LIB_NAME
         freetype
         )
 
+set( CMAKE_CXX_FLAGS_DEBUG /MP)
+
 ## IMPORTED SHARED LIBRARY LOCATION
 set( SHARED_LIB_LOCATION
         ${CMAKE_SOURCE_DIR}/libraries/${CMAKE_BUILD_TYPE}/Jsnp.dll

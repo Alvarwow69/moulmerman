@@ -111,6 +111,7 @@ void moul::MapGenerator::generateVisual()
             }
             i++;
             x++;
+            newBlockCpt.m_pos = {static_cast<float>(x), static_cast<float>(y)};
             newBlockCpt.start();
         }
         y++;

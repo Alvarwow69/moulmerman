@@ -32,9 +32,9 @@ namespace moul
             void start();
             bool isAlive();
             explicit Player(sw::GameObject& gameObject);
-            void increaseMaxBomb();
-            void increaseBombPower();
-            void increaseSpeed();
+            void increaseMaxBomb(int neg = 0);
+            void increaseBombPower(int neg = 0);
+            void increaseSpeed(int neg = 0);
             void addBomb();
         private:
             enum m_actions {

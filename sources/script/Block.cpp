@@ -4,6 +4,7 @@
 */
 
 #include "Block.hpp"
+#include "script/modifier/BombModifier.hpp"
 
 moul::Block::Block(sw::GameObject& gameObject) :
 sw::Component(gameObject),
@@ -31,11 +32,20 @@ void moul::Block::start()
     m_primitive.value().m_array[3].color = {0, 0, 1};
 }
 
+void moul::Block::createBomb()
+{
+    auto& newBomb = m_gameObject.scene().createGameObject("Bonus-" + std::to_string(m_pos.x) + "-" + std::to_string(m_pos.y));
+    auto& newBombCpt = newBomb.createComponent<moul::BombModifier>("ScriptManager");
+    newBomb.transform().setPosition(m_gameObject.transform().getGlobalPosition().x + 0.5f, m_gameObject.transform().getGlobalPosition().y + 0.5f, m_gameObject.transform().getGlobalPosition().z - 0.5f);
+    newBombCpt.m_modelName = "Modifier_Bomb";
+    newBombCpt.start();
+}
+
 void moul::Block::explode()
 {
     m_gameObject.setActive(false);
     m_gameObject.scene().m_tree.erase(m_gameObject.id);
     m_gameObject.scene().m_lut.erase(m_gameObject.id);
     if (std::rand() % 100 <= 5)
-        std::cout << "Bonus" << std::endl;
+        createBomb();
 }

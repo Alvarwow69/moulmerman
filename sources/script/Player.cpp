@@ -8,6 +8,7 @@
 #include "Player.hpp"
 #include "config/Config.hpp"
 #include "GameManager.hpp"
+#include "script/modifier/BombModifier.hpp"
 
 #include <memory_resource> //magic trick
 
@@ -104,10 +105,11 @@ void moul::Player::update()
         else if (list.size() == 1) {
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
-                if (!bomb)
-                    continue;
-                if (!bomb->m_enable)
+                auto* bonus = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
+                if (bomb && !bomb->m_enable)
                     m_gameObject.transform().move(0, 0, m_speed * elapsedTime);
+                else if (bonus)
+                    bonus->applyModifier(*this);
             }
         }
         m_gameObject.transform().setRotation(0);
@@ -120,10 +122,11 @@ void moul::Player::update()
         else if (list.size() == 1) {
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
-                if (!bomb)
-                    continue;
-                if (!bomb->m_enable)
+                auto* bonus = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
+                if (bomb && !bomb->m_enable)
                     m_gameObject.transform().move(0, 0, -m_speed * elapsedTime);
+                else if (bonus)
+                    bonus->applyModifier(*this);
             }
         }
         m_gameObject.transform().setRotation(180);
@@ -136,10 +139,11 @@ void moul::Player::update()
         else if (list.size() == 1) {
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
-                if (!bomb)
-                    continue;
-                if (!bomb->m_enable)
+                auto* bonus = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
+                if (bomb && !bomb->m_enable)
                     m_gameObject.transform().move(m_speed * elapsedTime, 0, 0);
+                else if (bonus)
+                    bonus->applyModifier(*this);
             }
         }
         m_gameObject.transform().setRotation(90);
@@ -152,18 +156,18 @@ void moul::Player::update()
         else if (list.size() == 1) {
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
-                if (!bomb)
-                    continue;
-                if (!bomb->m_enable)
+                auto* bonus = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
+                if (bomb && !bomb->m_enable)
                     m_gameObject.transform().move(-m_speed * elapsedTime, 0, 0);
+                else if (bonus)
+                    bonus->applyModifier(*this);
             }
         }
         m_gameObject.transform().setRotation(-90);
     }
 
-    if (sw::isKeyDown(m_keys[m_actions::BOMB])) {
+    if (sw::isKeyPressed(m_keys[m_actions::BOMB]))
         bomb();
-    }
     updateAnimation();
 
     std::stringstream ss;
@@ -174,20 +178,31 @@ void moul::Player::update()
     m_rangetxt.value().setText(std::to_string(m_bombPower));
 }
 
-void moul::Player::increaseMaxBomb()
+void moul::Player::increaseMaxBomb(int neg)
 {
-    m_bombNumberTotal += 1;
-    m_bombAvailable += 1;
+    if (neg) {
+        m_bombNumberTotal -= 1;
+        m_bombAvailable = (m_bombAvailable == m_bombNumberTotal ? m_bombAvailable - 1 : m_bombAvailable);
+    } else {
+        m_bombNumberTotal += 1;
+        m_bombAvailable += 1;
+    }
 }
 
-void moul::Player::increaseBombPower()
+void moul::Player::increaseBombPower(int neg)
 {
-    m_bombPower += 1;
+    if (neg)
+        m_bombPower -= 1;
+    else
+        m_bombPower += 1;
 }
 
-void moul::Player::increaseSpeed()
+void moul::Player::increaseSpeed(int neg)
 {
-    m_speed += 1;
+    if (neg)
+        m_speed -= 1;
+    else
+        m_speed += 1;
 }
 
 void moul::Player::addBomb()

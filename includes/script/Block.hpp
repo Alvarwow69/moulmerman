@@ -19,8 +19,11 @@ namespace moul
         explicit Block(sw::GameObject& gameObject);
         ~Block() override;
         std::string m_modelName;
+        sw::Vector2f m_pos;
     private:
         sw::Reference<sw::MeshRenderer> m_mesh;
+
+        void createBomb();
         sw::Reference<sw::Primitive> m_primitive;
     }; // class Block
 } // namespace moul
