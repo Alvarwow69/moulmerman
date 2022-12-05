@@ -23,6 +23,8 @@ namespace moul
         float m_spentTime;
         float m_durationTime;
         sw::Reference<sw::MeshRenderer> m_mesh;
+        sw::Reference<sw::Primitive> m_primitive;
+
     }; // class Fire
 } // namespace moul
 

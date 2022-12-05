@@ -29,6 +29,7 @@ namespace moul
 
         [[nodiscard]] static GameState GetGameState();
         [[nodiscard]] static MapGenerator& GetMap();
+
     private:
         void countdown();
         void displayPauseMenu();

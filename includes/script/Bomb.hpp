@@ -28,6 +28,7 @@ namespace moul
         explicit Bomb(sw::GameObject& gameObject);
         ~Bomb() override;
         sw::Reference<moul::Player> m_player;
+        bool m_enable;
     private:
         bool m_hasExploded = false;
         float m_spentTime;
@@ -37,6 +38,7 @@ namespace moul
         float m_lastTime;
         sw::Reference<sw::MeshRenderer> m_mesh;
         sw::Reference<sw::AudioSource> m_audio;
+        sw::Reference<sw::Primitive> m_primitive;
     };
 }
 

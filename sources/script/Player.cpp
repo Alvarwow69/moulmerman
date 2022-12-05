@@ -101,6 +101,15 @@ void moul::Player::update()
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
             m_gameObject.transform().move(0, 0, m_speed * elapsedTime);
+        else if (list.size() == 1) {
+            for (auto element : list) {
+                auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
+                if (!bomb)
+                    continue;
+                if (!bomb->m_enable)
+                    m_gameObject.transform().move(0, 0, m_speed * elapsedTime);
+            }
+        }
         m_gameObject.transform().setRotation(0);
     } else if (sw::isKeyDown(m_keys[m_actions::BACKWARD])) {
         min.y += -m_speed * elapsedTime;
@@ -108,6 +117,15 @@ void moul::Player::update()
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
             m_gameObject.transform().move(0, 0, -m_speed * elapsedTime);
+        else if (list.size() == 1) {
+            for (auto element : list) {
+                auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
+                if (!bomb)
+                    continue;
+                if (!bomb->m_enable)
+                    m_gameObject.transform().move(0, 0, -m_speed * elapsedTime);
+            }
+        }
         m_gameObject.transform().setRotation(180);
     } else if (sw::isKeyDown(m_keys[m_actions::LEFT])) {
         min.x += m_speed * elapsedTime;
@@ -115,6 +133,15 @@ void moul::Player::update()
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
             m_gameObject.transform().move(m_speed * elapsedTime, 0, 0);
+        else if (list.size() == 1) {
+            for (auto element : list) {
+                auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
+                if (!bomb)
+                    continue;
+                if (!bomb->m_enable)
+                    m_gameObject.transform().move(m_speed * elapsedTime, 0, 0);
+            }
+        }
         m_gameObject.transform().setRotation(90);
     } else if (sw::isKeyDown(m_keys[m_actions::RIGHT])) {
         min.x += -m_speed * elapsedTime;
@@ -122,24 +149,16 @@ void moul::Player::update()
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
             m_gameObject.transform().move(-m_speed * elapsedTime, 0, 0);
+        else if (list.size() == 1) {
+            for (auto element : list) {
+                auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
+                if (!bomb)
+                    continue;
+                if (!bomb->m_enable)
+                    m_gameObject.transform().move(-m_speed * elapsedTime, 0, 0);
+            }
+        }
         m_gameObject.transform().setRotation(-90);
-    }
-
-    if (m_gameObject.id >= 0)
-    {
-        auto& ntmp = m_gameObject.transform().getGlobalPosition();
-        min = { ntmp.z - 0.25f, ntmp.x - 0.25f };
-        max = { min.x + 0.25f, min.y + 0.25f };
-
-        //std::cout << "Player update ------" << std::endl;
-        //std::cout << "current position: " << ntmp << std::endl;
-        //std::cout << "hitbox: min = " << min << " max = " << max;
-
-        m_gameObject.scene().m_tree.update(m_gameObject.id, min, max, true);
-
-        //  std::cout << "node position: min = " << m_gameObject.scene().m_tree.get_aabb(m_gameObject.id).min() << " max = " << m_gameObject.scene().m_tree.get_aabb(m_gameObject.id).max();
-        //std::cout << "----------" << std::endl;
-
     }
 
     if (sw::isKeyDown(m_keys[m_actions::BOMB])) {

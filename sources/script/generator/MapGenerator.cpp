@@ -98,12 +98,12 @@ void moul::MapGenerator::generateVisual()
             switch (c) {
                 case '*':
                     newBlockCpt.m_modelName = "Unbreakable_Block";
-                    //scene->m_lut.emplace(i, block comp);
+                    scene.m_lut.emplace(i, newBlockCpt);
                     scene.m_tree.insert(i, {trans.x, trans.z - 1.0f}, {trans.x + 1.0f, trans.z});
                     break;
                 case ' ':
                     newBlockCpt.m_modelName = "Block";
-                    //scene->m_lut.emplace(i, block comp);
+                    scene.m_lut.emplace(i, newBlockCpt);
                     scene.m_tree.insert(i, {trans.x, trans.z - 1.0f}, {trans.x + 1.0f, trans.z});
                     break;
                 default:

@@ -35,6 +35,7 @@ void moul::Block::explode()
 {
     m_gameObject.setActive(false);
     m_gameObject.scene().m_tree.erase(m_gameObject.id);
+    m_gameObject.scene().m_lut.erase(m_gameObject.id);
     if (std::rand() % 100 <= 5)
         std::cout << "Bonus" << std::endl;
 }
