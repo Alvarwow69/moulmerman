@@ -24,6 +24,9 @@ namespace moul
         sw::Reference<sw::MeshRenderer> m_mesh;
 
         void createBomb();
+        void createRange();
+        void createSpeed();
+        void createNinja();
         sw::Reference<sw::Primitive> m_primitive;
     }; // class Block
 } // namespace moul

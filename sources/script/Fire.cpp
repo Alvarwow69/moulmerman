@@ -10,7 +10,7 @@
 moul::Fire::Fire(sw::GameObject& gameObject) :
 sw::Component(gameObject),
 m_spentTime(0.0f),
-m_durationTime(1.5f)
+m_durationTime(1.0f)
 {
     m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::Fire::start);
     m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::Fire::update);

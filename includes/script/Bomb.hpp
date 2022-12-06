@@ -29,10 +29,10 @@ namespace moul
         ~Bomb() override;
         sw::Reference<moul::Player> m_player;
         bool m_enable;
+        int m_power;
     private:
         bool m_hasExploded = false;
         float m_spentTime;
-        int m_power;
         float m_explosionTime;
         float m_animTime;
         float m_lastTime;

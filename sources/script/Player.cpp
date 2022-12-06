@@ -10,6 +10,8 @@
 #include "GameManager.hpp"
 #include "script/modifier/BombModifier.hpp"
 #include "Fire.hpp"
+#include "modifier/RangeModifier.hpp"
+#include "modifier/SpeedModifier.hpp"
 
 #include <memory_resource> //magic trick
 
@@ -102,12 +104,18 @@ void moul::Player::update()
         else if (list.size() == 1) {
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
-                auto* bonus = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_bomb = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_speed = dynamic_cast<moul::RangeModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_range = dynamic_cast<moul::SpeedModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* fire = dynamic_cast<moul::Fire*>(&m_gameObject.scene().m_lut[element].value());
                 if ((bomb && !bomb->m_enable) || fire)
                     m_gameObject.transform().move(0, 0, m_speed * elapsedTime);
-                else if (bonus)
-                    bonus->applyModifier(*this);
+                else if (bonus_bomb)
+                    bonus_bomb->applyModifier(*this);
+                else if (bonus_range)
+                    bonus_range->applyModifier(*this);
+                else if (bonus_speed)
+                    bonus_speed->applyModifier(*this);
             }
         }
         m_gameObject.transform().setRotation(0);
@@ -120,13 +128,18 @@ void moul::Player::update()
         else if (list.size() == 1) {
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
-                auto* bonus = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_bomb = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_speed = dynamic_cast<moul::RangeModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_range = dynamic_cast<moul::SpeedModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* fire = dynamic_cast<moul::Fire*>(&m_gameObject.scene().m_lut[element].value());
                 if ((bomb && !bomb->m_enable) || fire)
                     m_gameObject.transform().move(0, 0, -m_speed * elapsedTime);
-                else if (bonus)
-                    bonus->applyModifier(*this);
-            }
+                else if (bonus_bomb)
+                    bonus_bomb->applyModifier(*this);
+                else if (bonus_range)
+                    bonus_range->applyModifier(*this);
+                else if (bonus_speed)
+                    bonus_speed->applyModifier(*this);            }
         }
         m_gameObject.transform().setRotation(180);
     } else if (sw::isKeyDown(m_keys[m_actions::LEFT])) {
@@ -138,13 +151,18 @@ void moul::Player::update()
         else if (list.size() == 1) {
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
-                auto* bonus = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_bomb = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_speed = dynamic_cast<moul::RangeModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_range = dynamic_cast<moul::SpeedModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* fire = dynamic_cast<moul::Fire*>(&m_gameObject.scene().m_lut[element].value());
                 if ((bomb && !bomb->m_enable) || fire)
                     m_gameObject.transform().move(m_speed * elapsedTime, 0, 0);
-                else if (bonus)
-                    bonus->applyModifier(*this);
-            }
+                else if (bonus_bomb)
+                    bonus_bomb->applyModifier(*this);
+                else if (bonus_range)
+                    bonus_range->applyModifier(*this);
+                else if (bonus_speed)
+                    bonus_speed->applyModifier(*this);            }
         }
         m_gameObject.transform().setRotation(90);
     } else if (sw::isKeyDown(m_keys[m_actions::RIGHT])) {
@@ -156,13 +174,18 @@ void moul::Player::update()
         else if (list.size() == 1) {
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
-                auto* bonus = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_bomb = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_speed = dynamic_cast<moul::RangeModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_range = dynamic_cast<moul::SpeedModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* fire = dynamic_cast<moul::Fire*>(&m_gameObject.scene().m_lut[element].value());
                 if ((bomb && !bomb->m_enable) || fire)
                     m_gameObject.transform().move(-m_speed * elapsedTime, 0, 0);
-                else if (bonus)
-                    bonus->applyModifier(*this);
-            }
+                else if (bonus_bomb)
+                    bonus_bomb->applyModifier(*this);
+                else if (bonus_range)
+                    bonus_range->applyModifier(*this);
+                else if (bonus_speed)
+                    bonus_speed->applyModifier(*this);            }
         }
         m_gameObject.transform().setRotation(-90);
     }
@@ -228,6 +251,7 @@ void moul::Player::bomb()
     auto& newBombCpt = newBomb.createComponent<moul::Bomb>("ScriptManager");
     newBombCpt.m_player.emplace(*this);
     newBomb.transform().setPosition(((int)m_gameObject.transform().getGlobalPosition().x) + 0.5f, m_gameObject.transform().getGlobalPosition().y, ((int)m_gameObject.transform().getGlobalPosition().z) - 0.5f );
+    newBombCpt.m_power = m_bombPower;
     newBombCpt.start();
 }
 

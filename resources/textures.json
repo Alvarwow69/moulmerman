@@ -509,5 +509,32 @@
       "Game"
     ],
     "Type": "Model"
-  }
-}
+  },
+  "range_icon.png": {
+    "Path": "resources/textures/range_icon.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "Modifier_Range": {
+    "Path": "resources/models/Modifier_Range.obj",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Model"
+  },
+  "speed_icon.png": {
+    "Path": "resources/textures/speed_icon.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "Modifier_Speed": {
+    "Path": "resources/models/Modifier_Speed.obj",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Model"
+  }}
