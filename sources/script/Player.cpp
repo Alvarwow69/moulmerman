@@ -260,7 +260,6 @@ void moul::Player::die()
     m_gameObject.setActive(false);
     m_gameObject.scene().m_lut.erase(m_gameObject.id);
     m_gameObject.scene().m_tree.erase(m_gameObject.id);
-    auto oui = moul::GameManager::GetPlayerLeft();
     sw::Config::GetConfig()["Setting"][m_gameObject.name()]["rank"] = std::to_string(moul::GameManager::GetPlayerLeft());
     m_gameObject.scene().eventManager.drop("PlayerDie");
 }

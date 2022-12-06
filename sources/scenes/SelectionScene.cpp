@@ -24,7 +24,7 @@ void moul::SelectionScene::onLoad(sw::EventInfo &info)
     camera.setProjection(sw::Camera::PERSPECTIVE);
     camera.setClippingFar(1000);
     mainCamera.transform().move(0, 0, 15);
-    mainCamera.createComponent<sw::AudioSource>("AudioManager").addAudio("Selection_music").setPlayOnStart(true);
+    mainCamera.createComponent<sw::AudioSource>("AudioManager").addAudio("Selection_music").setPlayOnStart(true).play();
 
     auto& building = scene.createGameObject("Building");
     auto& model = building.createComponent<sw::MeshRenderer>("MeshRendererManager", "Selection_scene");

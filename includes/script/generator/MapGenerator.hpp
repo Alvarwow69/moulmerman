@@ -17,6 +17,7 @@ namespace moul
     public:
         explicit MapGenerator(sw::GameObject& gameObject);
 
+        void start();
         void generateMap(int with, int height);
         void generateProcedural();
         void generateBasicMap();

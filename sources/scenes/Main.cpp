@@ -35,7 +35,7 @@ void Main::onLoad(sw::EventInfo& info)
     loader.m_switchAuto = true;
     sw::ConcreteComponent auto& camera = mainCamera.createComponent<sw::Camera>("CameraManager");
     sw::ConcreteComponent auto& camAudio = mainCamera.createComponent<sw::AudioSource>("AudioManager");
-    camAudio.addAudio("Menu_music").setPlayOnStart(true).setVolume(.5f);
+    camAudio.addAudio("Menu_music").setPlayOnStart(true).setVolume(.5f).play();
     camera.setClippingNear(-1);
     std::string back("MainMenuBack");
     background.createComponent<sw::Sprite>("SpriteManager").setTexture(back);

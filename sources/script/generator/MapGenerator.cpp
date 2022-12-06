@@ -16,6 +16,14 @@ m_basic(false),
 m_origin{0, 0, 0}
 {}
 
+void moul::MapGenerator::start()
+{
+    m_size = {0, 0};
+    m_map.clear();
+    m_basic = false;
+    m_origin = {0, 0, 0};
+}
+
 void moul::MapGenerator::generateMap(int with, int height)
 {
     std::string tmp;

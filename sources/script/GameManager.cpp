@@ -25,6 +25,8 @@ m_countdown(0.0)
     gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::GameManager::start);
     gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::GameManager::update);
     gameObject.scene().eventManager["PlayerDie"].subscribe(m_gameObject.name(), this, &moul::GameManager::playerDie);
+    m_gameState = NONE;
+    m_playerLeft = 0;
 }
 
 void moul::GameManager::start()
@@ -32,6 +34,7 @@ void moul::GameManager::start()
     m_gameState = PREGAME;
     auto& mapGen = m_gameObject.scene().createGameObject("MapGenerator");
     m_mapGenerator.emplace(mapGen.createComponent<moul::MapGenerator>("ScriptManager"));
+    m_mapGenerator.value().start();
     m_mapGenerator.value().m_origin = {6.0f, 3.6f, -36};
     m_mapGenerator.value().generateMap(13, 13);
     m_mapGenerator.value().generateBasicMap();
