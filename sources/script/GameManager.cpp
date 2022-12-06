@@ -47,6 +47,8 @@ void moul::GameManager::start()
 
     m_gameObject.scene().eventManager.create("Collision");
     spawnPlayers();
+    std::time_t time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    sw::Config::GetConfig()["Setting"]["GameStart"] = std::to_string(time);
 }
 
 void moul::GameManager::update()
@@ -148,7 +150,7 @@ void moul::GameManager::spawnPlayers()
 {
     auto conf = sw::Config::GetConfig()["Setting"];
 
-    for (int i = 0; i < conf.size(); i++) {
+    for (int i = 0; i < 4; i++) {
         auto player = conf[names[i]];
         if (player["type"].as<std::string>() == "No Player")
             continue;

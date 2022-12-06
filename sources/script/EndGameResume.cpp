@@ -21,7 +21,7 @@ void moul::EndGameResume::start()
 {
     auto conf = sw::Config::GetConfig()["Setting"];
     auto& info = m_body["infos"].emplace_object();
-    for (int i = 0; i < conf.size(); i++) {
+    for (int i = 0; i < 4; i++) {
         auto player = conf[names[i]];
         if (player["type"].as<std::string>() == "No Player")
             continue;
@@ -31,6 +31,7 @@ void moul::EndGameResume::start()
 
         info[names[i]] = newPlayer;
     }
+    info["GameStart"] = conf["GameStart"].as<std::string>();
     std::cout << boost::json::serialize(m_body) << std::endl;
     //m_request.sendRequest(m_body);
 }
