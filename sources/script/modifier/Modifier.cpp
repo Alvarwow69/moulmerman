@@ -28,7 +28,6 @@ void moul::Modifier::start()
     auto size = sw::Vector2f{0.3f, 0.3f};
     auto& trans = m_gameObject.transform().getGlobalPosition();
 
-    m_gameObject.id = 100000 + m_gameObject.scene().m_lut.size();
     m_meshRenderer.emplace(m_gameObject.createComponent<sw::MeshRenderer>("MeshRendererManager", m_modelName));
     m_audioSource.emplace(m_gameObject.createComponent<sw::AudioSource>("AudioManager"));
     m_gameObject.transform().scale(0.5f, 0.5f, 0.5f);

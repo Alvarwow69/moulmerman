@@ -172,7 +172,6 @@ void moul::GameManager::spawnPlayers()
 
         sw::Vector2f min{trans.z - 0.25f, trans.x - 0.25f};
         sw::Vector2f max{min.x + 0.5f, min.y + 0.5f};
-        newPlayer.id = i + 800;
         m_gameObject.scene().m_tree.insert(newPlayer.id, min, max);
         m_gameObject.scene().m_lut.emplace(newPlayer.id, newPlayerCpt);
         newPlayerCpt.start();

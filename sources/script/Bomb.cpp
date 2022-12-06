@@ -49,10 +49,9 @@ void moul::Bomb::start()
     m_primitive.value().m_array[3].color = {1, 0, 0};
 
     auto size = sw::Vector2f{0.3f, 0.3f};
-    m_gameObject.id = 1000 + (int)trans.x;
 
-    m_gameObject.scene().m_tree.insert(1000 + (int)trans.x, {trans.x - size.x, trans.z - size.y}, {trans.x + size.x, trans.z + size.y});
-    m_gameObject.scene().m_lut.try_emplace(1000 + (int)trans.x, *this);
+    m_gameObject.scene().m_tree.insert(m_gameObject.id, {trans.x - size.x, trans.z - size.y}, {trans.x + size.x, trans.z + size.y});
+    m_gameObject.scene().m_lut.try_emplace(m_gameObject.id, *this);
 }
 
 void moul::Bomb::update()

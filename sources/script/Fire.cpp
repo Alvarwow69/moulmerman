@@ -27,7 +27,6 @@ void moul::Fire::start()
 
     auto& trans = m_gameObject.transform().getGlobalPosition();
     auto size = sw::Vector2f{0.3f, 0.3f};
-    m_gameObject.id = 10000 + (int)trans.x * (int)trans.z + m_gameObject.scene().m_lut.size();
 
     m_gameObject.scene().m_tree.insert(m_gameObject.id, {trans.x - size.x, trans.z - size.y}, {trans.x + size.x, trans.z + size.y});
     m_gameObject.scene().m_lut.emplace(m_gameObject.id, *this);
