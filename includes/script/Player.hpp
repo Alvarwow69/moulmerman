@@ -23,6 +23,7 @@ namespace moul
     {
         public:
             std::string m_modelName;
+            std::string m_name;
             sw::Vector2f m_modelPos;
             sw::Reference<sw::Text> m_bombtxt;
             sw::Reference<sw::Text> m_rangetxt;
@@ -36,7 +37,8 @@ namespace moul
             void increaseBombPower(int neg = 0);
             void increaseSpeed(int neg = 0);
             void addBomb();
-        private:
+            void die();
+    private:
             enum m_actions {
                 FORWARD,
                 BACKWARD,
@@ -58,7 +60,6 @@ namespace moul
             //sw::Reference<sw::BoxCollider> m_collider;
             void bomb();
             void setKeys();
-            void die();
             void updateAnimation();
     };
 }

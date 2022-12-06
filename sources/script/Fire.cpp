@@ -5,6 +5,7 @@
 
 #include "Fire.hpp"
 #include "Block.hpp"
+#include "Player.hpp"
 
 moul::Fire::Fire(sw::GameObject& gameObject) :
 sw::Component(gameObject),
@@ -54,11 +55,14 @@ void moul::Fire::update()
     std::pmr::list<int> list{pa};
 
     m_gameObject.scene().m_tree.query(m_gameObject.id, {trans.x - size.x, trans.z - size.y}, {trans.x + size.x, trans.z + size.y}, std::back_inserter(list));
-    if (!list.empty()) {
+    if (list.size()) {
         for (auto element : list) {
             auto* block = dynamic_cast<moul::Block*>(&m_gameObject.scene().m_lut[element].value());
+            auto* player = dynamic_cast<moul::Player*>(&m_gameObject.scene().m_lut[element].value());
             if (block)
                 block->explode();
+            if (player)
+                player->die();
         }
 
     }

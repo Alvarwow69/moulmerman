@@ -9,6 +9,7 @@
 #include "config/Config.hpp"
 #include "GameManager.hpp"
 #include "script/modifier/BombModifier.hpp"
+#include "Fire.hpp"
 
 #include <memory_resource> //magic trick
 
@@ -42,10 +43,6 @@ void moul::Player::start()
     m_mesh.value().m_animator.emplace(m_animator.value());
 
     m_primitive.emplace(m_gameObject.createComponent<sw::Primitive>("PrimitiveManager"));
-    m_primitive.value().m_array[0].position = {-0.025f, 0.2f, -0.025f};
-    m_primitive.value().m_array[1].position = {0.025f, 0.2f, -0.025f};
-    m_primitive.value().m_array[2].position = {0.025f, 0.2f, 0.025f};
-    m_primitive.value().m_array[3].position = {-0.025f, 0.2f, 0.025f};
     m_primitive.value().m_array[0].color = {1, 1, 0};
     m_primitive.value().m_array[1].color = {1, 1, 0};
     m_primitive.value().m_array[2].color = {1, 1, 0};
@@ -79,7 +76,7 @@ void moul::Player::update()
     if (moul::GameManager::GetGameState() != moul::GameManager::INGAME)
         return;
     double elapsedTime = sw::OpenGLModule::deltaTime();
-    sw::Vector2f size = {0.3f, 0.3f};
+    sw::Vector2f size = {0.2f, 0.2f};
     
     std::array<std::byte, sizeof(size_t) * 256> buffer; // enough to fit in all nodes
     std::pmr::monotonic_buffer_resource mbr{buffer.data(), buffer.size()};
@@ -106,7 +103,8 @@ void moul::Player::update()
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
-                if (bomb && !bomb->m_enable)
+                auto* fire = dynamic_cast<moul::Fire*>(&m_gameObject.scene().m_lut[element].value());
+                if ((bomb && !bomb->m_enable) || fire)
                     m_gameObject.transform().move(0, 0, m_speed * elapsedTime);
                 else if (bonus)
                     bonus->applyModifier(*this);
@@ -123,7 +121,8 @@ void moul::Player::update()
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
-                if (bomb && !bomb->m_enable)
+                auto* fire = dynamic_cast<moul::Fire*>(&m_gameObject.scene().m_lut[element].value());
+                if ((bomb && !bomb->m_enable) || fire)
                     m_gameObject.transform().move(0, 0, -m_speed * elapsedTime);
                 else if (bonus)
                     bonus->applyModifier(*this);
@@ -140,7 +139,8 @@ void moul::Player::update()
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
-                if (bomb && !bomb->m_enable)
+                auto* fire = dynamic_cast<moul::Fire*>(&m_gameObject.scene().m_lut[element].value());
+                if ((bomb && !bomb->m_enable) || fire)
                     m_gameObject.transform().move(m_speed * elapsedTime, 0, 0);
                 else if (bonus)
                     bonus->applyModifier(*this);
@@ -157,7 +157,8 @@ void moul::Player::update()
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
-                if (bomb && !bomb->m_enable)
+                auto* fire = dynamic_cast<moul::Fire*>(&m_gameObject.scene().m_lut[element].value());
+                if ((bomb && !bomb->m_enable) || fire)
                     m_gameObject.transform().move(-m_speed * elapsedTime, 0, 0);
                 else if (bonus)
                     bonus->applyModifier(*this);
@@ -169,6 +170,14 @@ void moul::Player::update()
     if (sw::isKeyPressed(m_keys[m_actions::BOMB]))
         bomb();
     updateAnimation();
+
+    if (m_gameObject.id >= 0)
+    {
+        auto& ntmp = m_gameObject.transform().getGlobalPosition();
+        min = {ntmp.x - size.x, ntmp.z - size.x};
+        max = {ntmp.x + size.y, ntmp.z + size.y};
+        m_gameObject.scene().m_tree.update(m_gameObject.id, min, max, true);
+    }
 
     std::stringstream ss;
     ss << std::setprecision(2) << m_speed;
@@ -224,5 +233,10 @@ void moul::Player::bomb()
 
 void moul::Player::die()
 {
+    m_gameObject.setActive(false);
+    m_gameObject.scene().m_lut.erase(m_gameObject.id);
+    m_gameObject.scene().m_tree.erase(m_gameObject.id);
+    auto oui = moul::GameManager::GetPlayerLeft();
+    sw::Config::GetConfig()["Setting"][m_gameObject.name()]["rank"] = std::to_string(moul::GameManager::GetPlayerLeft());
     m_gameObject.scene().eventManager.drop("PlayerDie");
 }

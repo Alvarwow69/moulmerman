@@ -16,11 +16,11 @@ const std::string names[4] = {"Player1", "Player2", "Player3", "Player4"};
 
 moul::GameManager::GameState moul::GameManager::m_gameState = NONE;
 sw::Reference<moul::MapGenerator> moul::GameManager::m_mapGenerator;
+int moul::GameManager::m_playerLeft = 0;
 
 moul::GameManager::GameManager(sw::GameObject &gameObject) :
 sw::Component(gameObject),
-m_countdown(0.0),
-m_playerLeft(0)
+m_countdown(0.0)
 {
     gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::GameManager::start);
     gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::GameManager::update);
@@ -113,7 +113,7 @@ moul::MapGenerator& moul::GameManager::GetMap()
 void moul::GameManager::playerDie()
 {
     m_playerLeft--;
-    if (m_playerLeft == 0)
+    if (m_playerLeft == 1)
         m_gameState = POSTGAME;
 }
 
@@ -154,7 +154,7 @@ void moul::GameManager::spawnPlayers()
         auto player = conf[names[i]];
         if (player["type"].as<std::string>() == "No Player")
             continue;
-        auto& newPlayer = m_gameObject.scene().createGameObject(player["name"].as<std::string>());
+        auto& newPlayer = m_gameObject.scene().createGameObject(names[i]);
         auto& newPlayerCpt = newPlayer.createComponent<moul::Player>("ScriptManager");
         CreateUI(m_gameObject.scene(), i, names[i]);
         newPlayerCpt.m_modelName = names[i];
@@ -164,14 +164,10 @@ void moul::GameManager::spawnPlayers()
         newPlayerCpt.m_bombtxt.emplace(m_gameObject.scene().getGameObject("Text_Bomb_UI" + names[i]).getComponent<sw::Text>("TextManager"));
         newPlayerCpt.m_speedtxt.emplace(m_gameObject.scene().getGameObject("Text_Speed_UI" + names[i]).getComponent<sw::Text>("TextManager"));
         newPlayerCpt.m_rangetxt.emplace(m_gameObject.scene().getGameObject("Text_Range_UI" + names[i]).getComponent<sw::Text>("TextManager"));
+        newPlayerCpt.m_name = player["name"].as<std::string>();
+        player["rank"] = 1;
 
-        /*
-        sw::Vector2f min = ...
-        sw::Vector2f max = ...
-        */
         auto &trans = newPlayer.transform().getPosition();
-        //auto &size = newPlayer.getComponent<sw::BoxCollider>("BoxColliderManager").getSize();
-
         sw::Vector2f min{trans.z - 0.25f, trans.x - 0.25f};
         sw::Vector2f max{min.x + 0.5f, min.y + 0.5f};
         m_gameObject.scene().m_tree.insert(newPlayer.id, min, max);
@@ -187,4 +183,9 @@ void moul::GameManager::postGame()
 
     if (m_countdown >= 5)
         sw::OpenGLModule::sceneManager().loadScene("EndGame");
+}
+
+int moul::GameManager::GetPlayerLeft()
+{
+    return (m_playerLeft);
 }

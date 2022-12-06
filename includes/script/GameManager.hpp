@@ -29,6 +29,7 @@ namespace moul
 
         [[nodiscard]] static GameState GetGameState();
         [[nodiscard]] static MapGenerator& GetMap();
+        [[nodiscard]] static int GetPlayerLeft();
 
     private:
         void countdown();
@@ -43,7 +44,7 @@ namespace moul
         static GameState m_gameState;
         double m_countdown;
         int m_nextStep;
-        int m_playerLeft;
+        static int m_playerLeft;
     };
 }
 
