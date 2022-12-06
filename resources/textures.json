@@ -115,9 +115,16 @@
     "Type": "Texture"
   },
   "Menu_music": {
-    "Path": "resources/audio/bomberman-menu.mp3",
+    "Path": "resources/audio/Menu_scene_21_11_V1.wav",
     "Scene": [
       "Main"
+    ],
+    "Type": "Audio"
+  },
+  "Selection_music": {
+    "Path": "resources/audio/Selection_Perso_Loop.wav",
+    "Scene": [
+      "SelectionScene"
     ],
     "Type": "Audio"
   },
@@ -460,5 +467,47 @@
       "Game"
     ],
     "Type": "Texture"
+  },
+  "UIPlayer1": {
+    "Path": "resources/textures/UI_Player1.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "UIPlayer2": {
+    "Path": "resources/textures/UI_Player2.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "UIPlayer3": {
+    "Path": "resources/textures/UI_Player3.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "UIPlayer4": {
+    "Path": "resources/textures/UI_Player4.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "bomb_icon.png": {
+    "Path": "resources/textures/bomb_icon.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "Modifier_Bomb": {
+    "Path": "resources/models/Modifier_Bomb.obj",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Model"
   }
 }
