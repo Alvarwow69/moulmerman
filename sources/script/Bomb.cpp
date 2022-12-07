@@ -89,8 +89,8 @@ void moul::Bomb::update()
     std::pmr::list<int> list{pa};
 
     m_gameObject.scene().m_tree.query(m_gameObject.id, {trans.x - size.x, trans.z - size.y}, {trans.x + size.x, trans.z + size.y}, std::back_inserter(list));
-    //if (list.empty()) TODO fix la bomb
-    //    m_enable = true;
+    if (list.empty())
+        m_enable = true;
 }
 
 void moul::Bomb::destroy()
