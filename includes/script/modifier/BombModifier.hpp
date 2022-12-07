@@ -18,9 +18,9 @@ namespace moul
         explicit BombModifier(sw::GameObject &gameObject);
 
         void applyModifier(Player& player) override;
+        bool m_good;
 
     private:
-        bool m_good;
     };
 }
 

@@ -212,10 +212,10 @@ void moul::Player::update()
 
 void moul::Player::increaseMaxBomb(int neg)
 {
-    if (neg) {
+    if (neg && m_bombNumberTotal > 1) {
         m_bombNumberTotal -= 1;
-        m_bombAvailable = (m_bombAvailable == m_bombNumberTotal ? m_bombAvailable - 1 : m_bombAvailable);
-    } else {
+        m_bombAvailable = (m_bombAvailable >= m_bombNumberTotal ? m_bombAvailable - 1 : m_bombAvailable);
+    } else if (!neg && m_bombNumberTotal < 10){
         m_bombNumberTotal += 1;
         m_bombAvailable += 1;
     }
@@ -223,23 +223,24 @@ void moul::Player::increaseMaxBomb(int neg)
 
 void moul::Player::increaseBombPower(int neg)
 {
-    if (neg)
+    if (neg && m_bombPower > 1)
         m_bombPower -= 1;
-    else
+    else if (!neg && m_bombPower < 5)
         m_bombPower += 1;
 }
 
 void moul::Player::increaseSpeed(int neg)
 {
-    if (neg)
+    if (neg && m_speed > 2)
         m_speed -= 1;
-    else
+    else if (!neg && m_speed < 7)
         m_speed += 1;
 }
 
 void moul::Player::addBomb()
 {
-    m_bombAvailable += 1;
+    if (m_bombAvailable < m_bombNumberTotal)
+        m_bombAvailable += 1;
 }
 
 void moul::Player::bomb()

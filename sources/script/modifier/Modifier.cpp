@@ -10,7 +10,8 @@
 
 moul::Modifier::Modifier(sw::GameObject &gameObject) :
 sw::Component(gameObject),
-m_animTime(0.0f)
+m_animTime(0.0f),
+m_colliderId(-1)
 {
     gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::Modifier::start);
     gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::Modifier::update);
@@ -44,4 +45,15 @@ void moul::Modifier::update()
     auto t = m_animTime < 1.f ? m_animTime : 2.f - m_animTime;
     auto y = t < 0.5 ? 2 * t * t : t * (4 - 2 * t) - 1;
     m_gameObject.transform().move(0, (y - 0.5f) * 0.075f, 0);
+}
+
+void moul::Modifier::destroy(int id)
+{
+    if (m_colliderId == -1)
+        m_colliderId = id;
+    else if (id != m_colliderId){
+        m_gameObject.scene().m_lut.erase(m_gameObject.id);
+        m_gameObject.scene().m_tree.erase(m_gameObject.id);
+        m_gameObject.scene().deleteGameObject(m_gameObject.name());
+    }
 }

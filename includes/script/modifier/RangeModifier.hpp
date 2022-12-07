@@ -18,9 +18,9 @@ namespace moul
         explicit RangeModifier(sw::GameObject &gameObject);
 
         void applyModifier(Player& player) override;
+        bool m_good;
 
     private:
-        bool m_good;
     };
 }
 

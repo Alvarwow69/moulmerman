@@ -37,27 +37,33 @@ void moul::Block::start()
 
 void moul::Block::createBomb()
 {
+    bool isPositive = std::rand() % 100 > 10;
     auto& newBomb = m_gameObject.scene().createGameObject("Bonus-" + std::to_string(m_pos.x) + "-" + std::to_string(m_pos.y));
     auto& newBombCpt = newBomb.createComponent<moul::BombModifier>("ScriptManager");
     newBomb.transform().setPosition(m_gameObject.transform().getGlobalPosition().x + 0.5f, m_gameObject.transform().getGlobalPosition().y + 0.5f, m_gameObject.transform().getGlobalPosition().z - 0.5f);
-    newBombCpt.m_modelName = "Modifier_Bomb";
+    newBombCpt.m_modelName = isPositive ? "Modifier_Bomb" : "Modifier_Bomb_neg";
+    newBombCpt.m_good = isPositive;
     newBombCpt.start();
 }
 
 void moul::Block::createRange()
 {
+    bool isPositive = std::rand() % 100 > 10;
     auto& newBomb = m_gameObject.scene().createGameObject("Bonus-" + std::to_string(m_pos.x) + "-" + std::to_string(m_pos.y));
     auto& newBombCpt = newBomb.createComponent<moul::RangeModifier>("ScriptManager");
     newBomb.transform().setPosition(m_gameObject.transform().getGlobalPosition().x + 0.5f, m_gameObject.transform().getGlobalPosition().y + 0.5f, m_gameObject.transform().getGlobalPosition().z - 0.5f);
-    newBombCpt.m_modelName = "Modifier_Range";
+    newBombCpt.m_modelName = isPositive ? "Modifier_Range" : "Modifier_Range_neg";
+    newBombCpt.m_good = isPositive;
     newBombCpt.start();
 }
 void moul::Block::createSpeed()
 {
+    bool isPositive = std::rand() % 100 > 10;
     auto& newBomb = m_gameObject.scene().createGameObject("Bonus-" + std::to_string(m_pos.x) + "-" + std::to_string(m_pos.y));
     auto& newBombCpt = newBomb.createComponent<moul::SpeedModifier>("ScriptManager");
     newBomb.transform().setPosition(m_gameObject.transform().getGlobalPosition().x + 0.5f, m_gameObject.transform().getGlobalPosition().y + 0.5f, m_gameObject.transform().getGlobalPosition().z - 0.5f);
-    newBombCpt.m_modelName = "Modifier_Speed";
+    newBombCpt.m_modelName = isPositive ? "Modifier_Speed" : "Modifier_Speed_neg";
+    newBombCpt.m_good = isPositive;
     newBombCpt.start();
 }
 
@@ -76,7 +82,7 @@ void moul::Block::explode()
     m_gameObject.setActive(false);
     m_gameObject.scene().m_tree.erase(m_gameObject.id);
     m_gameObject.scene().m_lut.erase(m_gameObject.id);
-    if (std::rand() % 100 <= 5) {
+    if (std::rand() % 100 <= 10) {
         auto type = std::rand() % 100;
         if (type <= 25)
             createBomb();

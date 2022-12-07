@@ -537,4 +537,47 @@
       "Game"
     ],
     "Type": "Model"
-  }}
+  },
+  "devil_speed_icon.png": {
+    "Path": "resources/textures/devil_speed_icon.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "Modifier_Speed_neg": {
+    "Path": "resources/models/Modifier_Speed_neg.obj",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Model"
+  },
+  "devil_range_icon.png": {
+    "Path": "resources/textures/devil_range_icon.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "Modifier_Range_neg": {
+    "Path": "resources/models/Modifier_Range_neg.obj",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Model"
+  },
+  "devil_bomb_icon.png": {
+    "Path": "resources/textures/devil_bomb_icon.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "Modifier_Bomb_neg": {
+    "Path": "resources/models/Modifier_Bomb_neg.obj",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Model"
+  }
+}

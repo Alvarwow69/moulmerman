@@ -6,6 +6,9 @@
 #include "Fire.hpp"
 #include "Block.hpp"
 #include "Player.hpp"
+#include "modifier/BombModifier.hpp"
+#include "modifier/SpeedModifier.hpp"
+#include "modifier/RangeModifier.hpp"
 
 moul::Fire::Fire(sw::GameObject& gameObject) :
 sw::Component(gameObject),
@@ -59,10 +62,19 @@ void moul::Fire::update()
         for (auto element : list) {
             auto* block = dynamic_cast<moul::Block*>(&m_gameObject.scene().m_lut[element].value());
             auto* player = dynamic_cast<moul::Player*>(&m_gameObject.scene().m_lut[element].value());
+            auto* bomb = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
+            auto* range = dynamic_cast<moul::SpeedModifier*>(&m_gameObject.scene().m_lut[element].value());
+            auto* speed = dynamic_cast<moul::RangeModifier*>(&m_gameObject.scene().m_lut[element].value());
             if (block)
                 block->explode();
             if (player)
                 player->die();
+            if (bomb)
+                bomb->destroy(m_gameObject.id);
+            else if (range)
+                range->destroy(m_gameObject.id);
+            else if (speed)
+                speed->destroy(m_gameObject.id);
         }
 
     }

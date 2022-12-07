@@ -24,7 +24,9 @@ namespace moul
         void update();
 
         virtual void applyModifier(Player& player) = 0;
+        virtual void destroy(int id);
     protected:
+        int m_colliderId;
         sw::Reference<sw::MeshRenderer> m_meshRenderer;
         sw::Reference<sw::AudioSource> m_audioSource;
         float m_animTime;
