@@ -12,13 +12,16 @@
 #include "Fire.hpp"
 #include "modifier/RangeModifier.hpp"
 #include "modifier/SpeedModifier.hpp"
+#include "Block.hpp"
+#include "modifier/NinjaModifier.hpp"
 
 #include <memory_resource> //magic trick
 
 moul::Player::Player(sw::GameObject& gameObject) :
 sw::Component(gameObject),
 m_modelName("PLACEHOLDER"),
-m_bombAvailable(1)
+m_bombAvailable(1),
+m_ninja(false)
 {
     m_gameObject.scene().eventManager["Update"].subscribe(m_gameObject.name(), this, &moul::Player::update);
 }
@@ -49,6 +52,7 @@ void moul::Player::start()
     m_primitive.value().m_array[1].color = {1, 1, 0};
     m_primitive.value().m_array[2].color = {1, 1, 0};
     m_primitive.value().m_array[3].color = {1, 1, 0};
+    m_primitive.value().setActive(false);
 
     m_alive = true;
     m_speed = 3.f;
@@ -79,7 +83,16 @@ void moul::Player::update()
         return;
     double elapsedTime = sw::OpenGLModule::deltaTime();
     sw::Vector2f size = {0.2f, 0.2f};
-    
+    sw::Vector3f movement = {0, 0, 0};
+
+    if (m_ninja) {
+        m_ninjaTime += elapsedTime;
+        if (m_ninjaTime >= 5) {
+            m_ninja = false;
+            m_gameObject.transform().setPosition(m_ninjaPos);
+        }
+    }
+
     std::array<std::byte, sizeof(size_t) * 256> buffer; // enough to fit in all nodes
     std::pmr::monotonic_buffer_resource mbr{buffer.data(), buffer.size()};
     std::pmr::polymorphic_allocator<int> pa{&mbr};
@@ -100,95 +113,131 @@ void moul::Player::update()
         max.y += m_speed * elapsedTime;
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
-            m_gameObject.transform().move(0, 0, m_speed * elapsedTime);
-        else if (list.size() == 1) {
+            movement = {0, 0, m_speed * (float)elapsedTime};
+        else if (list.size() != 0) {
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus_bomb = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus_speed = dynamic_cast<moul::RangeModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus_range = dynamic_cast<moul::SpeedModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_ninja = dynamic_cast<moul::NinjaModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* fire = dynamic_cast<moul::Fire*>(&m_gameObject.scene().m_lut[element].value());
-                if ((bomb && !bomb->m_enable) || fire)
-                    m_gameObject.transform().move(0, 0, m_speed * elapsedTime);
-                else if (bonus_bomb)
+                auto* block = dynamic_cast<moul::Block*>(&m_gameObject.scene().m_lut[element].value());
+                if (m_ninja && block) {
+                    movement = {0, 0, (float)(m_speed * elapsedTime * (block->m_destructible ? 1.0f : 0.0f))};
+                    if (!block->m_destructible)
+                        break;} else if ((bomb && !bomb->m_enable) || fire) {
+                    movement = {0, 0, m_speed * (float)elapsedTime};
+                } else if (bonus_bomb)
                     bonus_bomb->applyModifier(*this);
                 else if (bonus_range)
                     bonus_range->applyModifier(*this);
                 else if (bonus_speed)
                     bonus_speed->applyModifier(*this);
+                else if (bonus_ninja)
+                    bonus_ninja->applyModifier(*this);
             }
         }
         m_gameObject.transform().setRotation(0);
-    } else if (sw::isKeyDown(m_keys[m_actions::BACKWARD])) {
+    }
+    if (sw::isKeyDown(m_keys[m_actions::BACKWARD])) {
         min.y += -m_speed * elapsedTime;
         max.y += -m_speed * elapsedTime;
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
-            m_gameObject.transform().move(0, 0, -m_speed * elapsedTime);
-        else if (list.size() == 1) {
+            movement = {0, 0, -m_speed * (float)elapsedTime};
+        else if (list.size() != 0) {
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus_bomb = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus_speed = dynamic_cast<moul::RangeModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus_range = dynamic_cast<moul::SpeedModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_ninja = dynamic_cast<moul::NinjaModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* fire = dynamic_cast<moul::Fire*>(&m_gameObject.scene().m_lut[element].value());
-                if ((bomb && !bomb->m_enable) || fire)
-                    m_gameObject.transform().move(0, 0, -m_speed * elapsedTime);
-                else if (bonus_bomb)
+                auto* block = dynamic_cast<moul::Block*>(&m_gameObject.scene().m_lut[element].value());
+                if (m_ninja && block) {
+                    movement = {0, 0, (float)(-m_speed * elapsedTime * (block->m_destructible ? 1.0f : 0.0f))};
+                    if (!block->m_destructible)
+                        break;
+                } else if ((bomb && !bomb->m_enable) || fire) {
+                    movement = {0, 0, -m_speed * (float)elapsedTime};
+                } else if (bonus_bomb)
                     bonus_bomb->applyModifier(*this);
                 else if (bonus_range)
                     bonus_range->applyModifier(*this);
                 else if (bonus_speed)
-                    bonus_speed->applyModifier(*this);            }
+                    bonus_speed->applyModifier(*this);
+                else if (bonus_ninja)
+                    bonus_ninja->applyModifier(*this);
+            }
         }
         m_gameObject.transform().setRotation(180);
-    } else if (sw::isKeyDown(m_keys[m_actions::LEFT])) {
+    }
+    if (sw::isKeyDown(m_keys[m_actions::LEFT])) {
         min.x += m_speed * elapsedTime;
         max.x += m_speed * elapsedTime;
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
-            m_gameObject.transform().move(m_speed * elapsedTime, 0, 0);
-        else if (list.size() == 1) {
+            movement = {m_speed * (float)elapsedTime, 0, 0};
+        else if (list.size() != 0) {
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus_bomb = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus_speed = dynamic_cast<moul::RangeModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus_range = dynamic_cast<moul::SpeedModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_ninja = dynamic_cast<moul::NinjaModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* fire = dynamic_cast<moul::Fire*>(&m_gameObject.scene().m_lut[element].value());
-                if ((bomb && !bomb->m_enable) || fire)
-                    m_gameObject.transform().move(m_speed * elapsedTime, 0, 0);
-                else if (bonus_bomb)
+                auto* block = dynamic_cast<moul::Block*>(&m_gameObject.scene().m_lut[element].value());
+                if ((m_ninja && block)) {
+                    movement = {(float)(m_speed * elapsedTime * (block->m_destructible ? 1.0f : 0.0f)), 0, 0};
+                    if (!block->m_destructible)
+                        break;} else if ((bomb && !bomb->m_enable) || fire) {
+                    movement = {m_speed * (float)elapsedTime, 0, 0};
+                }else if (bonus_bomb)
                     bonus_bomb->applyModifier(*this);
                 else if (bonus_range)
                     bonus_range->applyModifier(*this);
                 else if (bonus_speed)
-                    bonus_speed->applyModifier(*this);            }
+                    bonus_speed->applyModifier(*this);
+                else if (bonus_ninja)
+                    bonus_ninja->applyModifier(*this);
+            }
         }
         m_gameObject.transform().setRotation(90);
-    } else if (sw::isKeyDown(m_keys[m_actions::RIGHT])) {
+    }
+    if (sw::isKeyDown(m_keys[m_actions::RIGHT])) {
         min.x += -m_speed * elapsedTime;
         max.x += -m_speed * elapsedTime;
         m_gameObject.scene().m_tree.query(m_gameObject.id, min, max, std::back_inserter(list));
         if (!list.size())
-            m_gameObject.transform().move(-m_speed * elapsedTime, 0, 0);
-        else if (list.size() == 1) {
+            movement = {-m_speed * (float)elapsedTime, 0, 0};
+        else if (list.size() != 0) {
             for (auto element : list) {
                 auto* bomb = dynamic_cast<moul::Bomb*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus_bomb = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus_speed = dynamic_cast<moul::RangeModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* bonus_range = dynamic_cast<moul::SpeedModifier*>(&m_gameObject.scene().m_lut[element].value());
+                auto* bonus_ninja = dynamic_cast<moul::NinjaModifier*>(&m_gameObject.scene().m_lut[element].value());
                 auto* fire = dynamic_cast<moul::Fire*>(&m_gameObject.scene().m_lut[element].value());
-                if ((bomb && !bomb->m_enable) || fire)
-                    m_gameObject.transform().move(-m_speed * elapsedTime, 0, 0);
-                else if (bonus_bomb)
+                auto* block = dynamic_cast<moul::Block*>(&m_gameObject.scene().m_lut[element].value());
+                if ((m_ninja && block)) {
+                    movement = {(float)(-m_speed * elapsedTime * (block->m_destructible ? 1.0f : 0.0f)), 0, 0};
+                    if (!block->m_destructible)
+                        break;} else if ((bomb && !bomb->m_enable) || fire) {
+                    movement = {-m_speed * (float)elapsedTime, 0, 0};
+                } else if (bonus_bomb)
                     bonus_bomb->applyModifier(*this);
                 else if (bonus_range)
                     bonus_range->applyModifier(*this);
                 else if (bonus_speed)
-                    bonus_speed->applyModifier(*this);            }
+                    bonus_speed->applyModifier(*this);
+                else if (bonus_ninja)
+                    bonus_ninja->applyModifier(*this);
+            }
         }
         m_gameObject.transform().setRotation(-90);
     }
+    m_gameObject.transform().move(movement);
 
     if (sw::isKeyPressed(m_keys[m_actions::BOMB]))
         bomb();
@@ -263,4 +312,13 @@ void moul::Player::die()
     m_gameObject.scene().m_tree.erase(m_gameObject.id);
     sw::Config::GetConfig()["Setting"][m_gameObject.name()]["rank"] = std::to_string(moul::GameManager::GetPlayerLeft());
     m_gameObject.scene().eventManager.drop("PlayerDie");
+}
+
+void moul::Player::ninja()
+{
+    if (m_ninja)
+        return;
+    m_ninjaTime = 0.0;
+    m_ninjaPos = m_gameObject.transform().getGlobalPosition();
+    m_ninja = true;
 }

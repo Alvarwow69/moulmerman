@@ -8,10 +8,12 @@
 #include "modifier/SpeedModifier.hpp"
 #include "modifier/RangeModifier.hpp"
 #include "resources/OpenResources.hpp"
+#include "modifier/NinjaModifier.hpp"
 
 moul::Block::Block(sw::GameObject& gameObject) :
 sw::Component(gameObject),
-m_modelName()
+m_modelName(),
+m_destructible(false)
 {
     m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::Block::start);
 }
@@ -33,6 +35,7 @@ void moul::Block::start()
     m_primitive.value().m_array[1].color = {0, 0, 1};
     m_primitive.value().m_array[2].color = {0, 0, 1};
     m_primitive.value().m_array[3].color = {0, 0, 1};
+    m_primitive.value().setActive(false);
 }
 
 void moul::Block::createBomb()
@@ -69,11 +72,11 @@ void moul::Block::createSpeed()
 
 void moul::Block::createNinja()
 {
-    //auto& newBomb = m_gameObject.scene().createGameObject("Bonus-" + std::to_string(m_pos.x) + "-" + std::to_string(m_pos.y));
-    //auto& newBombCpt = newBomb.createComponent<moul::BombModifier>("ScriptManager");
-    //newBomb.transform().setPosition(m_gameObject.transform().getGlobalPosition().x + 0.5f, m_gameObject.transform().getGlobalPosition().y + 0.5f, m_gameObject.transform().getGlobalPosition().z - 0.5f);
-    //newBombCpt.m_modelName = "Modifier_Bomb";
-    //newBombCpt.start();
+    auto& newBomb = m_gameObject.scene().createGameObject("Bonus-" + std::to_string(m_pos.x) + "-" + std::to_string(m_pos.y));
+    auto& newBombCpt = newBomb.createComponent<moul::NinjaModifier>("ScriptManager");
+    newBomb.transform().setPosition(m_gameObject.transform().getGlobalPosition().x + 0.5f, m_gameObject.transform().getGlobalPosition().y + 0.5f, m_gameObject.transform().getGlobalPosition().z - 0.5f);
+    newBombCpt.m_modelName = "Modifier_Ninja";
+    newBombCpt.start();
 }
 
 

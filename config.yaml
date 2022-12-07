@@ -1,0 +1,66 @@
+Project:
+  name: "Moulmerman"
+  framerate: 60
+  icon: "./"
+
+Debug:
+  Colorized: false
+  Display_Console: true
+  Display_Error: true
+  Display_Warning: true
+  Display_Info: true
+  Display_Debug: true
+  ClearOnPlay: false
+
+  BlackList_Log: [ ]
+  BlackList_Executor: [ ]
+  BlackList_Action: [ ]
+  BlackList_Target: [ ]
+
+  WhiteList_Log: [ ]
+  WhiteList_Executor: [ ]
+  WhiteList_Action: [ ]
+  WhiteList_Target: [ ]
+
+Setting:
+  Player1:
+    name: "Player1"
+    type: "Player"
+    keys:
+      f: 90
+      b: 83
+      l: 81
+      r: 68
+      bomb: 65
+    rank: 1
+  Player2:
+    name: "Player2"
+    type: "Player"
+    keys:
+      f: 84
+      b: 71
+      l: 70
+      r: 72
+      bomb: 89
+    rank: 2
+  Player3:
+    name: "Player3"
+    type: "none"
+    keys:
+      f: 73
+      b: 75
+      l: 74
+      r: 76
+      bomb: 79
+    rank: 3
+  Player4:
+    name: "Player4"
+    type: "none"
+    keys:
+      f: 265
+      b: 264
+      l: 263
+      r: 262
+      bomb: 257
+    rank: 4
+  GameStart: 0

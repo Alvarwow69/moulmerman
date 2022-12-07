@@ -38,6 +38,7 @@ namespace moul
             void increaseSpeed(int neg = 0);
             void addBomb();
             void die();
+            void ninja();
     private:
             enum m_actions {
                 FORWARD,
@@ -57,6 +58,9 @@ namespace moul
             sw::Reference<sw::MeshRenderer> m_mesh;
             sw::Reference<sw::ModelAnimator> m_animator;
             sw::Reference<sw::Primitive> m_primitive;
+            double m_ninjaTime;
+            sw::Vector3f m_ninjaPos;
+            bool m_ninja;
             //sw::Reference<sw::BoxCollider> m_collider;
             void bomb();
             void setKeys();

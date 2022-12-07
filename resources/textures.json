@@ -579,5 +579,19 @@
       "Game"
     ],
     "Type": "Model"
+  },
+  "ninja_icon.png": {
+    "Path": "resources/textures/ninja_icon.png",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Texture"
+  },
+  "Modifier_Ninja": {
+    "Path": "resources/models/Modifier_Ninja.obj",
+    "Scene": [
+      "Game"
+    ],
+    "Type": "Model"
   }
 }

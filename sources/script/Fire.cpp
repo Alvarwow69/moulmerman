@@ -44,6 +44,7 @@ void moul::Fire::start()
     m_primitive.value().m_array[1].color = {1, 0, 0};
     m_primitive.value().m_array[2].color = {1, 0, 0};
     m_primitive.value().m_array[3].color = {1, 0, 0};
+    m_primitive.value().setActive(false);
 }
 
 void moul::Fire::update()

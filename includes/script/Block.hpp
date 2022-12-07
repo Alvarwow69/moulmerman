@@ -20,6 +20,7 @@ namespace moul
         ~Block() override;
         std::string m_modelName;
         sw::Vector2f m_pos;
+        bool m_destructible;
     private:
         sw::Reference<sw::MeshRenderer> m_mesh;
 

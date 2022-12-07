@@ -110,6 +110,7 @@ void moul::MapGenerator::generateVisual()
                     break;
                 case ' ':
                     newBlockCpt.m_modelName = "Block";
+                    newBlockCpt.m_destructible = true;
                     scene.m_lut.emplace(newBlock.id, newBlockCpt);
                     scene.m_tree.insert(newBlock.id, {trans.x, trans.z - 1.0f}, {trans.x + 1.0f, trans.z});
                     break;
