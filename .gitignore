@@ -34,8 +34,11 @@ out
 # IDE cache
 .idea
 .vscode
+.vs
 cmake-*
+CMakeSettings.json
 libraries
 *.exp
 
 *.pdb
+build
