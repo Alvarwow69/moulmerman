@@ -6,6 +6,7 @@
 #include "Fire.hpp"
 #include "Block.hpp"
 #include "Player.hpp"
+#include "AI.hpp"
 #include "modifier/BombModifier.hpp"
 #include "modifier/SpeedModifier.hpp"
 #include "modifier/RangeModifier.hpp"
@@ -53,16 +54,20 @@ void moul::Fire::update()
     auto& trans = m_gameObject.transform().getGlobalPosition();
     auto size = sw::Vector2f{0.3f, 0.3f};
 
+    /*
     std::array<std::byte, sizeof(size_t) * 256> buffer; // enough to fit in all nodes
     std::pmr::monotonic_buffer_resource mbr{buffer.data(), buffer.size()};
     std::pmr::polymorphic_allocator<int> pa{&mbr};
     std::pmr::list<int> list{pa};
+    */
+    std::vector<int> list;
 
     m_gameObject.scene().m_tree.query(m_gameObject.id, {trans.x - size.x, trans.z - size.y}, {trans.x + size.x, trans.z + size.y}, std::back_inserter(list));
     if (list.size()) {
         for (auto element : list) {
             auto* block = dynamic_cast<moul::Block*>(&m_gameObject.scene().m_lut[element].value());
             auto* player = dynamic_cast<moul::Player*>(&m_gameObject.scene().m_lut[element].value());
+            auto* ai = dynamic_cast<moul::AI*>(&m_gameObject.scene().m_lut[element].value());
             auto* bomb = dynamic_cast<moul::BombModifier*>(&m_gameObject.scene().m_lut[element].value());
             auto* range = dynamic_cast<moul::SpeedModifier*>(&m_gameObject.scene().m_lut[element].value());
             auto* speed = dynamic_cast<moul::RangeModifier*>(&m_gameObject.scene().m_lut[element].value());
@@ -76,6 +81,8 @@ void moul::Fire::update()
                 range->destroy(m_gameObject.id);
             else if (speed)
                 speed->destroy(m_gameObject.id);
+            else if (ai)
+                ai->die();
         }
 
     }

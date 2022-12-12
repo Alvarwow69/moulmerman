@@ -8,6 +8,7 @@
 #include "Fire.hpp"
 #include "GameManager.hpp"
 #include "script/Player.hpp"
+#include "script/AI.hpp"
 #include "script/Block.hpp"
 
 const int xIndex[4] = {1, 0, -1, 0};
@@ -23,6 +24,8 @@ m_power(1),
 m_spentTime(0.0f),
 m_lastTime(0.0f),
 m_player(),
+m_ai(),
+ai_owned(false),
 m_enable(false)
 {
     m_gameObject.scene().eventManager["Start"].subscribe(m_gameObject.name(), this, &moul::Bomb::start);
@@ -47,8 +50,8 @@ void moul::Bomb::start()
     m_primitive.value().m_array[1].color = {1, 0, 0};
     m_primitive.value().m_array[2].color = {1, 0, 0};
     m_primitive.value().m_array[3].color = {1, 0, 0};
-
-    auto size = sw::Vector2f{0.3f, 0.3f};
+    m_primitive.value().setActive(true);
+    auto size = sw::Vector2f{.3f, .3f};
 
     m_gameObject.scene().m_tree.insert(m_gameObject.id, {trans.x - size.x, trans.z - size.y}, {trans.x + size.x, trans.z + size.y});
     m_gameObject.scene().m_lut.try_emplace(m_gameObject.id, *this);
@@ -58,7 +61,7 @@ void moul::Bomb::update()
 {
     double elapsedTime = sw::OpenGLModule::deltaTime();
     auto& trans = m_gameObject.transform().getGlobalPosition();
-    auto size = sw::Vector2f{0.3f, 0.3f};
+    auto size = sw::Vector2f{.3f, .3f};
 
     m_animTime += elapsedTime;
     if (m_hasExploded) {
@@ -103,7 +106,9 @@ bool moul::Bomb::hasExploded()
 void moul::Bomb::explode()
 {
     bool border[4] = {false, false, false, false};
-    m_player.value().addBomb();
+    if (ai_owned)
+        m_ai.value().addBomb();
+    else m_player.value().addBomb();
     m_hasExploded = true;
     m_animTime = 0;
     m_gameObject.scene().m_lut.erase(m_gameObject.id);

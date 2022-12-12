@@ -17,6 +17,7 @@ namespace moul
     public:
         explicit NinjaModifier(sw::GameObject &gameObject);
 
+        void applyModifier(AI& player);
         void applyModifier(Player& player) override;
         bool m_good;
 
