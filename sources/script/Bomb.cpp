@@ -50,7 +50,7 @@ void moul::Bomb::start()
     m_primitive.value().m_array[1].color = {1, 0, 0};
     m_primitive.value().m_array[2].color = {1, 0, 0};
     m_primitive.value().m_array[3].color = {1, 0, 0};
-    m_primitive.value().setActive(true);
+    m_primitive.value().setActive(false);
     auto size = sw::Vector2f{.3f, .3f};
 
     m_gameObject.scene().m_tree.insert(m_gameObject.id, {trans.x - size.x, trans.z - size.y}, {trans.x + size.x, trans.z + size.y});
