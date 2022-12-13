@@ -7,6 +7,7 @@
 #define MOULMERMAN_BOMBMODIFIER_HPP
 
 #include "Modifier.hpp"
+#include "script/AI.hpp"
 
 namespace moul
 {
@@ -17,6 +18,7 @@ namespace moul
     public:
         explicit BombModifier(sw::GameObject &gameObject);
 
+        void applyModifier(AI& player);
         void applyModifier(Player& player) override;
         bool m_good;
 

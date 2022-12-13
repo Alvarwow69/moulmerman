@@ -93,12 +93,9 @@ void moul::Player::update()
         }
     }
 
-    std::array<std::byte, sizeof(size_t) * 256> buffer; // enough to fit in all nodes
-    std::pmr::monotonic_buffer_resource mbr{buffer.data(), buffer.size()};
-    std::pmr::polymorphic_allocator<int> pa{&mbr};
-    std::pmr::list<int> list{pa};
+    
+    std::vector<int> list;
 
-    //std::vector<int> candidates;
     auto &tmp = m_gameObject.transform().getGlobalPosition();
     sw::Vector2f min{tmp.x - size.x, tmp.z - size.x};
     sw::Vector2f max{tmp.x + size.y, tmp.z + size.y};

@@ -7,6 +7,7 @@
 #define MOULMERMAN_MODIFIER_HPP
 
 #include "components/Components.hpp"
+#include "script/AI.hpp"
 
 namespace moul
 {
@@ -22,7 +23,7 @@ namespace moul
 
         void start();
         void update();
-
+        
         virtual void applyModifier(Player& player) = 0;
         virtual void destroy(int id);
     protected:

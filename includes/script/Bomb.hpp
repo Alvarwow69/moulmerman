@@ -9,11 +9,13 @@
 #include "components/Components.hpp"
 #include "components/MeshRenderer.hpp"  
 #include "OpenGLModule.hpp"
+#include "AI.hpp"
 
 namespace moul
 {
 
     class Player;
+    class AI;
 
     class Bomb : public sw::Component
     {
@@ -28,6 +30,8 @@ namespace moul
         explicit Bomb(sw::GameObject& gameObject);
         ~Bomb() override;
         sw::Reference<moul::Player> m_player;
+        sw::Reference<AI> m_ai;
+        bool ai_owned;
         bool m_enable;
         int m_power;
     private:

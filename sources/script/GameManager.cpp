@@ -155,28 +155,54 @@ void moul::GameManager::spawnPlayers()
 
     for (int i = 0; i < 4; i++) {
         auto player = conf[names[i]];
-        if (player["type"].as<std::string>() == "No Player")
+        auto type = player["type"].as<std::string>();
+        if (type == "No Player")
             continue;
         auto& newPlayer = m_gameObject.scene().createGameObject(names[i]);
-        auto& newPlayerCpt = newPlayer.createComponent<moul::Player>("ScriptManager");
-        CreateUI(m_gameObject.scene(), i, names[i]);
-        newPlayerCpt.m_modelName = names[i];
-        newPlayer.transform().setPosition(positions[m_playerLeft]);
-        newPlayer.transform().scale(8, 8, 8);
-        newPlayer.transform().rotate(180);
-        newPlayerCpt.m_bombtxt.emplace(m_gameObject.scene().getGameObject("Text_Bomb_UI" + names[i]).getComponent<sw::Text>("TextManager"));
-        newPlayerCpt.m_speedtxt.emplace(m_gameObject.scene().getGameObject("Text_Speed_UI" + names[i]).getComponent<sw::Text>("TextManager"));
-        newPlayerCpt.m_rangetxt.emplace(m_gameObject.scene().getGameObject("Text_Range_UI" + names[i]).getComponent<sw::Text>("TextManager"));
-        newPlayerCpt.m_name = player["name"].as<std::string>();
-        player["rank"] = 1;
+        if (type == "AI")
+        {
+            auto& newPlayerCpt = newPlayer.createComponent<moul::AI>("ScriptManager");
+            CreateUI(m_gameObject.scene(), i, names[i]);
+            newPlayerCpt.m_modelName = names[i];
+            newPlayer.transform().setPosition(positions[m_playerLeft]);
+            newPlayer.transform().scale(8, 8, 8);
+            newPlayer.transform().rotate(180);
+            newPlayerCpt.m_bombtxt.emplace(m_gameObject.scene().getGameObject("Text_Bomb_UI" + names[i]).getComponent<sw::Text>("TextManager"));
+            newPlayerCpt.m_speedtxt.emplace(m_gameObject.scene().getGameObject("Text_Speed_UI" + names[i]).getComponent<sw::Text>("TextManager"));
+            newPlayerCpt.m_rangetxt.emplace(m_gameObject.scene().getGameObject("Text_Range_UI" + names[i]).getComponent<sw::Text>("TextManager"));
+            newPlayerCpt.m_name = player["name"].as<std::string>();
+            player["rank"] = 1;
 
-        auto &trans = newPlayer.transform().getPosition();
-        sw::Vector2f min{trans.z - 0.25f, trans.x - 0.25f};
-        sw::Vector2f max{min.x + 0.5f, min.y + 0.5f};
-        m_gameObject.scene().m_tree.insert(newPlayer.id, min, max);
-        m_gameObject.scene().m_lut.emplace(newPlayer.id, newPlayerCpt);
-        newPlayerCpt.start();
-        m_playerLeft++;
+            auto& trans = newPlayer.transform().getPosition();
+            sw::Vector2f min{ trans.z - 0.25f, trans.x - 0.25f };
+            sw::Vector2f max{ min.x + 0.5f, min.y + 0.5f };
+            m_gameObject.scene().m_tree.insert(newPlayer.id, min, max);
+            m_gameObject.scene().m_lut.emplace(newPlayer.id, newPlayerCpt);
+            newPlayerCpt.start();
+            m_playerLeft++;
+        }
+        else
+        {
+            auto& newPlayerCpt = newPlayer.createComponent<moul::Player>("ScriptManager");
+            CreateUI(m_gameObject.scene(), i, names[i]);
+            newPlayerCpt.m_modelName = names[i];
+            newPlayer.transform().setPosition(positions[m_playerLeft]);
+            newPlayer.transform().scale(8, 8, 8);
+            newPlayer.transform().rotate(180);
+            newPlayerCpt.m_bombtxt.emplace(m_gameObject.scene().getGameObject("Text_Bomb_UI" + names[i]).getComponent<sw::Text>("TextManager"));
+            newPlayerCpt.m_speedtxt.emplace(m_gameObject.scene().getGameObject("Text_Speed_UI" + names[i]).getComponent<sw::Text>("TextManager"));
+            newPlayerCpt.m_rangetxt.emplace(m_gameObject.scene().getGameObject("Text_Range_UI" + names[i]).getComponent<sw::Text>("TextManager"));
+            newPlayerCpt.m_name = player["name"].as<std::string>();
+            player["rank"] = 1;
+
+            auto& trans = newPlayer.transform().getPosition();
+            sw::Vector2f min{ trans.z - 0.25f, trans.x - 0.25f };
+            sw::Vector2f max{ min.x + 0.5f, min.y + 0.5f };
+            m_gameObject.scene().m_tree.insert(newPlayer.id, min, max);
+            m_gameObject.scene().m_lut.emplace(newPlayer.id, newPlayerCpt);
+            newPlayerCpt.start();
+            m_playerLeft++;
+        }
     }
 }
 
