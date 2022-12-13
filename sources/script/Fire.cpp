@@ -53,13 +53,7 @@ void moul::Fire::update()
     double elapsedTime = sw::OpenGLModule::deltaTime();
     auto& trans = m_gameObject.transform().getGlobalPosition();
     auto size = sw::Vector2f{0.3f, 0.3f};
-
-    /*
-    std::array<std::byte, sizeof(size_t) * 256> buffer; // enough to fit in all nodes
-    std::pmr::monotonic_buffer_resource mbr{buffer.data(), buffer.size()};
-    std::pmr::polymorphic_allocator<int> pa{&mbr};
-    std::pmr::list<int> list{pa};
-    */
+    
     std::vector<int> list;
 
     m_gameObject.scene().m_tree.query(m_gameObject.id, {trans.x - size.x, trans.z - size.y}, {trans.x + size.x, trans.z + size.y}, std::back_inserter(list));
